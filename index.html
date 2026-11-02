@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Spotter — Super intelligence for your files</title>
-<meta name="description" content="Spotter is the super-intelligent file manager for Mac. Ask in plain English and it finds, reads, answers and tidies, using Apple's on-device AI. Nothing leaves your Mac.">
+<meta name="description" content="Spotter is the super-intelligent file manager for Mac. Find any file by describing it, ask your documents questions, clean up gigabytes safely and manage files with undo. Apple on-device AI; nothing leaves your Mac.">
 <meta property="og:title" content="Spotter — Super intelligence for your files">
-<meta property="og:description" content="Ask your Mac anything about your files. Spotter finds them, reads them, answers with sources and keeps everything on your Mac.">
+<meta property="og:description" content="Find, understand, clean and organise every file on your Mac. Every result shows its match score. Nothing leaves your Mac.">
 <meta property="og:url" content="https://thespotter.si/">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#070b16" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#04060d">
+<meta name="color-scheme" content="dark">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://thespotter.si/">
 <link rel="stylesheet" href="styles.css">
@@ -25,7 +25,6 @@
     <symbol id="i-photo" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M4 17l5-4.5 4 3.5 3-2.5 4.5 3.5"/></symbol>
     <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3.5h7l4.5 4.5v12a.5.5 0 0 1-.5.5H7a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1z"/><path d="M14 3.5V8h4.5M9 12.5h6M9 16h6"/></symbol>
     <symbol id="i-film" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M8 5v14M16 5v14M3.5 9.5H8M3.5 14.5H8M16 9.5h4.5M16 14.5h4.5"/></symbol>
-    <symbol id="i-box" viewBox="0 0 24 24"><path d="M4 8l8-4 8 4v8.5L12 20.5 4 16.5z"/><path d="M4 8l8 4 8-4M12 12v8.5"/></symbol>
     <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19.5h14"/></symbol>
     <symbol id="i-copies" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5a1.5 1.5 0 0 0-1.5-1.5h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></symbol>
     <symbol id="i-broom" viewBox="0 0 24 24"><path d="M14.5 3.5l-3 7M7 11h9l1.5 9.5h-12z"/><path d="M9.5 15v5M13.5 15v5"/></symbol>
@@ -42,11 +41,15 @@
     <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.5 5.4 3.5 8.5s-1 5.9-3.5 8.5c-2.5-2.6-3.5-5.4-3.5-8.5s1-5.9 3.5-8.5z"/></symbol>
     <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3.5 7a1.5 1.5 0 0 1 1.5-1.5h4.3l2 2H19A1.5 1.5 0 0 1 20.5 9v9A1.5 1.5 0 0 1 19 19.5H5A1.5 1.5 0 0 1 3.5 18z"/></symbol>
     <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.2"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="5" cy="6.5" r=".9"/><circle cx="5" cy="12" r=".9"/><circle cx="5" cy="17.5" r=".9"/></symbol>
     <symbol id="i-panes" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M12 5v14M3.5 9h17"/></symbol>
+    <symbol id="i-columns" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M9 5v14M14.5 5v14"/></symbol>
     <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><circle cx="12" cy="7.8" r=".5"/></symbol>
     <symbol id="i-tag" viewBox="0 0 24 24"><path d="M4 12.6V5a1 1 0 0 1 1-1h7.6L20 11.4 11.4 20z"/><circle cx="8.5" cy="8.5" r="1.4"/></symbol>
-    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 1 0 0 17c1.2 0 1.8-.8 1.8-1.7 0-1.3-1.2-1.6-1.2-2.8 0-1 .8-1.5 1.8-1.5h2.1a4 4 0 0 0 4-4c0-3.9-3.8-7-8.5-7z"/><circle cx="8" cy="11" r="1"/><circle cx="10.5" cy="7.5" r="1"/><circle cx="14.5" cy="7.5" r="1"/></symbol>
-    <symbol id="i-drag" viewBox="0 0 24 24"><path d="M9 4.5h9a1.5 1.5 0 0 1 1.5 1.5v9M6 8h9a1.5 1.5 0 0 1 1.5 1.5V18a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 18V9.5A1.5 1.5 0 0 1 6 8z"/></symbol>
+    <symbol id="i-rename" viewBox="0 0 24 24"><path d="M4 7.5h10M4 12h7M4 16.5h5M14.5 17.5l5-5-2.5-2.5-5 5-.5 3z"/></symbol>
+    <symbol id="i-zip" viewBox="0 0 24 24"><path d="M7 3.5h7l4.5 4.5v12a.5.5 0 0 1-.5.5H7a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1z"/><path d="M11 3.5v2h1.5v2H11v2h1.5v2H11v2.5h1.5v2.5H11"/></symbol>
+    <symbol id="i-convert" viewBox="0 0 24 24"><path d="M5 8h12l-3.5-3.5M19 16H7l3.5 3.5"/></symbol>
+    <symbol id="i-ruler" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="1.5"/><path d="M7 8v3M11 8v4M15 8v3M19 8v4"/></symbol>
     <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3L5 13.5h6L10.5 21 19 10.5h-6z"/></symbol>
     <symbol id="i-cmd" viewBox="0 0 24 24"><path d="M9 9V6.5A2.5 2.5 0 1 0 6.5 9H9zm0 0h6m-6 0v6m6-6V6.5A2.5 2.5 0 1 1 17.5 9H15zm0 0v6m0 0h2.5a2.5 2.5 0 1 1-2.5 2.5V15zm0 0H9m0 0v2.5A2.5 2.5 0 1 1 6.5 15H9z"/></symbol>
     <symbol id="i-menu" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M3.5 8h17M7 12h6M7 15.5h4"/></symbol>
@@ -55,329 +58,421 @@
     <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2.2"/><path d="M11 18h2"/></symbol>
     <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
     <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.5l7 2.8v5.2c0 4.4-3 7.9-7 9-4-1.1-7-4.6-7-9V6.3z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol>
-    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="5" cy="6.5" r=".9"/><circle cx="5" cy="12" r=".9"/><circle cx="5" cy="17.5" r=".9"/></symbol>
     <symbol id="i-hand" viewBox="0 0 24 24"><path d="M12 3.5l7 2.8v5.2c0 4.4-3 7.9-7 9-4-1.1-7-4.6-7-9V6.3z"/><path d="M12 8v5M12 16v.3"/></symbol>
     <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13"/></symbol>
     <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5a4.5 4.5 0 0 1-.6-9 6 6 0 0 1 11.5 1.6A3.8 3.8 0 0 1 17.5 18.5z"/></symbol>
     <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6.5" y="6.5" width="11" height="11" rx="2"/><path d="M9.5 3.5v3M14.5 3.5v3M9.5 17.5v3M14.5 17.5v3M3.5 9.5h3M3.5 14.5h3M17.5 9.5h3M17.5 14.5h3"/></symbol>
     <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l8.5-8.5M16 7l2.5 2.5M14 9l1.8 1.8"/></symbol>
     <symbol id="i-off" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M6 6l12 12"/></symbol>
+    <symbol id="i-app" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 15l3-6 3 6M10 13.2h4"/></symbol>
+    <symbol id="i-pkg" viewBox="0 0 24 24"><path d="M4 8l8-4 8 4v8.5L12 20.5 4 16.5z"/><path d="M4 8l8 4 8-4M12 12v8.5"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 7l8 6 8-6"/></symbol>
+    <symbol id="i-rec" viewBox="0 0 24 24"><rect x="3.5" y="6" width="12" height="12" rx="2"/><path d="M15.5 10.5l5-3v9l-5-3"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-dash" viewBox="0 0 24 24"><path d="M7 12h10"/></symbol>
   </defs>
 </svg>
 
-<div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="bg-fallback" aria-hidden="true"></div>
 
 <header class="nav">
   <div class="wrap nav-inner">
     <a class="brand" href="/"><img src="favicon.svg" alt="" width="28" height="28"> Spotter</a>
     <nav>
-      <a href="#intelligence">Intelligence</a>
-      <a href="#features" class="hide-sm">Features</a>
-      <a href="#privacy">Privacy</a>
-      <a href="#faq" class="hide-sm">FAQ</a>
+      <a href="#score">Match Score</a>
+      <a href="#clean">Clean</a>
+      <a href="#manage" class="hide-sm">File manager</a>
+      <a href="#privacy" class="hide-sm">Privacy</a>
+      <a href="#faq" class="hide-md">FAQ</a>
     </nav>
     <span class="nav-cta" aria-disabled="true">Coming soon</span>
   </div>
 </header>
 
 <main>
-  <!-- Hero -->
+  <!-- HERO -->
   <section class="hero">
     <div class="wrap hero-inner">
-      <p class="eyebrow"><svg><use href="#i-spark"/></svg> thespotter.si · for Mac</p>
+      <p class="eyebrow"><span class="pulse"></span> thespotter.si · the AI file manager for Mac</p>
       <h1><span class="grad">Super intelligence</span><br>for your files.</h1>
-      <p class="lede">Spotter is the intelligent file manager for Mac. Ask in plain English, and it finds, reads, answers and tidies, with Apple's on-device AI. Nothing leaves your Mac.</p>
+      <p class="lede">Find any file by describing it. Ask your documents anything. Clear out gigabytes safely. Organise thousands of files in one go. All on your Mac, on Apple's on-device AI.</p>
       <div class="cta-row">
         <span class="btn btn-primary" aria-disabled="true"><svg><use href="#i-down"/></svg> Coming soon for Mac</span>
-        <a class="btn btn-glass" href="#intelligence">See what it understands</a>
+        <a class="btn btn-glass" href="#score">See how it thinks</a>
       </div>
-      <p class="fine">One-time purchase · Apple silicon · No account</p>
+      <p class="fine">One-time purchase · Apple silicon · Nothing uploaded, ever</p>
     </div>
 
     <div class="wrap">
-      <div class="app" id="app">
-        <div class="app-bar">
-          <span class="lights"><i></i><i></i><i></i></span>
-          <span class="app-title"><img src="favicon.svg" alt="" width="18" height="18"> Spotter</span>
-          <span class="app-status"><b class="dot"></b> <span id="indexed">248,192</span> files understood</span>
-        </div>
-        <div class="app-body">
-          <aside class="side">
-            <p>Home</p>
-            <a class="on"><svg><use href="#i-home"/></svg>Home</a>
-            <a><svg><use href="#i-bubble"/></svg>Ask Your Files</a>
-            <p>Libraries</p>
-            <a><svg><use href="#i-photo"/></svg>Images</a>
-            <a><svg><use href="#i-doc"/></svg>Documents</a>
-            <a><svg><use href="#i-film"/></svg>Videos</a>
-            <a><svg><use href="#i-down"/></svg>Downloads</a>
-            <p>Storage</p>
-            <a><svg><use href="#i-copies"/></svg>Duplicates</a>
-            <a><svg><use href="#i-broom"/></svg>Clean Up</a>
-          </aside>
-          <div class="pane">
-            <h2 class="greet">Good morning. What are you looking for?</h2>
-            <div class="askbar">
-              <svg class="ab-ico"><use href="#i-spark"/></svg>
-              <span class="typed" id="typed"></span><b class="caret"></b>
-              <span class="ab-keys"><kbd>⇧</kbd><kbd>⌥</kbd><kbd>Space</kbd></span>
+      <div class="desk">
+        <div class="menubar"><b>Spotter</b><span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Window</span><i></i><span class="mb-r">Tue 9:41</span></div>
+        <div class="app">
+          <div class="app-bar">
+            <span class="lights"><i></i><i></i><i></i></span>
+            <span class="app-title"><img src="favicon.svg" alt="" width="18" height="18"> Spotter</span>
+            <span class="app-status"><b class="dot"></b>248,192 files understood</span>
+          </div>
+          <div class="app-body">
+            <aside class="side">
+              <p>Spotter</p>
+              <a class="on"><svg><use href="#i-search"/></svg>Search</a>
+              <a><svg><use href="#i-bubble"/></svg>Ask Your Files</a>
+              <a><svg><use href="#i-broom"/></svg>Clean</a>
+              <p>Libraries</p>
+              <a><svg><use href="#i-photo"/></svg>Images</a>
+              <a><svg><use href="#i-doc"/></svg>Documents</a>
+              <a><svg><use href="#i-film"/></svg>Videos</a>
+              <a><svg><use href="#i-down"/></svg>Downloads</a>
+              <p>Places</p>
+              <a><svg><use href="#i-folder"/></svg>Desktop</a>
+              <a><svg><use href="#i-folder"/></svg>Projects</a>
+            </aside>
+            <div class="pane">
+              <div class="askbar">
+                <svg class="ab-ico"><use href="#i-spark"/></svg>
+                <span class="typed" id="typed"></span><b class="caret"></b>
+                <span class="ab-keys"><kbd>⇧</kbd><kbd>⌥</kbd><kbd>Space</kbd></span>
+              </div>
+              <div class="try">
+                <button data-s="0">priyanshu's salary slips</button>
+                <button data-s="1">notice period in my Acme contract?</button>
+                <button data-s="2">wifi password screenshot</button>
+                <button data-s="3">photos from meghalaya</button>
+                <button data-s="4">what can I delete?</button>
+                <button data-s="5">gmail pdfs I never opened</button>
+              </div>
+              <div class="answer" id="answer" aria-live="polite"></div>
             </div>
-            <div class="try">
-              <span class="try-label">Try asking</span>
-              <button data-s="0">What's the notice period in my Acme contract?</button>
-              <button data-s="1">Priyanshu's salary slips</button>
-              <button data-s="2">Screenshot with the wifi password</button>
-              <button data-s="3">Photos from Meghalaya</button>
-              <button data-s="4">What can I safely delete?</button>
-            </div>
-            <div class="answer" id="answer" aria-live="polite"></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Trust strip -->
-  <section class="strip">
-    <div class="wrap strip-inner">
-      <span><svg><use href="#i-chip"/></svg>Apple on-device AI</span>
-      <span><svg><use href="#i-lock"/></svg>Encrypted index</span>
-      <span><svg><use href="#i-cloud"/></svg>Nothing uploaded</span>
-      <span><svg><use href="#i-history"/></svg>Undo for everything</span>
-      <span><svg><use href="#i-shield"/></svg>No account</span>
+  <!-- MARQUEE -->
+  <section class="marquee" aria-label="Things you can ask">
+    <div class="track">
+      <span>"hotel receipts from goa last year"</span><span>"the deck with the old ₹499 pricing"</span><span>"files I opened before Tuesday's meeting"</span><span>"zips bigger than 1 GB older than 6 months"</span><span>"invoices from acme over 1 MB"</span><span>"videos from my iPhone in August"</span><span>"what does my lease say about pets?"</span><span>"move all 2025 invoices into Taxes"</span><span>"screenshots with a tracking number"</span><span>"duplicate photos from the wedding"</span>
+      <span aria-hidden="true">"hotel receipts from goa last year"</span><span aria-hidden="true">"the deck with the old ₹499 pricing"</span><span aria-hidden="true">"files I opened before Tuesday's meeting"</span><span aria-hidden="true">"zips bigger than 1 GB older than 6 months"</span><span aria-hidden="true">"invoices from acme over 1 MB"</span><span aria-hidden="true">"videos from my iPhone in August"</span><span aria-hidden="true">"what does my lease say about pets?"</span><span aria-hidden="true">"move all 2025 invoices into Taxes"</span><span aria-hidden="true">"screenshots with a tracking number"</span><span aria-hidden="true">"duplicate photos from the wedding"</span>
     </div>
   </section>
 
-  <!-- Intelligence -->
-  <section id="intelligence" class="section dark">
-    <div class="glow" aria-hidden="true"></div>
-    <div class="wrap">
-      <p class="kicker">The intelligence</p>
-      <h2>Not just search.<br><span class="grad-light">Understanding.</span></h2>
-      <p class="section-lede">Finder knows your file names. Spotter knows what's in your files, where they came from, when you used them and what they mean.</p>
-      <div class="intel">
-        <article><svg><use href="#i-spark"/></svg><h3>Understands meaning</h3><p>"Salary slips" finds "Payslip Aug 2025". "Hotel receipts" finds the guest folio. Different words, same idea.</p></article>
-        <article><svg><use href="#i-text"/></svg><h3>Reads images</h3><p>Text in screenshots, photos and scanned PDFs, tables included, read by Apple's Vision on your Mac.</p></article>
-        <article><svg><use href="#i-wave"/></svg><h3>Listens</h3><p>Voice notes, calls and videos become searchable transcripts.</p></article>
-        <article><svg><use href="#i-quote"/></svg><h3>Answers with sources</h3><p>Ask a question and get the answer with the file and page it came from, or an honest "not found".</p></article>
-        <article><svg><use href="#i-clock"/></svg><h3>Remembers when and where</h3><p>"Files I opened before Tuesday's meeting." "Photos from Meghalaya." Without tracking you.</p></article>
-        <article><svg><use href="#i-question"/></svg><h3>Asks when unsure</h3><p>Two meanings or too many results? One quick question, with answers drawn from your own files.</p></article>
-      </div>
-      <div class="explain">
-        <div class="ex-q"><svg><use href="#i-search"/></svg>hotel receipts from goa last year</div>
-        <div class="ex-chips"><span>Contains <b>hotel receipts</b></span><span>Place <b>Goa</b></span><span>Date <b>2025</b></span><span class="m">Also matching <b>folio · check-in · booking</b></span></div>
-        <div class="ex-row"><i class="ico pdf">PDF</i><div><b>Folio_TajFortAguada_Dec25.pdf</b><small>…Guest <mark>folio</mark> · <mark>Goa</mark> · Room charges ₹18,400…</small></div><span class="tags"><em class="t-text">Text</em><em class="t-mean">Meaning</em></span></div>
-        <p class="ex-note">Every search becomes chips you can change, and every result tells you why it matched. No black box.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Bento -->
-  <section id="features" class="section">
-    <div class="wrap">
-      <p class="kicker c-blue center">Everything it does</p>
-      <h2 class="center">One app. Every file job.</h2>
-      <p class="section-lede center">Find it, understand it, act on it, tidy it up. All in one place, all on your Mac.</p>
-
-      <div class="bento">
-        <article class="tile wide">
-          <div class="tile-copy">
-            <span class="badge b-purple"><svg><use href="#i-bubble"/></svg>Ask your files</span>
-            <h3>Answers straight from your documents.</h3>
-            <p>Summaries with page references. Compare two versions of a contract. Pull amounts, dates and names from fifty invoices into one table.</p>
-          </div>
-          <div class="tile-visual chat">
-            <div class="bubble me">Summarise the Q3 board deck</div>
-            <div class="bubble ai">Revenue up 18% on Q2, driven by enterprise. Hiring paused until January. Two risks flagged: churn in SMB and the payments migration.<span class="cite">Board_Q3.key · slides 4, 9, 14</span></div>
-          </div>
-        </article>
-
-        <article class="tile">
-          <span class="badge b-orange"><svg><use href="#i-wand"/></svg>Plain-language actions</span>
-          <h3>Describe the change. Approve the plan.</h3>
-          <div class="plan">
-            <p>"Move all 2025 invoices into Taxes"</p>
-            <div><span>INV‑0425.pdf</span><span>→ Taxes/2025</span></div>
-            <div><span>acme_invoice_may.pdf</span><span>→ Taxes/2025</span></div>
-            <div class="muted"><span>+ 21 more · nothing overwritten</span></div>
-          </div>
-          <p class="tile-foot">The AI proposes. Only you approve. Undo anything, even days later.</p>
-        </article>
-
-        <article class="tile">
-          <span class="badge b-pink"><svg><use href="#i-history"/></svg>Version history</span>
-          <h3>Find the version before it changed.</h3>
-          <div class="versions">
-            <div><b>Today</b><span>Pricing ₹699</span></div>
-            <div class="hit"><b>12 Oct</b><span>Pricing <mark>₹499</mark></span></div>
-            <div><b>2 Oct</b><span>Pricing TBD</span></div>
-          </div>
-          <p class="tile-foot">Search inside the earlier versions macOS already keeps, then compare or restore.</p>
-        </article>
-
-        <article class="tile">
-          <span class="badge b-red"><svg><use href="#i-disk"/></svg>Storage</span>
-          <h3>Gigabytes back, honestly.</h3>
-          <ul class="cleanup">
-            <li><span>Forgotten downloads</span><b>4.2 GB</b></li>
-            <li><span>Old installers</span><b>3.6 GB</b></li>
-            <li><span>Duplicates and look‑alikes</span><b>2.1 GB</b></li>
-            <li><span>Big old videos</span><b>1.2 GB</b></li>
-          </ul>
-          <p class="tile-foot">Clone-aware numbers. Free space without deleting by turning duplicates into clones. Example scan.</p>
-        </article>
-
-        <article class="tile">
-          <span class="badge b-green"><svg><use href="#i-text"/></svg>Text in images</span>
-          <h3>Search every screenshot.</h3>
-          <div class="shot"><span>Network</span><b>HomeFiber_5G</b><span>Password</span><b><mark>sunrise‑4471‑blue</mark></b></div>
-          <p class="tile-foot">Copy text from many images at once. Finds receipts, IDs, handwriting and QR codes by type.</p>
-        </article>
-
-        <article class="tile">
-          <span class="badge b-indigo"><svg><use href="#i-globe"/></svg>Downloaded from</span>
-          <h3>Remember the email, not the filename.</h3>
-          <ul class="sources">
-            <li><b>Gmail</b><span>214 files</span></li>
-            <li><b>WhatsApp</b><span>388 files</span></li>
-            <li><b>Slack</b><span>51 files</span></li>
-            <li><b>Any website</b><span>1,204 files</span></li>
-          </ul>
-        </article>
-
-        <article class="tile wide">
-          <div class="tile-copy">
-            <span class="badge b-teal"><svg><use href="#i-pin"/></svg>Places and memory</span>
-            <h3>Remember when and where, not what you called it.</h3>
-            <p>Photos and videos by place, across your folders and your Photos library, with place names that work offline. Files you used around a meeting, from your calendar. Workspaces that gather a project's files without moving them.</p>
-          </div>
-          <div class="tile-visual">
-            <div class="mini-search"><svg><use href="#i-search"/></svg>photos and videos from meghalaya</div>
-            <div class="photos"><i style="--h:150"></i><i style="--h:95"></i><i style="--h:200"></i><i style="--h:30"></i><i style="--h:170"></i><i style="--h:120"></i></div>
-            <small class="cap">142 items · Shillong, Cherrapunji, Dawki</small>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Compare -->
-  <section id="compare" class="section soft">
-    <div class="wrap">
-      <p class="kicker c-blue">Compare</p>
-      <h2>What Finder and Spotlight leave to you.</h2>
-      <p class="section-lede">Finder is great for opening a folder and Spotlight for launching apps. Spotter does the rest.</p>
-      <div class="glass table-wrap">
-        <table class="compare">
-          <thead><tr><th>Job</th><th>Spotter</th><th>Finder &amp; Spotlight</th></tr></thead>
-          <tbody>
-            <tr><td>Finding a file you can't name</td><td>Describe it. Text inside, text in images, meaning and source all count</td><td>Mostly names, with rules added one at a time</td></tr>
-            <tr><td>Knowing why something matched</td><td>A reason and the matching passage for every result</td><td>No explanation</td></tr>
-            <tr><td>Questions about documents</td><td>Summaries, answers and comparisons, with page references</td><td>Open each file and read it</td></tr>
-            <tr><td>Changing many files</td><td>Describe it, review the plan, approve. Undo any time</td><td>One at a time, or Automator</td></tr>
-            <tr><td>Old versions of a document</td><td>Search inside earlier versions</td><td>Browse versions one by one</td></tr>
-            <tr><td>Duplicates and storage</td><td>Clone-aware cleanup with honest numbers</td><td>Storage settings, away from your files</td></tr>
-            <tr><td>Where a download came from</td><td>Grouped by source: Gmail, Slack, WhatsApp, any site</td><td>"Where from" in Get Info, one file at a time</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="note">"Show in Finder" is always one click away, so you can keep using both. Spotter is not made by or affiliated with Apple.</p>
-    </div>
-  </section>
-
-  <!-- File manager + everywhere -->
+  <!-- PILLARS -->
   <section class="section">
     <div class="wrap">
-      <p class="kicker c-blue">A complete file manager</p>
-      <h2>Everything Finder does, and then some.</h2>
-      <p class="section-lede">Search is the way in. Browsing, previewing and organising are all there too.</p>
-      <div class="icons">
-        <div><svg><use href="#i-grid"/></svg><b>Libraries</b><span>Images, videos, music, documents, archives, apps and downloads</span></div>
-        <div><svg><use href="#i-list"/></svg><b>Every view</b><span>List, grid, column and gallery</span></div>
-        <div><svg><use href="#i-panes"/></svg><b>Tabs and dual pane</b><span>Side‑by‑side panes for moving files fast</span></div>
-        <div><svg><use href="#i-info"/></svg><b>Inspector</b><span>Live Text, Visual Look Up, source and versions</span></div>
-        <div><svg><use href="#i-eye"/></svg><b>Quick Look</b><span>Press Space; arrows step through files</span></div>
-        <div><svg><use href="#i-palette"/></svg><b>Colours and emoji</b><span>For folders, and filter by them</span></div>
-        <div><svg><use href="#i-tag"/></svg><b>Smart tags</b><span>Finder tags, plus suggestions from what's inside</span></div>
-        <div><svg><use href="#i-drag"/></svg><b>Drag and drop</b><span>Many files at once, into any app</span></div>
+      <div class="pillars reveal">
+        <a href="#score" class="pillar p-find"><svg><use href="#i-search"/></svg><b>Find</b><span>Describe it. Get it, with a match score.</span></a>
+        <a href="#ask" class="pillar p-ask"><svg><use href="#i-bubble"/></svg><b>Understand</b><span>Answers and summaries, with sources.</span></a>
+        <a href="#clean" class="pillar p-clean"><svg><use href="#i-broom"/></svg><b>Clean</b><span>Gigabytes back, with honest numbers.</span></a>
+        <a href="#manage" class="pillar p-manage"><svg><use href="#i-folder"/></svg><b>Manage</b><span>A complete file manager, with undo.</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATCH SCORE -->
+  <section id="score" class="section">
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="kicker k-blue">Match Score</p>
+        <h2>Every result shows<br><span class="grad">how sure it is.</span></h2>
+        <p class="section-lede">Other search tools hand you a list and hope. Spotter scores every result out of 100 and shows exactly why: which of your words it found, where it found them, and what it matched by meaning.</p>
+        <ul class="ticks">
+          <li>Files that match everything you asked for rank above ones that repeat a single word</li>
+          <li>Results found only by meaning are labelled, never passed off as exact</li>
+          <li>Below a confident score, Spotter asks one quick question instead of guessing</li>
+        </ul>
+      </div>
+      <div class="score-card glass reveal">
+        <div class="sc-q"><svg><use href="#i-search"/></svg>hotel receipts from goa last year</div>
+        <div class="sc-top">
+          <i class="ico pdf">PDF</i>
+          <div><b>Folio_TajFortAguada_Dec25.pdf</b><small>Downloads · from mail.google.com · 88 KB</small></div>
+          <span class="score big" style="--v:97"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5" pathLength="100"/><circle class="fill" cx="18" cy="18" r="15.5" pathLength="100"/></svg><b><span data-count="97">97</span></b></span>
+        </div>
+        <p class="sc-snip">…Guest <mark>folio</mark> · Taj Fort Aguada, <mark>Goa</mark> · Check-in 21 Dec 2025 · Room charges ₹18,400…</p>
+        <div class="bars">
+          <div><span>Your words found</span><i style="--w:100%"></i><b>3 of 3</b></div>
+          <div><span>Found inside the text</span><i style="--w:92%"></i><b>Page 1</b></div>
+          <div><span>Matched by meaning</span><i style="--w:80%" class="v"></i><b>receipt → folio</b></div>
+          <div><span>Place</span><i style="--w:100%" class="t"></i><b>Goa, India</b></div>
+          <div><span>Date</span><i style="--w:100%" class="t"></i><b>Dec 2025</b></div>
+        </div>
+        <div class="sc-why"><span class="t-text">Text</span><span class="t-mean">Meaning</span><span class="t-meta">Place</span><span class="t-name">Date</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTELLIGENCE -->
+  <section class="section">
+    <div class="wrap">
+      <div class="center reveal">
+        <p class="kicker k-violet">The intelligence</p>
+        <h2>Not just search. <span class="grad">Understanding.</span></h2>
+        <p class="section-lede">Finder knows your file names. Spotter knows what's inside your files, where they came from, when you used them and what they mean.</p>
+      </div>
+      <div class="intel reveal">
+        <article><svg><use href="#i-spark"/></svg><h3>Understands meaning</h3><p>"Salary slips" finds "Payslip Aug 2025". "Hotel receipts" finds the guest folio.</p></article>
+        <article><svg><use href="#i-text"/></svg><h3>Reads images</h3><p>Text in screenshots, photos and scanned PDFs, tables included, via Apple's Vision.</p></article>
+        <article><svg><use href="#i-wave"/></svg><h3>Listens</h3><p>Voice notes, calls and videos become searchable transcripts.</p></article>
+        <article><svg><use href="#i-quote"/></svg><h3>Answers with sources</h3><p>Every answer cites its file and page, or says honestly that it's not there.</p></article>
+        <article><svg><use href="#i-clock"/></svg><h3>Remembers when and where</h3><p>"Files from before Tuesday's meeting." "Photos from Meghalaya." No tracking.</p></article>
+        <article><svg><use href="#i-question"/></svg><h3>Asks when unsure</h3><p>Two meanings or too many results? One quick question, built from your files.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ASK + ACT + VERSIONS -->
+  <section id="ask" class="section">
+    <div class="wrap">
+      <div class="row reveal">
+        <div class="row-copy">
+          <p class="kicker k-violet">Ask your files</p>
+          <h2>Your documents,<br><span class="grad">answering back.</span></h2>
+          <p class="section-lede">Summaries with page references. Answers drawn only from your files. Compare two versions of a contract. Pull amounts, dates and names out of fifty invoices into one table.</p>
+        </div>
+        <div class="glass mock chat">
+          <div class="bubble me">Pull the totals from every Swiggy invoice this year</div>
+          <div class="bubble ai"><span class="ai-badge"><svg><use href="#i-spark"/></svg>Table from 23 files</span>
+            <table class="mini-table"><tr><th>Date</th><th>Order</th><th>Total</th></tr><tr><td>04 Jan</td><td>#8812</td><td>₹642</td></tr><tr><td>19 Jan</td><td>#9104</td><td>₹1,180</td></tr><tr><td>02 Feb</td><td>#9921</td><td>₹415</td></tr><tr class="muted"><td colspan="2">+ 20 more</td><td><b>₹21,964</b></td></tr></table>
+            <span class="cite">23 sources</span><span class="cite">Export to Numbers</span>
+          </div>
+        </div>
       </div>
 
-      <h3 class="sub">Wherever you are on your Mac</h3>
-      <div class="icons">
-        <div><svg><use href="#i-bolt"/></svg><b>Quick Search</b><span><kbd>⇧</kbd><kbd>⌥</kbd><kbd>Space</kbd> over any app</span></div>
-        <div><svg><use href="#i-cmd"/></svg><b>Command bar</b><span><kbd>⌘</kbd><kbd>K</kbd> for every action</span></div>
-        <div><svg><use href="#i-menu"/></svg><b>Menu bar</b><span>Your newest downloads, ready to drag</span></div>
-        <div><svg><use href="#i-tray"/></svg><b>File shelf</b><span>Park files while you gather them</span></div>
-        <div><svg><use href="#i-mic"/></svg><b>Siri and Shortcuts</b><span>Spotter actions in Spotlight, Siri and your automations</span></div>
-        <div><svg><use href="#i-phone"/></svg><b>Scan from iPhone</b><span>Paper to searchable PDF, in the right folder</span></div>
-        <div><svg><use href="#i-photo"/></svg><b>Batch Quick Actions</b><span>Convert images, combine PDFs, remove backgrounds, shrink videos</span></div>
+      <div class="row flip reveal">
+        <div class="row-copy">
+          <p class="kicker k-orange">Plain-language actions</p>
+          <h2>Say what you want.<br><span class="grad">Approve the plan.</span></h2>
+          <p class="section-lede">"Move all 2025 invoices into Taxes and rename them by date." Spotter shows every change before it happens. The AI proposes; only you approve. Undo anything, even days later.</p>
+        </div>
+        <div class="glass mock">
+          <div class="mini-search"><svg><use href="#i-wand"/></svg>move all 2025 invoices into Taxes, rename by date</div>
+          <div class="plan">
+            <p><b>Plan</b> · 23 files · nothing overwritten</p>
+            <div><span>INV-0425.pdf</span><span>→ Taxes/2025/2025-04-02 Acme.pdf</span></div>
+            <div><span>acme_invoice_may.pdf</span><span>→ Taxes/2025/2025-05-03 Acme.pdf</span></div>
+            <div><span>Swiggy-Invoice-9921.pdf</span><span>→ Taxes/2025/2025-02-02 Swiggy.pdf</span></div>
+            <div class="muted"><span>+ 20 more</span><span></span></div>
+          </div>
+          <div class="btns"><button class="mini ghost">Edit plan</button><button class="mini">Approve</button></div>
+        </div>
+      </div>
+
+      <div class="row reveal">
+        <div class="row-copy">
+          <p class="kicker k-pink">Searchable version history</p>
+          <h2>Find the version<br><span class="grad">before it changed.</span></h2>
+          <p class="section-lede">macOS quietly keeps earlier versions of your documents. Spotter is the first app that searches inside them, so you can find the draft with the old pricing, compare it with today's and restore it.</p>
+        </div>
+        <div class="glass mock">
+          <div class="mini-search"><svg><use href="#i-search"/></svg>pitch deck with the old ₹499 price</div>
+          <div class="versions">
+            <div><b>Today</b><span>Pricing ₹699 / month</span></div>
+            <div class="hit"><b>12 Oct</b><span>Pricing <mark>₹499</mark> / month</span><em>Match 100</em></div>
+            <div><b>2 Oct</b><span>Pricing TBD</span></div>
+          </div>
+          <div class="btns"><button class="mini ghost">Compare</button><button class="mini">Restore 12 Oct</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLEAN -->
+  <section id="clean" class="section clean">
+    <div class="wrap">
+      <div class="center reveal">
+        <p class="kicker k-green">Spotter Clean</p>
+        <h2>One scan. <span class="grad-green">Gigabytes back.</span></h2>
+        <p class="section-lede">A complete cleanup suite, built into the app that already understands your files. It knows which download you'll never open again, which photo is a near-copy and which app you forgot you had.</p>
+      </div>
+
+      <div class="clean-hero reveal">
+        <div class="orb-wrap">
+          <div class="orb"><i></i><i></i><i></i></div>
+          <svg class="donut" viewBox="0 0 200 200" aria-hidden="true">
+            <circle class="track" cx="100" cy="100" r="86" pathLength="100"/>
+            <circle class="seg s1" cx="100" cy="100" r="86" pathLength="100" style="--len:33;--off:0"/>
+            <circle class="seg s2" cx="100" cy="100" r="86" pathLength="100" style="--len:20;--off:33"/>
+            <circle class="seg s3" cx="100" cy="100" r="86" pathLength="100" style="--len:22;--off:53"/>
+            <circle class="seg s4" cx="100" cy="100" r="86" pathLength="100" style="--len:15;--off:75"/>
+            <circle class="seg s5" cx="100" cy="100" r="86" pathLength="100" style="--len:10;--off:90"/>
+          </svg>
+          <div class="orb-text"><b><span data-count="18.4">18.4</span> GB</b><span>ready to clean</span></div>
+        </div>
+        <div class="clean-list">
+          <div><i class="c1"></i><span>Forgotten downloads</span><b>6.1 GB</b></div>
+          <div><i class="c2"></i><span>Old installers (.dmg, .pkg)</span><b>3.6 GB</b></div>
+          <div><i class="c3"></i><span>Duplicates and look-alike photos</span><b>4.0 GB</b></div>
+          <div><i class="c4"></i><span>Apps you haven't opened in 6 months</span><b>2.8 GB</b></div>
+          <div><i class="c5"></i><span>Old screen recordings</span><b>1.9 GB</b></div>
+          <p class="cap">Example scan. Your numbers depend on your Mac.</p>
+          <span class="btn btn-green" aria-disabled="true"><svg><use href="#i-broom"/></svg> Review and clean</span>
+        </div>
+      </div>
+
+      <div class="clean-grid reveal">
+        <article><svg><use href="#i-down"/></svg><h3>Forgotten downloads</h3><p>Files you downloaded and never opened again, grouped by where they came from.</p></article>
+        <article><svg><use href="#i-pkg"/></svg><h3>Old installers</h3><p>.dmg and .pkg files for apps you've already installed.</p></article>
+        <article><svg><use href="#i-copies"/></svg><h3>Duplicates, clone-aware</h3><p>Identical files found by content. Turn them into APFS clones to free space without deleting a thing.</p></article>
+        <article><svg><use href="#i-photo"/></svg><h3>Look-alike photos</h3><p>Bursts, edits and HEIC/JPEG pairs. Spotter suggests the best one to keep.</p></article>
+        <article><svg><use href="#i-app"/></svg><h3>Unused apps</h3><p>Apps you haven't opened in months, removed along with their leftover support files.</p></article>
+        <article><svg><use href="#i-disk"/></svg><h3>Space map</h3><p>See what's taking space, from the whole disk down to a single folder.</p></article>
+        <article><svg><use href="#i-cloud"/></svg><h3>iCloud offload</h3><p>Send big iCloud files back to the cloud. iCloud-only files are never downloaded.</p></article>
+        <article><svg><use href="#i-mail"/></svg><h3>Mail and Messages</h3><p>How much space attachments take, with a link straight to Apple's own tools.</p></article>
+        <article><svg><use href="#i-rec"/></svg><h3>Big old media</h3><p>Large videos and screen recordings you haven't watched in a year.</p></article>
+      </div>
+
+      <div class="honest reveal">
+        <div><b>Honest numbers</b><span>Clone-aware estimates, so the gigabytes you see are the gigabytes you get.</span></div>
+        <div><b>Trash, never delete</b><span>Everything goes to the Trash, so you can always put it back.</span></div>
+        <div><b>You decide</b><span>Nothing is removed automatically. Review every card first.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILE MANAGER -->
+  <section id="manage" class="section">
+    <div class="wrap">
+      <div class="center reveal">
+        <p class="kicker k-blue">A complete file manager</p>
+        <h2>Everything Finder does. <span class="grad">Then the rest.</span></h2>
+        <p class="section-lede">Use Spotter as your everyday file manager: tabs, dual pane, every view, folder sizes, batch tools, and undo for every single change.</p>
+      </div>
+
+      <div class="fm glass reveal">
+        <div class="fm-bar">
+          <span class="lights"><i></i><i></i><i></i></span>
+          <div class="tabs"><span class="on">Downloads</span><span>Projects</span><span>NE Trip</span><span class="plus">+</span></div>
+          <div class="views"><svg><use href="#i-list"/></svg><svg><use href="#i-grid"/></svg><svg class="on"><use href="#i-columns"/></svg><svg><use href="#i-photo"/></svg></div>
+        </div>
+        <div class="fm-panes">
+          <div class="fm-pane">
+            <p class="crumb">Macintosh HD › Users › priyanshu › <b>Downloads</b></p>
+            <ul>
+              <li class="sel"><svg><use href="#i-photo"/></svg><span>IMG_4521.HEIC</span><em>3.1 MB</em></li>
+              <li class="sel"><svg><use href="#i-photo"/></svg><span>IMG_4522.HEIC</span><em>2.8 MB</em></li>
+              <li class="sel"><svg><use href="#i-photo"/></svg><span>IMG_4533.MOV</span><em>84 MB</em></li>
+              <li><svg><use href="#i-doc"/></svg><span>Folio_TajFortAguada.pdf</span><em>88 KB</em></li>
+              <li><svg><use href="#i-folder"/></svg><span>Old installers</span><em>3.6 GB</em></li>
+              <li><svg><use href="#i-folder"/></svg><span>WhatsApp Media</span><em>2.4 GB</em></li>
+            </ul>
+          </div>
+          <div class="fm-pane">
+            <p class="crumb">Pictures › <b>NE Trip 2026</b></p>
+            <ul>
+              <li><svg><use href="#i-folder"/></svg><span>Shillong</span><em>1.2 GB</em></li>
+              <li><svg><use href="#i-folder"/></svg><span>Cherrapunji</span><em>860 MB</em></li>
+              <li><svg><use href="#i-folder"/></svg><span>Dawki</span><em>540 MB</em></li>
+              <li class="drop"><svg><use href="#i-down"/></svg><span>Drop 3 items to move here</span><em></em></li>
+            </ul>
+          </div>
+        </div>
+        <div class="rename">
+          <div class="rn-head"><svg><use href="#i-rename"/></svg><b>Rename 3 items</b><span>Pattern: place · date · number</span></div>
+          <div class="rn-row"><s>IMG_4521.HEIC</s><span>→</span><b>Shillong 2026-03-14 01.heic</b></div>
+          <div class="rn-row"><s>IMG_4522.HEIC</s><span>→</span><b>Shillong 2026-03-14 02.heic</b></div>
+          <div class="rn-row"><s>IMG_4533.MOV</s><span>→</span><b>Dawki 2026-03-15 01.mov</b></div>
+        </div>
+      </div>
+
+      <div class="icons reveal">
+        <div><svg><use href="#i-panes"/></svg><b>Tabs and dual pane</b><span>Move files side by side, fast</span></div>
+        <div><svg><use href="#i-columns"/></svg><b>Every view</b><span>List, grid, column and gallery</span></div>
+        <div><svg><use href="#i-ruler"/></svg><b>Folder sizes everywhere</b><span>See which folder is huge at a glance</span></div>
+        <div><svg><use href="#i-rename"/></svg><b>Batch rename</b><span>Patterns, dates, places, live preview</span></div>
+        <div><svg><use href="#i-convert"/></svg><b>Batch convert</b><span>Images, PDFs, video, combine and shrink</span></div>
+        <div><svg><use href="#i-zip"/></svg><b>Compress and extract</b><span>Zip and unzip in a click</span></div>
+        <div><svg><use href="#i-tag"/></svg><b>Tags, colours, emoji</b><span>Finder tags, kept in sync, plus suggestions</span></div>
+        <div><svg><use href="#i-grid"/></svg><b>Libraries</b><span>Images, videos, music, docs, apps, downloads</span></div>
+        <div><svg><use href="#i-info"/></svg><b>Inspector</b><span>Live Text, Visual Look Up, source, versions</span></div>
+        <div><svg><use href="#i-eye"/></svg><b>Quick Look</b><span>Space to preview, arrows to step</span></div>
+        <div><svg><use href="#i-folder"/></svg><b>Workspaces</b><span>Gather a project's files without moving them</span></div>
         <div><svg><use href="#i-history"/></svg><b>Undo everything</b><span>Every change logged, even after a restart</span></div>
       </div>
     </div>
   </section>
 
-  <!-- AI tiers + privacy -->
-  <section id="privacy" class="section dark">
-    <div class="glow g2" aria-hidden="true"></div>
-    <div class="wrap">
-      <div class="split">
-        <div>
-          <p class="kicker">Private by design</p>
-          <h2>Super intelligent.<br><span class="grad-light">Super private.</span></h2>
-          <p class="section-lede">Spotter runs on the intelligence already inside your Mac: Apple's Vision, Speech and on-device language model. No big model download, no account, and your files never leave your Mac.</p>
-        </div>
-        <div class="tiers">
-          <div class="tier on"><svg><use href="#i-chip"/></svg><div><b>On your Mac</b><span>The default. Every AI feature; nothing leaves.</span></div></div>
-          <div class="tier"><svg><use href="#i-off"/></svg><div><b>AI off</b><span>Search, text recognition, storage and actions still work.</span></div></div>
-          <div class="tier"><svg><use href="#i-cloud"/></svg><div><b>Private Cloud Compute</b><span>Opt-in, per request, for very long documents.</span></div></div>
-          <div class="tier"><svg><use href="#i-key"/></svg><div><b>Your own cloud key</b><span>Opt-in. Claude, Gemini or OpenAI. Passages only, shown first.</span></div></div>
-        </div>
-      </div>
-      <div class="intel four">
-        <article><svg><use href="#i-lock"/></svg><h3>Encrypted index</h3><p>AES‑256, with the key in your Keychain.</p></article>
-        <article><svg><use href="#i-eye"/></svg><h3>Privacy dashboard</h3><p>Every folder read and every cloud request, in one place.</p></article>
-        <article><svg><use href="#i-hand"/></svg><h3>The AI can't touch files</h3><p>File contents are data, never instructions. Nothing changes until you approve.</p></article>
-        <article><svg><use href="#i-trash"/></svg><h3>Nothing deleted outright</h3><p>Deleting means the Trash. iCloud‑only files are never downloaded.</p></article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Specs + shortcuts -->
+  <!-- EVERYWHERE -->
   <section class="section">
-    <div class="wrap split top">
-      <div class="glass pad">
-        <h3 class="sub0">A real Mac app</h3>
-        <dl class="specs">
-          <dt>Runs on</dt><dd>Macs with Apple silicon</dd>
-          <dt>Built with</dt><dd>SwiftUI and AppKit</dd>
-          <dt>Security</dt><dd>Signed and notarized by Apple</dd>
-          <dt>AI</dt><dd>Apple Foundation Models, Vision and Speech, on your Mac</dd>
-          <dt>Network</dt><dd>Licence and update checks, plus cloud AI only if you turn it on</dd>
-          <dt>Licence</dt><dd>One-time purchase, free updates</dd>
-        </dl>
+    <div class="wrap">
+      <div class="center reveal">
+        <p class="kicker k-cyan">Everywhere on your Mac</p>
+        <h2>You don't even have to <span class="grad">open it.</span></h2>
       </div>
-      <div class="glass pad">
-        <h3 class="sub0">Quick with a keyboard</h3>
-        <dl class="keys">
-          <dt>Quick Search from any app</dt><dd><kbd>⇧</kbd><kbd>⌥</kbd><kbd>Space</kbd></dd>
-          <dt>Command bar</dt><dd><kbd>⌘</kbd><kbd>K</kbd></dd>
-          <dt>Search in Spotter</dt><dd><kbd>⌘</kbd><kbd>F</kbd></dd>
-          <dt>Quick Look</dt><dd><kbd>Space</kbd></dd>
-          <dt>Inspector</dt><dd><kbd>⌘</kbd><kbd>I</kbd></dd>
-          <dt>Undo last change</dt><dd><kbd>⌘</kbd><kbd>Z</kbd></dd>
-        </dl>
+      <div class="every reveal">
+        <article><svg><use href="#i-bolt"/></svg><h3>Quick Search</h3><p><kbd>⇧</kbd><kbd>⌥</kbd><kbd>Space</kbd> over any app, with full intelligence.</p></article>
+        <article><svg><use href="#i-cmd"/></svg><h3>Command bar</h3><p><kbd>⌘</kbd><kbd>K</kbd> for every action in Spotter.</p></article>
+        <article><svg><use href="#i-menu"/></svg><h3>Menu bar</h3><p>Newest downloads with thumbnails, ready to drag.</p></article>
+        <article><svg><use href="#i-tray"/></svg><h3>File shelf</h3><p>Park files while you gather them from anywhere.</p></article>
+        <article><svg><use href="#i-mic"/></svg><h3>Siri and Shortcuts</h3><p>Spotter actions in Spotlight, Siri and your automations.</p></article>
+        <article><svg><use href="#i-phone"/></svg><h3>Scan from iPhone</h3><p>Paper to searchable PDF, straight into the right folder.</p></article>
       </div>
     </div>
   </section>
 
-  <!-- Price -->
-  <section class="section soft">
-    <div class="wrap center">
-      <p class="kicker c-blue">Pricing</p>
-      <h2>Pay once. Keep it.</h2>
-      <p class="section-lede">Every feature, free updates. No subscription, no account. Try it free before you buy.</p>
+  <!-- ONLY IN SPOTTER -->
+  <section class="section">
+    <div class="wrap">
+      <div class="center reveal">
+        <p class="kicker k-violet">Only in Spotter</p>
+        <h2>Three apps' worth of power. <span class="grad">One app.</span></h2>
+        <p class="section-lede">A file manager, a Mac cleaner and an AI search app usually cost three subscriptions. Spotter does all three, and the things none of them do.</p>
+      </div>
+      <div class="glass table-wrap reveal">
+        <table class="compare">
+          <thead><tr><th></th><th class="us">Spotter</th><th>Finder &amp; Spotlight</th><th>Typical Mac cleaner</th><th>Typical AI search app</th></tr></thead>
+          <tbody>
+            <tr><td>Find files by what's inside, in plain English</td><td class="y"></td><td class="p">Partly</td><td class="n"></td><td class="y"></td></tr>
+            <tr><td>Match score and reason for every result</td><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td></tr>
+            <tr><td>Answers from your documents, with page references</td><td class="y"></td><td class="n"></td><td class="n"></td><td class="p">Some</td></tr>
+            <tr><td>Search inside old versions of documents</td><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td></tr>
+            <tr><td>Plain-language batch actions, with a plan to approve</td><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td></tr>
+            <tr><td>Cleanup: downloads, installers, unused apps</td><td class="y"></td><td class="p">Basic</td><td class="y"></td><td class="n"></td></tr>
+            <tr><td>Clone-aware duplicates with honest savings</td><td class="y"></td><td class="n"></td><td class="p">Rarely</td><td class="n"></td></tr>
+            <tr><td>Full file manager: tabs, dual pane, folder sizes</td><td class="y"></td><td class="p">Partly</td><td class="n"></td><td class="n"></td></tr>
+            <tr><td>Undo for every change, even after restart</td><td class="y"></td><td class="n"></td><td class="n"></td><td class="n"></td></tr>
+            <tr><td>Runs fully on your Mac</td><td class="y"></td><td class="y"></td><td class="p">Varies</td><td class="p">Varies</td></tr>
+            <tr><td>One price, no subscription</td><td class="y"></td><td class="y"></td><td class="p">Often not</td><td class="p">Often not</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note center">Spotter is not made by or affiliated with Apple. "Show in Finder" is always one click away.</p>
+    </div>
+  </section>
+
+  <!-- PRIVACY -->
+  <section id="privacy" class="section">
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="kicker k-cyan">Private by design</p>
+        <h2>Super intelligent.<br><span class="grad">Super private.</span></h2>
+        <p class="section-lede">Spotter runs on the intelligence already inside your Mac: Apple's Vision, Speech and on-device language model. No account, no model download, and your files never leave your Mac.</p>
+        <div class="facts">
+          <div><b>0 bytes</b><span>of your files uploaded</span></div>
+          <div><b>AES-256</b><span>encrypted index</span></div>
+          <div><b>100%</b><span>of changes undoable</span></div>
+        </div>
+      </div>
+      <div class="tiers reveal">
+        <div class="tier on"><svg><use href="#i-chip"/></svg><div><b>On your Mac</b><span>The default. Every AI feature; nothing leaves.</span></div></div>
+        <div class="tier"><svg><use href="#i-off"/></svg><div><b>AI off</b><span>Search, text recognition, Clean and file management still work.</span></div></div>
+        <div class="tier"><svg><use href="#i-cloud"/></svg><div><b>Private Cloud Compute</b><span>Opt-in, per request, for very long documents.</span></div></div>
+        <div class="tier"><svg><use href="#i-key"/></svg><div><b>Your own cloud key</b><span>Opt-in. Claude, Gemini or OpenAI. Passages only, shown to you first.</span></div></div>
+        <div class="tier"><svg><use href="#i-eye"/></svg><div><b>Privacy dashboard</b><span>Every folder read and every cloud request, in one place.</span></div></div>
+        <div class="tier"><svg><use href="#i-hand"/></svg><div><b>The AI can't touch files</b><span>File contents are data, never instructions. You approve every change.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICE -->
+  <section class="section">
+    <div class="wrap center reveal">
+      <p class="kicker k-blue">Pricing</p>
+      <h2>Pay once. <span class="grad">Keep it.</span></h2>
+      <p class="section-lede">Search, Ask, Clean and the complete file manager. Every feature, free updates. No subscription, no account.</p>
       <div class="price-card glass">
-        <img src="favicon.svg" alt="" width="56" height="56">
+        <img src="favicon.svg" alt="" width="64" height="64">
         <h3>Spotter</h3>
         <p class="pc-sub">Launching soon</p>
         <ul class="ticks">
@@ -394,14 +489,13 @@
   <!-- FAQ -->
   <section id="faq" class="section">
     <div class="wrap narrow">
-      <h2 class="center">Questions, answered.</h2>
-      <div class="glass faq">
-        <details><summary>What does "super intelligence" mean here?</summary><p>That Spotter understands your files rather than just listing them: it reads what's inside, recognises text in images, follows what you mean, answers questions with sources and remembers where files came from. It's intelligence about your files, running on your Mac, not a general AI chatbot.</p></details>
-        <details><summary>Does Spotter upload my files?</summary><p>No. Everything Spotter reads and stores stays on your Mac, encrypted. Searching works offline. Cloud AI is off unless you turn it on, and even then only the passages a question needs are sent, after Spotter shows you what they are.</p></details>
-        <details><summary>How is it different from Spotlight?</summary><p>Spotlight is great for launching apps and finding files by name. Spotter finds files by what's in them and what you remember about them, explains every match, answers questions about your documents, searches old versions, cleans up storage and changes many files at once with undo.</p></details>
-        <details><summary>Does it replace Finder?</summary><p>You can use it as your everyday file manager, with libraries, every view, tabs and dual pane. The Desktop, Open and Save dialogs stay with Finder, and "Show in Finder" is always one click away.</p></details>
-        <details><summary>Do I need Apple Intelligence?</summary><p>No. Search, text recognition, storage cleanup, browsing and actions all work without it. Summaries and answers need Apple Intelligence turned on, or a cloud AI you choose.</p></details>
-        <details><summary>Why does it ask for Full Disk Access?</summary><p>It lets Spotter search your whole Mac. It's optional: you can pick just the folders you want instead, and change that any time.</p></details>
+      <h2 class="center reveal">Questions, answered.</h2>
+      <div class="glass faq reveal">
+        <details><summary>What is the match score?</summary><p>A number from 0 to 100 on every result showing how much of what you asked for Spotter found: your words, where they appear, matches by meaning, place and date. You can open any result to see the breakdown.</p></details>
+        <details><summary>Does Spotter upload my files?</summary><p>No. Everything Spotter reads and stores stays on your Mac, encrypted. Searching and cleaning work offline. Cloud AI is off unless you turn it on, and even then only the passages a question needs are sent, after Spotter shows you what they are.</p></details>
+        <details><summary>Can it replace my Mac cleaner?</summary><p>Spotter Clean covers forgotten downloads, old installers, duplicates and look-alike photos, unused apps with their leftovers, big old media, iCloud offloading and a space map. It doesn't do antivirus or "speed-up" tricks; it's about getting real space back, honestly.</p></details>
+        <details><summary>Does it replace Finder?</summary><p>You can use it as your everyday file manager, with tabs, dual pane, every view and folder sizes. The Desktop, Open and Save dialogs stay with Finder, and "Show in Finder" is always one click away.</p></details>
+        <details><summary>Do I need Apple Intelligence?</summary><p>No. Search, text recognition, Clean and file management all work without it. Summaries and answers need Apple Intelligence turned on, or a cloud AI you choose.</p></details>
         <details><summary>Will it change or delete my files?</summary><p>Only when you ask. Every change is shown as a plan first, nothing is ever overwritten, deleting always means the Trash, and every change can be undone.</p></details>
         <details><summary>Which Macs does it run on?</summary><p>Macs with Apple silicon running a recent version of macOS. We'll confirm the exact version at launch.</p></details>
         <details><summary>Is it a subscription?</summary><p>No. Pay once and keep it, with free updates. You can try it free first.</p></details>
@@ -410,10 +504,10 @@
   </section>
 
   <section class="section final">
-    <div class="wrap center">
-      <img class="final-icon" src="favicon.svg" alt="" width="84" height="84">
-      <h2>Give your Mac <span class="grad">super intelligence.</span></h2>
-      <p class="section-lede">Ask for what you remember. Spotter does the rest.</p>
+    <div class="wrap center reveal">
+      <img class="final-icon" src="favicon.svg" alt="" width="96" height="96">
+      <h2>Give your Mac<br><span class="grad">super intelligence.</span></h2>
+      <p class="section-lede">Find it. Understand it. Clean it. Organise it.</p>
       <span class="btn btn-primary" aria-disabled="true"><svg><use href="#i-down"/></svg> Coming soon for Mac</span>
     </div>
   </section>
@@ -422,71 +516,9 @@
 <footer class="footer">
   <div class="wrap footer-inner">
     <span>© 2026 Spotter · thespotter.si</span>
-    <span class="links"><a href="#features">Features</a><a href="privacy.html">Privacy</a></span>
+    <span class="links"><a href="#clean">Clean</a><a href="#manage">File manager</a><a href="privacy.html">Privacy</a></span>
   </div>
 </footer>
-
-<script>
-(() => {
-  const S = [
-    { q: "What's the notice period in my Acme contract?", html: `
-      <div class="ai-answer"><span class="ai-badge"><svg><use href="#i-spark"/></svg>Answer</span>
-      <p><b>60 days' written notice</b> from either side. Leaving within the first year costs one month's fee.</p>
-      <span class="cite">Acme_MSA_2025.pdf · p. 7</span><span class="cite">Acme_MSA_2025.pdf · p. 12</span>
-      <p class="ai-more">In last year's version it was 30 days. <a>Compare versions</a></p></div>` },
-    { q: "Priyanshu's salary slips", files: [
-      ["pdf","PDF","Priyanshu_Khandelwal‑Payslip_Aug‑2025.pdf","Downloads · from mail.google.com","<mark>PAYSLIP</mark> AUG 2025 · Monthly <mark>Salary</mark>",["name","text"]],
-      ["pdf","PDF","PaytmSalarySlip_Feb2024.pdf","Documents/Priyanshu","",["name","mean"]],
-      ["pdf","PDF","Form16_FY2024‑25.pdf","Documents/Tax","Gross <mark>salary</mark> as per section 17(1)",["text"]]],
-      chips: [["Contains","priyanshu"],["Contains","salary slips"],["m","payslip · pay slip"]] },
-    { q: "Screenshot with the wifi password", files: [
-      ["img","PNG","Screenshot 2026‑03‑14 at 21.04.png","Desktop","Network HomeFiber_5G · <mark>Password</mark> sunrise‑4471‑blue",["ocr"]],
-      ["img","PNG","Screenshot 2025‑11‑02 at 10.11.png","Desktop/Old","Guest <mark>WiFi</mark>: Cafe_Lumen · pass…",["ocr"]]],
-      chips: [["Kind","Screenshot"],["Contains","wifi password"]] },
-    { q: "Photos from Meghalaya", files: [
-      ["img","HEIC","IMG_4521.HEIC","Photos library · Shillong, Meghalaya","",["meta"]],
-      ["vid","MOV","IMG_4533.MOV","Photos library · Dawki, Meghalaya · 0:42","",["meta"]],
-      ["img","JPG","DSC_0192.JPG","Pictures/NE Trip · Cherrapunji, Meghalaya","",["meta"]]],
-      chips: [["Kind","Photos, Videos"],["Place","Meghalaya, India"]] },
-    { q: "What can I safely delete?", html: `
-      <div class="ai-answer"><span class="ai-badge"><svg><use href="#i-spark"/></svg>Clean Up</span>
-      <p>About <b>11.6 GB</b> you probably don't need. Everything goes to the Trash, so you can put it back.</p>
-      <ul class="ai-list"><li><span>Installers you already installed</span><b>3.6 GB</b></li><li><span>Downloads untouched for a year</span><b>4.2 GB</b></li><li><span>Exact duplicates</span><b>2.1 GB</b></li><li><span>Old screen recordings</span><b>1.7 GB</b></li></ul>
-      <p class="ai-more">Estimates. Review before anything moves.</p></div>` }
-  ];
-  const TAG = { name:["t-name","Name"], text:["t-text","Text"], ocr:["t-ocr","Image text"], mean:["t-mean","Meaning"], meta:["t-meta","Place"] };
-  const typed = document.getElementById('typed'), answer = document.getElementById('answer');
-  const btns = [...document.querySelectorAll('.try button')];
-  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let cur = -1, timer, typing, auto = true;
-
-  function render(s) {
-    if (s.html) return s.html;
-    const chips = s.chips.map(([k, v]) => k === 'm' ? `<span class="m">Also matching <b>${v}</b></span>` : `<span>${k} <b>${v}</b></span>`).join('');
-    const rows = s.files.map(([c, l, n, w, snip, t]) =>
-      `<li><i class="ico ${c}">${l}</i><div><b>${n}</b><small>${w}</small>${snip ? `<small class="snip">…${snip}…</small>` : ''}</div>` +
-      `<span class="tags">${t.map(x => `<em class="${TAG[x][0]}">${TAG[x][1]}</em>`).join('')}</span></li>`).join('');
-    return `<div class="chips">${chips}</div><ul class="files">${rows}</ul>`;
-  }
-  function reveal(i) {
-    answer.innerHTML = render(S[i]); answer.classList.add('in');
-    if (auto && !still) timer = setTimeout(() => show((cur + 1) % S.length), 6500);
-  }
-  function show(i) {
-    cur = i; clearInterval(typing); clearTimeout(timer);
-    btns.forEach((b, j) => b.classList.toggle('on', j === i));
-    answer.classList.remove('in');
-    const q = S[i].q;
-    if (still) { typed.textContent = q; reveal(i); return; }
-    let n = 0; typed.textContent = '';
-    typing = setInterval(() => {
-      typed.textContent = q.slice(0, ++n);
-      if (n >= q.length) { clearInterval(typing); timer = setTimeout(() => reveal(i), 250); }
-    }, 32);
-  }
-  btns.forEach((b, i) => b.addEventListener('click', () => { auto = false; show(i); }));
-  show(0);
-})();
-</script>
+<script src="app.js"></script>
 </body>
 </html>
