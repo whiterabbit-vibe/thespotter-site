@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spotter — Find anything on your Mac</title>
+<meta name="description" content="Spotter finds files on your Mac by what you remember: words inside documents, text in screenshots, where a photo was taken. Private by design — everything runs on your Mac.">
+<meta property="og:title" content="Spotter — Find anything on your Mac">
+<meta property="og:description" content="Describe a file the way you remember it. Spotter finds it, shows why it matched, and keeps everything on your Mac.">
+<meta property="og:url" content="https://thespotter.si/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b1220">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://thespotter.si/">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/"><img src="favicon.svg" alt="" width="28" height="28"> Spotter</a>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <p class="eyebrow">For Mac · Apple silicon</p>
+      <h1>Find anything on your Mac.<br><span>Just describe it.</span></h1>
+      <p class="lede">Type what you remember — <em>“salary slips from last year”</em>, <em>“screenshot with the Wi‑Fi password”</em>, <em>“photos from Meghalaya”</em> — and Spotter finds it, shows you why it matched, and lets you act on it. Everything happens on your Mac.</p>
+      <div class="cta-row">
+        <span class="btn btn-primary" aria-disabled="true">Coming soon for Mac</span>
+        <a class="btn btn-ghost" href="#features">See what it does</a>
+      </div>
+      <p class="fine">Requires macOS 26 or later on a Mac with Apple silicon.</p>
+
+      <div class="window" role="img" aria-label="Spotter's search window finding salary slips">
+        <div class="window-bar"><i></i><i></i><i></i><span>Spotter</span></div>
+        <div class="search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M13 13l4 4"/></svg>priyanshu's salary slips</div>
+        <div class="chips">
+          <span>Contains <b>priyanshu</b></span><span>Contains <b>salary</b></span><span>Contains <b>slips</b></span><span class="alt">Also matching <b>payslip, pay slip, salary statement</b></span>
+        </div>
+        <ul class="results">
+          <li><div class="ico pdf">PDF</div><div><b>Priyanshu_Khandelwal‑Payslip_Aug‑2025.pdf</b><small>~/Downloads · 37 KB · from mail.google.com</small><small class="snip">…<mark>PAYSLIP</mark> AUG 2025 · Monthly <mark>Salary</mark>…</small></div><div class="tags"><em class="t-name">Name</em><em class="t-text">Text</em></div></li>
+          <li><div class="ico pdf">PDF</div><div><b>PaytmSalarySlip_Feb2024.pdf</b><small>~/Downloads/Priyanshu · 41 KB</small></div><div class="tags"><em class="t-name">Name</em><em class="t-text">Text</em><em class="t-mean">Meaning</em></div></li>
+          <li><div class="ico img">IMG</div><div><b>IMG_4521.HEIC</b><small>Photos library · 📍 Shillong, Meghalaya</small></div><div class="tags"><em class="t-meta">Details</em></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="section">
+    <div class="wrap">
+      <h2>Search the way you remember</h2>
+      <p class="section-lede">Spotter reads what's inside your files, not just their names, and turns plain English into filters you can see and change.</p>
+      <div class="grid">
+        <article class="card">
+          <div class="card-ico">🔎</div>
+          <h3>Words inside every file</h3>
+          <p>PDFs, Word, PowerPoint, Excel, notes and more. Find the contract with “60‑day notice” without remembering what you called it.</p>
+        </article>
+        <article class="card">
+          <div class="card-ico">🖼️</div>
+          <h3>Text in screenshots and scans</h3>
+          <p>Apple's on-device text recognition reads your screenshots, photos and scanned PDFs, so tracking numbers and passwords are searchable.</p>
+        </article>
+        <article class="card">
+          <div class="card-ico">📍</div>
+          <h3>Photos by place</h3>
+          <p>“Photos and videos from Meghalaya.” Spotter knows where pictures were taken — in your folders and your Photos library — without sending locations anywhere.</p>
+        </article>
+        <article class="card">
+          <div class="card-ico">💬</div>
+          <h3>Asks when it isn't sure</h3>
+          <p>Too many results, or a word that could mean two things? Spotter asks one quick question — PDFs or images? which year? — with answers from your actual files.</p>
+        </article>
+        <article class="card">
+          <div class="card-ico">🧭</div>
+          <h3>Shows why it matched</h3>
+          <p>Every result says whether it matched by name, by text, by text in an image or by meaning, and highlights the passage. No black box.</p>
+        </article>
+        <article class="card">
+          <div class="card-ico">↩︎</div>
+          <h3>Act safely, undo anything</h3>
+          <p>Rename, move and tag many files at once with a preview first. Nothing is ever overwritten, and every change can be undone — even after a restart.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap split">
+      <div>
+        <h2>Built on Apple's on-device AI</h2>
+        <p class="section-lede">Spotter uses the intelligence already inside your Mac. Apple's Vision reads text in images, Apple's on-device language model understands what you mean, and Spotlight's own records tell Spotter where files came from and when you last opened them.</p>
+        <ul class="ticks">
+          <li>Works offline</li>
+          <li>Quick search from any app with <kbd>⇧</kbd> <kbd>⌥</kbd> <kbd>Space</kbd></li>
+          <li>Search still works with Apple Intelligence turned off</li>
+        </ul>
+      </div>
+      <div class="stack">
+        <div class="pill">Vision · text in images</div>
+        <div class="pill">Foundation Models · meaning</div>
+        <div class="pill">Spotlight metadata · sources & dates</div>
+        <div class="pill">PhotoKit · your Photos library</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy" class="section">
+    <div class="wrap">
+      <h2>Private by design</h2>
+      <p class="section-lede">Your files say a lot about you. Spotter is built so they never have to leave your Mac.</p>
+      <div class="grid three">
+        <article class="card plain">
+          <h3>Nothing is uploaded</h3>
+          <p>Reading, recognizing and searching all happen on your Mac. Spotter doesn't need an account or an internet connection to search.</p>
+        </article>
+        <article class="card plain">
+          <h3>Encrypted index</h3>
+          <p>What Spotter learns about your files is stored encrypted with AES‑256. The key lives in your Keychain, where only Spotter can use it.</p>
+        </article>
+        <article class="card plain">
+          <h3>You choose what it reads</h3>
+          <p>Pick the folders, exclude what you like, and delete everything Spotter stored with one click. Your files themselves are never touched.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap">
+      <h2>Coming at launch</h2>
+      <p class="section-lede">Spotter is being built as one complete app, not a beta that grows later.</p>
+      <div class="grid three">
+        <article class="card plain"><h3>Ask your files</h3><p>Summaries with page references, answers drawn from your documents, and side‑by‑side comparisons.</p></article>
+        <article class="card plain"><h3>Clean up storage</h3><p>Find duplicates and space hogs, with honest numbers about what you'll really get back.</p></article>
+        <article class="card plain"><h3>A complete file manager</h3><p>Libraries, column and gallery views, tabs and version history, alongside search.</p></article>
+      </div>
+      <p class="price">One price. No subscription.</p>
+    </div>
+  </section>
+
+  <section id="faq" class="section">
+    <div class="wrap narrow">
+      <h2>Questions</h2>
+      <details><summary>Does Spotter upload my files?</summary><p>No. Everything Spotter reads and stores stays on your Mac, encrypted. Searching works offline.</p></details>
+      <details><summary>How is it different from Spotlight?</summary><p>Spotlight is great for opening apps and finding files by name. Spotter is built for finding files by what's in them and what you remember about them, explains every match, asks when your search is unclear, and lets you rename, move and organise results safely with undo.</p></details>
+      <details><summary>Which Macs does it run on?</summary><p>Macs with Apple silicon running macOS 26 or later. Features that use Apple Intelligence need it turned on; search works without it.</p></details>
+      <details><summary>Will it change my files without asking?</summary><p>Never. Spotter only changes files when you ask, shows a preview first, never overwrites anything, and keeps an undo history.</p></details>
+      <details><summary>When can I get it?</summary><p>Soon. Spotter will be available to download from this site.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <span>© 2026 Spotter</span>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</footer>
+</body>
+</html>
