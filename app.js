@@ -109,10 +109,10 @@ void main(){
   const ring = v => `<span class="score" style="--v:${v}"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5" pathLength="100"/><circle class="fill" cx="18" cy="18" r="15.5" pathLength="100"/></svg><b>${v}</b></span>`;
   const TAG = { name: ['t-name', 'Name'], text: ['t-text', 'Text'], ocr: ['t-ocr', 'Image text'], mean: ['t-mean', 'Meaning'], place: ['t-meta', 'Place'], src: ['t-src', 'Source'] };
   const S = [
-    { q: "priyanshu's salary slips", chips: [['Contains', 'priyanshu'], ['Contains', 'salary slips'], ['m', 'payslip · pay slip · salary statement']], files: [
-      ['pdf', 'PDF', 'Priyanshu_Khandelwal-Payslip_Aug-2025.pdf', 'Downloads · from mail.google.com', '<mark>PAYSLIP</mark> AUG 2025 · Monthly <mark>Salary</mark>', ['name', 'text'], 98],
-      ['pdf', 'PDF', 'PaytmSalarySlip_Feb2024.pdf', 'Documents/Priyanshu', '', ['name', 'mean'], 91],
-      ['pdf', 'PDF', 'Form16_FY2024-25.pdf', 'Documents/Tax', 'Gross <mark>salary</mark> as per section 17(1)', ['text'], 54]] },
+    { q: "peter's salary slips", chips: [['Contains', 'peter'], ['Contains', 'salary slips'], ['m', 'payslip · pay slip · salary statement']], files: [
+      ['pdf', 'PDF', 'Peter_Rossi-Payslip_Aug-2025.pdf', 'Downloads · from mail.google.com', '<mark>PAYSLIP</mark> AUG 2025 · Monthly <mark>Salary</mark>', ['name', 'text'], 98],
+      ['pdf', 'PDF', 'Payslip_Feb2024.pdf', 'Documents/Work', '', ['name', 'mean'], 91],
+      ['pdf', 'PDF', 'CU_2025_Certificazione_Unica.pdf', 'Documents/Tax', 'Employee <mark>salary</mark> and tax withheld, 2025', ['text'], 54]] },
     { q: "What's the notice period in my Acme contract?", html: `
       <div class="ai-answer"><span class="ai-badge"><svg><use href="#i-spark"/></svg>Answer from your files</span>
       <p><b>60 days' written notice</b> from either side. Leaving within the first year costs one month's fee.</p>
@@ -121,10 +121,10 @@ void main(){
     { q: 'screenshot with the wifi password', chips: [['Kind', 'Screenshot'], ['Contains', 'wifi password']], files: [
       ['img', 'PNG', 'Screenshot 2026-03-14 at 21.04.png', 'Desktop', 'Network HomeFiber_5G · <mark>Password</mark> sunrise-4471-blue', ['ocr'], 96],
       ['img', 'PNG', 'Screenshot 2025-11-02 at 10.11.png', 'Desktop/Old', 'Guest <mark>WiFi</mark>: Cafe_Lumen · pass…', ['ocr'], 72]] },
-    { q: 'photos and videos from meghalaya', chips: [['Kind', 'Photos, Videos'], ['Place', 'Meghalaya, India']], files: [
-      ['img', 'HEIC', 'IMG_4521.HEIC', 'Photos library · Shillong, Meghalaya', '', ['place'], 100],
-      ['vid', 'MOV', 'IMG_4533.MOV', 'Photos library · Dawki, Meghalaya · 0:42', '', ['place'], 100],
-      ['img', 'JPG', 'DSC_0192.JPG', 'Pictures/NE Trip · Cherrapunji, Meghalaya', '', ['place'], 100]] },
+    { q: 'photos and videos from tuscany', chips: [['Kind', 'Photos, Videos'], ['Place', 'Tuscany, Italy']], files: [
+      ['img', 'HEIC', 'IMG_4521.HEIC', 'Photos library · Florence, Tuscany', '', ['place'], 100],
+      ['vid', 'MOV', 'IMG_4533.MOV', 'Photos library · Siena, Tuscany · 0:42', '', ['place'], 100],
+      ['img', 'JPG', 'DSC_0192.JPG', 'Pictures/Tuscany Trip · San Gimignano, Tuscany', '', ['place'], 100]] },
     { q: 'what can I safely delete?', html: `
       <div class="ai-answer"><span class="ai-badge"><svg><use href="#i-broom"/></svg>Spotter Clean</span>
       <p>About <b>18.4 GB</b> you probably don't need. Everything goes to the Trash, so you can put it back.</p>
