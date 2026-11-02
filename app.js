@@ -1,6 +1,23 @@
 // Spotter website: shader background, hero demo, scroll reveals and counters.
 (() => {
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const root = document.documentElement;
+  const isLight = () => root.dataset.theme === 'light';
+
+  /* ---------- Theme ---------- */
+  const setTheme = (t, save) => {
+    root.dataset.theme = t;
+    if (save) try { localStorage.setItem('theme', t); } catch (e) {}
+    const btn = document.querySelector('.theme-toggle');
+    if (btn) btn.setAttribute('aria-label', t === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+    window.dispatchEvent(new Event('themechange'));
+  };
+  document.querySelector('.theme-toggle')?.addEventListener('click', () => setTheme(isLight() ? 'dark' : 'light', true));
+  matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+    let saved = null; try { saved = localStorage.getItem('theme'); } catch (err) {}
+    if (!saved) setTheme(e.matches ? 'light' : 'dark', false);
+  });
+  setTheme(root.dataset.theme || 'dark', false);
 
   /* ---------- Flowing light background (WebGL) ---------- */
   const canvas = document.getElementById('bg');
@@ -8,7 +25,7 @@
   if (gl) {
     const vs = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
     const fs = `precision mediump float;
-uniform vec2 r;uniform float t;uniform vec2 m;uniform float s;
+uniform vec2 r;uniform float t;uniform vec2 m;uniform float s;uniform float L;
 float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
 float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);
 return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
@@ -30,7 +47,14 @@ void main(){
  col+=vec3(.3,.5,1.)*streak*a*.25;
  col*=mix(.35,1.05,smoothstep(.05,.95,uv.y));
  col*=1.-.45*exp(-dot((uv-vec2(.5,.62))*vec2(1.5,2.6),(uv-vec2(.5,.62))*vec2(1.5,2.6))*1.6);
- col+=(h(gl_FragCoord.xy+fract(t))-.5)*.025;
+ vec3 lc=vec3(.955,.965,.99);
+ lc=mix(lc,vec3(.62,.76,1.),a*.6);
+ lc=mix(lc,vec3(.8,.7,1.),smoothstep(.42,.7,q.x)*smoothstep(.4,.7,w.y)*.55);
+ lc=mix(lc,vec3(.62,.9,1.),smoothstep(.5,.72,w.x)*a*.45);
+ lc+=vec3(.3,.45,1.)*streak*a*.08;
+ lc=mix(lc,vec3(.975,.98,1.),.55*exp(-dot((uv-vec2(.5,.62))*vec2(1.5,2.6),(uv-vec2(.5,.62))*vec2(1.5,2.6))*1.6));
+ col=mix(col,lc,L);
+ col+=(h(gl_FragCoord.xy+fract(t))-.5)*mix(.025,.012,L);
  gl_FragColor=vec4(col,1.);
 }`;
     const sh = (type, src) => { const o = gl.createShader(type); gl.shaderSource(o, src); gl.compileShader(o); return o; };
@@ -46,7 +70,8 @@ void main(){
       gl.enableVertexAttribArray(a);
       gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
       const uR = gl.getUniformLocation(prog, 'r'), uT = gl.getUniformLocation(prog, 't');
-      const uM = gl.getUniformLocation(prog, 'm'), uS = gl.getUniformLocation(prog, 's');
+      const uM = gl.getUniformLocation(prog, 'm'), uS = gl.getUniformLocation(prog, 's'), uL = gl.getUniformLocation(prog, 'L');
+      let light = isLight() ? 1 : 0;
       const mouse = [0.5, 0.5], target = [0.5, 0.5];
       addEventListener('pointermove', e => { target[0] = e.clientX / innerWidth; target[1] = 1 - e.clientY / innerHeight; }, { passive: true });
       const scale = Math.min(devicePixelRatio || 1, 2) * 0.45;
@@ -62,6 +87,8 @@ void main(){
         gl.uniform2f(uR, canvas.width, canvas.height);
         gl.uniform1f(uT, 20 + (now - start) / 1000);
         gl.uniform2f(uM, mouse[0], mouse[1]);
+        light += ((isLight() ? 1 : 0) - light) * 0.12;
+        gl.uniform1f(uL, light);
         gl.uniform1f(uS, scrollY / innerHeight);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       };
@@ -72,6 +99,7 @@ void main(){
         draw(now);
       };
       draw(start);
+      addEventListener('themechange', () => { light = isLight() ? 1 : 0; draw(performance.now()); });
       requestAnimationFrame(frame);
       document.documentElement.classList.add('has-gl');
     }
