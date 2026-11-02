@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Spotter — Find anything on your Mac</title>
-<meta name="description" content="Spotter finds files on your Mac by what you remember: words inside documents, text in screenshots, where a photo was taken. Private by design — everything runs on your Mac.">
+<meta name="description" content="Spotter is an AI file manager for the Mac. Find files by what's inside them, ask questions about your documents, clean up storage and act on files safely with undo. Runs on Apple's on-device AI.">
 <meta property="og:title" content="Spotter — Find anything on your Mac">
-<meta property="og:description" content="Describe a file the way you remember it. Spotter finds it, shows why it matched, and keeps everything on your Mac.">
+<meta property="og:description" content="Describe a file the way you remember it. Spotter finds it, explains why, answers questions about it and keeps everything on your Mac.">
 <meta property="og:url" content="https://thespotter.si/">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#0b1220">
@@ -20,6 +20,7 @@
     <a class="brand" href="/"><img src="favicon.svg" alt="" width="28" height="28"> Spotter</a>
     <nav>
       <a href="#features">Features</a>
+      <a href="#compare" class="hide-sm">Compare</a>
       <a href="#privacy">Privacy</a>
       <a href="#faq">FAQ</a>
     </nav>
@@ -27,133 +28,419 @@
 </header>
 
 <main>
+  <!-- Hero -->
   <section class="hero">
     <div class="wrap hero-inner">
-      <p class="eyebrow">For Mac · Apple silicon</p>
+      <p class="eyebrow">The AI file manager for Mac</p>
       <h1>Find anything on your Mac.<br><span>Just describe it.</span></h1>
-      <p class="lede">Type what you remember — <em>“salary slips from last year”</em>, <em>“screenshot with the Wi‑Fi password”</em>, <em>“photos from Meghalaya”</em> — and Spotter finds it, shows you why it matched, and lets you act on it. Everything happens on your Mac.</p>
+      <p class="lede">Spotter reads what's inside your files, so you can find them the way you remember them, ask questions about them, clear out what you don't need and act on hundreds at once, with undo. All on your Mac, powered by Apple's on-device AI.</p>
       <div class="cta-row">
         <span class="btn btn-primary" aria-disabled="true">Coming soon for Mac</span>
-        <a class="btn btn-ghost" href="#features">See what it does</a>
+        <a class="btn btn-ghost" href="#features">See everything it does</a>
       </div>
-      <p class="fine">Requires macOS 26 or later on a Mac with Apple silicon.</p>
+      <p class="fine">One-time purchase · Apple silicon · No account needed</p>
 
-      <div class="window" role="img" aria-label="Spotter's search window finding salary slips">
-        <div class="window-bar"><i></i><i></i><i></i><span>Spotter</span></div>
-        <div class="search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M13 13l4 4"/></svg>priyanshu's salary slips</div>
-        <div class="chips">
-          <span>Contains <b>priyanshu</b></span><span>Contains <b>salary</b></span><span>Contains <b>slips</b></span><span class="alt">Also matching <b>payslip, pay slip, salary statement</b></span>
+      <div class="demo">
+        <div class="examples" role="tablist" aria-label="Example searches">
+          <button class="ex active" data-ex="0">priyanshu's salary slips</button>
+          <button class="ex" data-ex="1">screenshot with the wifi password</button>
+          <button class="ex" data-ex="2">photos and videos from meghalaya</button>
+          <button class="ex" data-ex="3">hotel receipts from goa last year</button>
+          <button class="ex" data-ex="4">pdfs from gmail i never opened</button>
         </div>
-        <ul class="results">
-          <li><div class="ico pdf">PDF</div><div><b>Priyanshu_Khandelwal‑Payslip_Aug‑2025.pdf</b><small>~/Downloads · 37 KB · from mail.google.com</small><small class="snip">…<mark>PAYSLIP</mark> AUG 2025 · Monthly <mark>Salary</mark>…</small></div><div class="tags"><em class="t-name">Name</em><em class="t-text">Text</em></div></li>
-          <li><div class="ico pdf">PDF</div><div><b>PaytmSalarySlip_Feb2024.pdf</b><small>~/Downloads/Priyanshu · 41 KB</small></div><div class="tags"><em class="t-name">Name</em><em class="t-text">Text</em><em class="t-mean">Meaning</em></div></li>
-          <li><div class="ico img">IMG</div><div><b>IMG_4521.HEIC</b><small>Photos library · 📍 Shillong, Meghalaya</small></div><div class="tags"><em class="t-meta">Details</em></div></li>
-        </ul>
+        <div class="window" aria-live="polite">
+          <div class="window-bar"><i></i><i></i><i></i><span>Spotter</span></div>
+          <div class="search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M13 13l4 4"/></svg><span id="q">priyanshu's salary slips</span><b class="caret"></b></div>
+          <div class="chips" id="chips"></div>
+          <ul class="results" id="results"></ul>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- Trust strip -->
+  <section class="strip">
+    <div class="wrap strip-inner">
+      <span>🔒 Nothing uploaded</span>
+      <span>🧠 Apple on-device AI</span>
+      <span>🗝️ Encrypted index</span>
+      <span>↩︎ Undo for everything</span>
+      <span>☁️ iCloud-only files never downloaded</span>
+      <span>👤 No account</span>
+    </div>
+  </section>
+
+  <!-- Libraries -->
+  <section class="section tight">
+    <div class="wrap center">
+      <h2>Everything you have, at a glance.</h2>
+      <p class="section-lede">Libraries gather every kind of file from across your Mac, wherever it's filed.</p>
+      <div class="libs">
+        <div><b>🖼️</b>Images</div><div><b>🎬</b>Videos</div><div><b>🎵</b>Music</div><div><b>📄</b>Documents</div>
+        <div><b>🗜️</b>Archives</div><div><b>🧩</b>Apps</div><div><b>⬇️</b>Downloads</div><div><b>📸</b>Screenshots</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compare -->
+  <section id="compare" class="section band">
+    <div class="wrap">
+      <h2>Spotter, or Finder and Spotlight?</h2>
+      <p class="section-lede">Finder is great for opening a folder and Spotlight for launching apps. Here's what they leave to you.</p>
+      <div class="table-wrap">
+        <table class="compare">
+          <thead><tr><th>Job</th><th>Spotter</th><th>Finder &amp; Spotlight</th></tr></thead>
+          <tbody>
+            <tr><td>Finding a file you can't name</td><td>Describe it. Words inside files, text in images, meaning and where it came from all count</td><td>Mostly names, with search rules added one at a time</td></tr>
+            <tr><td>Knowing why something matched</td><td>Every result shows a reason and the passage it matched</td><td>No explanation</td></tr>
+            <tr><td>Questions about documents</td><td>Summaries, answers and comparisons, with page references</td><td>Open each file and read it</td></tr>
+            <tr><td>Changing many files</td><td>Describe the change, review the plan, approve. Undo any time</td><td>One file at a time, or Automator</td></tr>
+            <tr><td>Old versions of a document</td><td>Search inside earlier versions to find the one before a change</td><td>Browse versions one by one in each app</td></tr>
+            <tr><td>Duplicates and storage</td><td>Clone-aware cleanup with honest numbers; free space without deleting</td><td>Storage settings, away from your files</td></tr>
+            <tr><td>Where a download came from</td><td>Every download grouped by source: Gmail, Slack, WhatsApp, any website</td><td>A "Where from" line in Get Info, one file at a time</td></tr>
+            <tr><td>Files from a meeting or trip</td><td>"Files I opened before Tuesday's meeting", "photos from Meghalaya"</td><td>Not possible</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Spotter shows the same files and "Show in Finder" is always one click away, so you can keep using both. Spotter is not made by or affiliated with Apple.</p>
+    </div>
+  </section>
+
+  <!-- Feature deep dives -->
   <section id="features" class="section">
     <div class="wrap">
-      <h2>Search the way you remember</h2>
-      <p class="section-lede">Spotter reads what's inside your files, not just their names, and turns plain English into filters you can see and change.</p>
-      <div class="grid">
-        <article class="card">
-          <div class="card-ico">🔎</div>
-          <h3>Words inside every file</h3>
-          <p>PDFs, Word, PowerPoint, Excel, notes and more. Find the contract with “60‑day notice” without remembering what you called it.</p>
-        </article>
-        <article class="card">
-          <div class="card-ico">🖼️</div>
-          <h3>Text in screenshots and scans</h3>
-          <p>Apple's on-device text recognition reads your screenshots, photos and scanned PDFs, so tracking numbers and passwords are searchable.</p>
-        </article>
-        <article class="card">
-          <div class="card-ico">📍</div>
-          <h3>Photos by place</h3>
-          <p>“Photos and videos from Meghalaya.” Spotter knows where pictures were taken — in your folders and your Photos library — without sending locations anywhere.</p>
-        </article>
-        <article class="card">
-          <div class="card-ico">💬</div>
-          <h3>Asks when it isn't sure</h3>
-          <p>Too many results, or a word that could mean two things? Spotter asks one quick question — PDFs or images? which year? — with answers from your actual files.</p>
-        </article>
-        <article class="card">
-          <div class="card-ico">🧭</div>
-          <h3>Shows why it matched</h3>
-          <p>Every result says whether it matched by name, by text, by text in an image or by meaning, and highlights the passage. No black box.</p>
-        </article>
-        <article class="card">
-          <div class="card-ico">↩︎</div>
-          <h3>Act safely, undo anything</h3>
-          <p>Rename, move and tag many files at once with a preview first. Nothing is ever overwritten, and every change can be undone — even after a restart.</p>
-        </article>
+      <h2 class="center">Built for the way files actually get lost.</h2>
+      <p class="section-lede center">A name you can't remember, a screenshot you can't find, a document that changed, a copy of a copy. Spotter has an answer for each.</p>
+
+      <div class="feature">
+        <div class="f-copy">
+          <p class="kicker c-blue">Search</p>
+          <h3>Type it the way you'd say it.</h3>
+          <p>Spotter turns your words into filters you can see and change: type, date, size, place, source. It searches names, the text inside files, text in images, transcripts of audio and video, and what files mean, all in one ranked list.</p>
+          <ul class="ticks">
+            <li>Every result says why it matched: name, text, image text or meaning</li>
+            <li>Asks a quick question when your search could mean two things</li>
+            <li>Filters for last opened, never opened and date added</li>
+            <li>Saved searches that also show up in Finder as Smart Folders</li>
+          </ul>
+        </div>
+        <div class="f-visual">
+          <div class="mock">
+            <div class="mock-search">invoices from acme over 1 mb</div>
+            <div class="chips"><span>Kind <b>Invoice</b></span><span>Contains <b>acme</b></span><span>Size <b>&gt; 1 MB</b></span></div>
+            <div class="ask"><b>Did you mean</b><span>PDFs only</span><span>2025</span><span>2024</span><span>All years</span></div>
+            <div class="row"><i class="ico pdf">PDF</i><div><b>ACME‑INV‑0425.pdf</b><small>…Tax <mark>Invoice</mark> · <mark>ACME</mark> Corp · ₹1,24,000…</small></div><em class="t-text">Text</em></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature flip">
+        <div class="f-copy">
+          <p class="kicker c-green">Text in images, scans and recordings</p>
+          <h3>Search the words in every screenshot.</h3>
+          <p>Apple's Vision framework reads the text in your screenshots, photos and scanned PDFs, tables included. Speech recognition turns voice notes, calls and videos into searchable transcripts. It all happens on your Mac.</p>
+          <ul class="ticks">
+            <li>That Wi‑Fi password, tracking number or quote you saw once</li>
+            <li>Copy the text from several images and PDFs at once</li>
+            <li>Finds receipts, IDs, handwriting and QR codes by type</li>
+          </ul>
+        </div>
+        <div class="f-visual">
+          <div class="mock">
+            <div class="shot"><span>Network</span><b>HomeFiber_5G</b><span>Password</span><b><mark>sunrise‑4471‑blue</mark></b></div>
+            <div class="row"><i class="ico img">PNG</i><div><b>Screenshot 2026‑03‑14 at 21.04.png</b><small>…wifi <mark>password</mark> sunrise‑4471‑blue…</small></div><em class="t-ocr">Image text</em></div>
+            <button class="mini">Copy text from 1 image</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="f-copy">
+          <p class="kicker c-purple">Ask your files</p>
+          <h3>Answers, straight from your documents.</h3>
+          <p>Ask a question and Spotter answers from your own files, showing the file and page each answer came from. When the answer isn't there, it says so rather than guessing.</p>
+          <ul class="ticks">
+            <li>Summaries of long PDFs and decks, with page references</li>
+            <li>Compare two versions of a contract and see what changed</li>
+            <li>Pull amounts, dates and names from many files into one table</li>
+            <li>Summaries of whole folders, plus descriptions and tags</li>
+          </ul>
+        </div>
+        <div class="f-visual">
+          <div class="mock">
+            <div class="bubble me">What's the notice period in my Acme contract?</div>
+            <div class="bubble ai">60 days' written notice from either side. Early exit within the first year costs one month's fee.<span class="cite">Acme_MSA_2025.pdf · p. 7</span><span class="cite">Acme_MSA_2025.pdf · p. 12</span></div>
+            <div class="bubble me">And in last year's version?</div>
+            <div class="bubble ai">30 days. It changed to 60 in the 2025 renewal.<span class="cite">Acme_MSA_2024.pdf · p. 6</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature flip">
+        <div class="f-copy">
+          <p class="kicker c-orange">Plain-language actions</p>
+          <h3>Describe the change. Approve the plan.</h3>
+          <p>"Move all 2025 invoices into Taxes." Spotter shows exactly what it will do, file by file, before anything happens. Rename, move, tag and convert hundreds of files at once, then undo any of it, even days later.</p>
+          <ul class="ticks">
+            <li>The AI proposes; only you can approve</li>
+            <li>Nothing is ever overwritten, and deleting always means the Trash</li>
+            <li>Batch Quick Actions: convert images, combine into a PDF, remove backgrounds, shrink PDFs and videos</li>
+            <li>Scan paper documents from your iPhone straight into a folder</li>
+          </ul>
+        </div>
+        <div class="f-visual">
+          <div class="mock">
+            <div class="mock-search">move all 2025 invoices into Taxes</div>
+            <div class="plan">
+              <p><b>Plan</b> · 23 files · nothing overwritten</p>
+              <div><span>INV‑0425.pdf</span><span>→ Taxes/2025</span></div>
+              <div><span>acme_invoice_may.pdf</span><span>→ Taxes/2025</span></div>
+              <div><span>Swiggy‑Invoice‑9921.pdf</span><span>→ Taxes/2025</span></div>
+              <div class="muted"><span>+ 20 more</span><span></span></div>
+            </div>
+            <div class="btns"><button class="mini ghost">Edit plan</button><button class="mini">Approve and move</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="f-copy">
+          <p class="kicker c-teal">Places and file memory</p>
+          <h3>Remember when and where, not what you called it.</h3>
+          <p>"Photos and videos from Meghalaya." "Files I opened before Tuesday's meeting." Spotter uses dates macOS already keeps, your calendar and where photos were taken, across your folders and your Photos library, without tracking you.</p>
+          <ul class="ticks">
+            <li>Place names work offline; locations never leave your Mac</li>
+            <li>Workspaces gather files for a project without moving them</li>
+            <li>Related files, one tap away from any result</li>
+          </ul>
+        </div>
+        <div class="f-visual">
+          <div class="mock">
+            <div class="mock-search">photos and videos from meghalaya</div>
+            <div class="chips"><span>Kind <b>Photos, Videos</b></span><span>📍 <b>Meghalaya, India</b></span></div>
+            <div class="photos"><i style="--h:150"></i><i style="--h:95"></i><i style="--h:200"></i><i style="--h:30"></i><i style="--h:170"></i><i style="--h:120"></i></div>
+            <small class="cap">142 items · Shillong, Cherrapunji, Dawki · Photos library and Desktop</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature flip">
+        <div class="f-copy">
+          <p class="kicker c-pink">Version history</p>
+          <h3>Find the version from before it changed.</h3>
+          <p>macOS quietly keeps earlier versions of your documents. Spotter makes them searchable, so you can find the draft that still had the old pricing, compare it with today's and restore it in one click.</p>
+          <ul class="ticks">
+            <li>Search inside earlier versions, not just the latest</li>
+            <li>Side‑by‑side comparison before you restore</li>
+          </ul>
+        </div>
+        <div class="f-visual">
+          <div class="mock">
+            <div class="mock-search">pitch deck with the old ₹499 price</div>
+            <div class="versions">
+              <div><b>Today</b><span>Pricing ₹699 / month</span></div>
+              <div class="hit"><b>12 Oct</b><span>Pricing <mark>₹499</mark> / month</span><em class="t-mean">Match</em></div>
+              <div><b>2 Oct</b><span>Pricing TBD</span></div>
+            </div>
+            <div class="btns"><button class="mini ghost">Compare</button><button class="mini">Restore 12 Oct</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="f-copy">
+          <p class="kicker c-red">Storage</p>
+          <h3>Gigabytes back, honestly.</h3>
+          <p>Spotter finds the things you forgot about and tells you what they're really worth. It knows about APFS clones, so its numbers are honest, and it can free space without deleting anything by turning duplicates into clones.</p>
+          <ul class="ticks">
+            <li>Duplicates and look‑alike photos: bursts, edits, HEIC and JPEG pairs</li>
+            <li>Largest files and folders, Mail and Messages attachment sizes</li>
+            <li>iCloud files can go back to the cloud; iCloud‑only files are never downloaded</li>
+            <li>Everything goes to the Trash, so you can put it back</li>
+          </ul>
+        </div>
+        <div class="f-visual">
+          <div class="mock">
+            <p class="mock-title">Clean up · example scan</p>
+            <ul class="cleanup">
+              <li><span>Forgotten downloads</span><b>4.2 GB</b></li>
+              <li><span>Old installers (.dmg, .pkg)</span><b>3.6 GB</b></li>
+              <li><span>Duplicates and look‑alikes</span><b>2.1 GB</b></li>
+              <li><span>Big old videos</span><b>1.2 GB</b></li>
+              <li><span>Old screenshots</span><b>0.9 GB</b></li>
+              <li><span>Apps you don't use</span><b>0.4 GB</b></li>
+            </ul>
+            <small class="cap">Estimates. Your numbers depend on your Mac.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature flip">
+        <div class="f-copy">
+          <p class="kicker c-indigo">Downloaded from</p>
+          <h3>Remember the email, not the filename.</h3>
+          <p>macOS records where every download came from. Spotter groups them, so "pdfs from gmail" or "images from whatsapp" just works, and the inspector shows each file's source.</p>
+        </div>
+        <div class="f-visual">
+          <div class="mock">
+            <p class="mock-title">Downloaded from</p>
+            <ul class="sources">
+              <li><b>Gmail</b><span>214 files · 1.1 GB</span></li>
+              <li><b>WhatsApp</b><span>388 files · 2.4 GB</span></li>
+              <li><b>Google Drive</b><span>96 files · 3.0 GB</span></li>
+              <li><b>Slack</b><span>51 files · 310 MB</span></li>
+              <li><b>ChatGPT</b><span>63 files · 98 MB</span></li>
+              <li><b>Any website</b><span>1,204 files · 6.8 GB</span></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- File manager -->
+  <section class="section band">
+    <div class="wrap">
+      <h2>A complete file manager, too.</h2>
+      <p class="section-lede">Search is the way in. Everything you'd expect from a file manager is there as well.</p>
+      <div class="grid four">
+        <article class="card"><div class="card-ico">🗂️</div><h3>Libraries</h3><p>Images, videos, music, documents, archives, apps and downloads, from every folder.</p></article>
+        <article class="card"><div class="card-ico">▦</div><h3>Every view</h3><p>List, grid, column and gallery, with bigger or smaller thumbnails.</p></article>
+        <article class="card"><div class="card-ico">🪟</div><h3>Tabs and dual pane</h3><p>Tabs, multiple windows and side‑by‑side panes for moving files fast.</p></article>
+        <article class="card"><div class="card-ico">🔍</div><h3>Inspector</h3><p>Live preview, Live Text, Visual Look Up, camera details, source and versions.</p></article>
+        <article class="card"><div class="card-ico">👁️</div><h3>Quick Look</h3><p>Press Space for a real macOS preview; arrow keys step through files.</p></article>
+        <article class="card"><div class="card-ico">🎨</div><h3>Colours and emoji</h3><p>Give folders a colour or an emoji, and filter by them.</p></article>
+        <article class="card"><div class="card-ico">🏷️</div><h3>Tags</h3><p>Finder tags, kept in sync, plus suggested tags from what's inside.</p></article>
+        <article class="card"><div class="card-ico">🖱️</div><h3>Drag and drop</h3><p>Drag several files at once into Mail, Slack or any app.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Everywhere -->
+  <section class="section">
+    <div class="wrap">
+      <h2>Wherever you are on your Mac.</h2>
+      <p class="section-lede">You don't have to open Spotter to use it.</p>
+      <div class="grid three">
+        <article class="card plain"><h3>Quick Search <kbd>⇧</kbd><kbd>⌥</kbd><kbd>Space</kbd></h3><p>A small search panel drops in over any app, with the same plain English and image text.</p></article>
+        <article class="card plain"><h3>Command bar <kbd>⌘</kbd><kbd>K</kbd></h3><p>Every action in Spotter, a few keystrokes away.</p></article>
+        <article class="card plain"><h3>Menu bar</h3><p>Your newest downloads with thumbnails, ready to drag into any app.</p></article>
+        <article class="card plain"><h3>File shelf</h3><p>Park files for a moment while you gather them from different places.</p></article>
+        <article class="card plain"><h3>Spotlight, Siri and Shortcuts</h3><p>Spotter's search and actions show up where you already work, and in your own automations.</p></article>
+        <article class="card plain"><h3>Scan from iPhone</h3><p>Point your iPhone at a document and it lands as a searchable PDF in the folder you chose.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI -->
   <section class="section band">
     <div class="wrap split">
       <div>
-        <h2>Built on Apple's on-device AI</h2>
-        <p class="section-lede">Spotter uses the intelligence already inside your Mac. Apple's Vision reads text in images, Apple's on-device language model understands what you mean, and Spotlight's own records tell Spotter where files came from and when you last opened them.</p>
+        <h2>Apple's on-device AI first. Cloud only if you choose.</h2>
+        <p class="section-lede">Spotter uses the intelligence already inside your Mac: Vision for text in images, Speech for recordings, Apple's on-device language model for meaning and answers, and Spotlight's own records for sources and dates. No big model download.</p>
         <ul class="ticks">
-          <li>Works offline</li>
-          <li>Quick search from any app with <kbd>⇧</kbd> <kbd>⌥</kbd> <kbd>Space</kbd></li>
-          <li>Search still works with Apple Intelligence turned off</li>
+          <li>Search, text recognition, cleanup and actions work even with Apple Intelligence off</li>
+          <li>For very long documents, opt in to Apple's Private Cloud Compute or your own Claude, Gemini or OpenAI key</li>
+          <li>Spotter shows exactly what will be sent before any cloud request, and logs it</li>
         </ul>
       </div>
-      <div class="stack">
-        <div class="pill">Vision · text in images</div>
-        <div class="pill">Foundation Models · meaning</div>
-        <div class="pill">Spotlight metadata · sources & dates</div>
-        <div class="pill">PhotoKit · your Photos library</div>
+      <div class="tiers">
+        <div class="tier on"><b>On your Mac</b><span>Default. Every AI feature, nothing leaves.</span></div>
+        <div class="tier"><b>AI off</b><span>Search, OCR, storage, browsing and actions still work.</span></div>
+        <div class="tier"><b>Private Cloud Compute</b><span>Opt-in, per request, for long documents.</span></div>
+        <div class="tier"><b>Your own cloud key</b><span>Opt-in. Claude, Gemini or OpenAI; passages only.</span></div>
       </div>
     </div>
   </section>
 
+  <!-- Privacy -->
   <section id="privacy" class="section">
     <div class="wrap">
-      <h2>Private by design</h2>
+      <h2>Private by design.</h2>
       <p class="section-lede">Your files say a lot about you. Spotter is built so they never have to leave your Mac.</p>
       <div class="grid three">
-        <article class="card plain">
-          <h3>Nothing is uploaded</h3>
-          <p>Reading, recognizing and searching all happen on your Mac. Spotter doesn't need an account or an internet connection to search.</p>
-        </article>
-        <article class="card plain">
-          <h3>Encrypted index</h3>
-          <p>What Spotter learns about your files is stored encrypted with AES‑256. The key lives in your Keychain, where only Spotter can use it.</p>
-        </article>
-        <article class="card plain">
-          <h3>You choose what it reads</h3>
-          <p>Pick the folders, exclude what you like, and delete everything Spotter stored with one click. Your files themselves are never touched.</p>
-        </article>
+        <article class="card plain"><h3>Nothing is uploaded</h3><p>Reading, recognizing and searching all happen on your Mac. No account, and searching works offline.</p></article>
+        <article class="card plain"><h3>Encrypted index</h3><p>What Spotter learns about your files is encrypted with AES‑256. The key lives in your Keychain.</p></article>
+        <article class="card plain"><h3>Privacy dashboard</h3><p>See every folder Spotter reads and every cloud request ever made, in one place.</p></article>
+        <article class="card plain"><h3>The AI can't touch your files</h3><p>File contents are treated as data, never instructions. The AI proposes; nothing changes until you approve.</p></article>
+        <article class="card plain"><h3>You choose what it reads</h3><p>Whole disk with Full Disk Access, or only the folders you pick. Mark folders private so they never go to any cloud model.</p></article>
+        <article class="card plain"><h3>Nothing deleted outright</h3><p>Every change is logged and undoable, deleting always means the Trash, and iCloud‑only files are never downloaded.</p></article>
       </div>
     </div>
   </section>
 
+  <!-- Specs + shortcuts -->
   <section class="section band">
-    <div class="wrap">
-      <h2>Coming at launch</h2>
-      <p class="section-lede">Spotter is being built as one complete app, not a beta that grows later.</p>
-      <div class="grid three">
-        <article class="card plain"><h3>Ask your files</h3><p>Summaries with page references, answers drawn from your documents, and side‑by‑side comparisons.</p></article>
-        <article class="card plain"><h3>Clean up storage</h3><p>Find duplicates and space hogs, with honest numbers about what you'll really get back.</p></article>
-        <article class="card plain"><h3>A complete file manager</h3><p>Libraries, column and gallery views, tabs and version history, alongside search.</p></article>
+    <div class="wrap split top">
+      <div>
+        <h2>A real Mac app.</h2>
+        <p class="section-lede">Native, signed and built on Apple's own frameworks. Not a web page in a window.</p>
+        <dl class="specs">
+          <dt>Runs on</dt><dd>Macs with Apple silicon</dd>
+          <dt>Built with</dt><dd>SwiftUI and AppKit</dd>
+          <dt>Security</dt><dd>Signed and notarized by Apple</dd>
+          <dt>AI</dt><dd>Apple Foundation Models, Vision and Speech, on your Mac</dd>
+          <dt>Index</dt><dd>Encrypted with AES‑256, key in your Keychain</dd>
+          <dt>Network</dt><dd>Only licence and update checks, plus cloud AI if you turn it on</dd>
+          <dt>Licence</dt><dd>One-time purchase, free updates</dd>
+        </dl>
       </div>
-      <p class="price">One price. No subscription.</p>
+      <div>
+        <h2>Quick with a keyboard.</h2>
+        <p class="section-lede">Every main action has a shortcut.</p>
+        <dl class="keys">
+          <dt>Quick Search from any app</dt><dd><kbd>⇧</kbd><kbd>⌥</kbd><kbd>Space</kbd></dd>
+          <dt>Command bar</dt><dd><kbd>⌘</kbd><kbd>K</kbd></dd>
+          <dt>Search in Spotter</dt><dd><kbd>⌘</kbd><kbd>F</kbd></dd>
+          <dt>Quick Look</dt><dd><kbd>Space</kbd></dd>
+          <dt>Inspector</dt><dd><kbd>⌘</kbd><kbd>I</kbd></dd>
+          <dt>Rename selection</dt><dd><kbd>⌘</kbd><kbd>R</kbd></dd>
+          <dt>Undo last change</dt><dd><kbd>⌘</kbd><kbd>Z</kbd></dd>
+        </dl>
+      </div>
     </div>
   </section>
 
-  <section id="faq" class="section">
+  <!-- Price -->
+  <section class="section">
+    <div class="wrap center">
+      <h2>Pay once. Keep it.</h2>
+      <p class="section-lede">Every feature, free updates, no subscription and no account. Try it free before you buy.</p>
+      <div class="price-card">
+        <p class="eyebrow">Launching soon</p>
+        <h3>Spotter</h3>
+        <ul class="ticks left">
+          <li>Everything on this page, at launch</li>
+          <li>One-time purchase, free updates</li>
+          <li>Free trial, no card needed</li>
+          <li>Move your licence to a new Mac any time</li>
+        </ul>
+        <span class="btn btn-primary wide" aria-disabled="true">Coming soon for Mac</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section band">
     <div class="wrap narrow">
-      <h2>Questions</h2>
-      <details><summary>Does Spotter upload my files?</summary><p>No. Everything Spotter reads and stores stays on your Mac, encrypted. Searching works offline.</p></details>
-      <details><summary>How is it different from Spotlight?</summary><p>Spotlight is great for opening apps and finding files by name. Spotter is built for finding files by what's in them and what you remember about them, explains every match, asks when your search is unclear, and lets you rename, move and organise results safely with undo.</p></details>
-      <details><summary>Which Macs does it run on?</summary><p>Macs with Apple silicon running macOS 26 or later. Features that use Apple Intelligence need it turned on; search works without it.</p></details>
-      <details><summary>Will it change my files without asking?</summary><p>Never. Spotter only changes files when you ask, shows a preview first, never overwrites anything, and keeps an undo history.</p></details>
+      <h2>Questions, answered.</h2>
+      <details><summary>Does Spotter upload my files?</summary><p>No. Everything Spotter reads and stores stays on your Mac, encrypted. Searching works offline. Cloud AI is off unless you turn it on, and even then only the passages a question needs are sent, after Spotter shows you what they are.</p></details>
+      <details><summary>How is it different from Spotlight?</summary><p>Spotlight is great for launching apps and finding files by name. Spotter is built for finding files by what's in them and what you remember about them. It explains every match, answers questions about your documents, searches old versions, cleans up storage and lets you change many files at once with undo.</p></details>
+      <details><summary>Does it replace Finder?</summary><p>You can use it as your everyday file manager, with libraries, every view, tabs and dual pane. The Desktop, Open and Save dialogs stay with Finder, and "Show in Finder" is always one click away.</p></details>
+      <details><summary>Do I need Apple Intelligence?</summary><p>No. Search, text recognition, storage cleanup, browsing and actions all work without it. Summaries and answers need Apple Intelligence turned on, or a cloud AI you choose.</p></details>
+      <details><summary>Why does it ask for Full Disk Access?</summary><p>Full Disk Access lets Spotter search your whole Mac. It's optional: you can pick just the folders you want instead, and change that any time.</p></details>
+      <details><summary>Will it change or delete my files?</summary><p>Only when you ask. Every change is shown as a plan first, nothing is ever overwritten, deleting always means the Trash, and every change can be undone.</p></details>
+      <details><summary>Which Macs does it run on?</summary><p>Macs with Apple silicon running a recent version of macOS. We'll confirm the exact version at launch.</p></details>
+      <details><summary>Is it a subscription?</summary><p>No. Pay once and keep it, with free updates. You can try it free first.</p></details>
       <details><summary>When can I get it?</summary><p>Soon. Spotter will be available to download from this site.</p></details>
+    </div>
+  </section>
+
+  <section class="section final">
+    <div class="wrap center">
+      <h2>Your files, finally findable.</h2>
+      <p class="section-lede">Describe what you remember. Spotter does the rest.</p>
+      <span class="btn btn-primary" aria-disabled="true">Coming soon for Mac</span>
     </div>
   </section>
 </main>
@@ -161,8 +448,44 @@
 <footer class="footer">
   <div class="wrap footer-inner">
     <span>© 2026 Spotter</span>
-    <a href="privacy.html">Privacy</a>
+    <span class="links"><a href="#features">Features</a><a href="privacy.html">Privacy</a></span>
   </div>
 </footer>
+
+<script>
+const EX = [
+  { chips: [["Contains","priyanshu"],["Contains","salary slips"],["alt","payslip, pay slip, salary statement"]],
+    rows: [["pdf","PDF","Priyanshu_Khandelwal‑Payslip_Aug‑2025.pdf","~/Downloads · 37 KB · from mail.google.com","<mark>PAYSLIP</mark> AUG 2025 · Monthly <mark>Salary</mark>",["name","text"]],
+           ["pdf","PDF","PaytmSalarySlip_Feb2024.pdf","~/Documents/Priyanshu · 41 KB","",["name","text","mean"]],
+           ["pdf","PDF","Form16_FY2024‑25.pdf","~/Documents/Tax · 212 KB","Gross <mark>salary</mark> as per section 17(1)",["text"]]] },
+  { chips: [["Kind","Screenshot"],["Contains","wifi password"]],
+    rows: [["img","PNG","Screenshot 2026‑03‑14 at 21.04.png","~/Desktop · 412 KB","Network HomeFiber_5G · <mark>Password</mark> sunrise‑4471‑blue",["ocr"]],
+           ["img","PNG","Screenshot 2025‑11‑02 at 10.11.png","~/Desktop/Old · 380 KB","Guest <mark>WiFi</mark>: Cafe_Lumen · pass…",["ocr"]]] },
+  { chips: [["Kind","Photos, Videos"],["📍","Meghalaya, India"]],
+    rows: [["img","HEIC","IMG_4521.HEIC","Photos library · 📍 Shillong, Meghalaya","",["meta"]],
+           ["vid","MOV","IMG_4533.MOV","Photos library · 📍 Dawki, Meghalaya · 0:42","",["meta"]],
+           ["img","JPG","DSC_0192.JPG","~/Pictures/NE Trip · 📍 Cherrapunji, Meghalaya","",["meta"]]] },
+  { chips: [["Contains","hotel receipts"],["Place","Goa"],["Date","2025"],["alt","folio, check-in, booking, reservation"]],
+    rows: [["pdf","PDF","Folio_TajFortAguada_Dec25.pdf","~/Downloads · 88 KB · from mail.google.com","Guest <mark>folio</mark> · <mark>Goa</mark> · Room charges ₹18,400",["text","mean"]],
+           ["img","JPG","IMG_20251221_receipt.jpg","~/Downloads · from WhatsApp","<mark>Hotel</mark> Calangute <mark>Goa</mark> · Tax <mark>Invoice</mark>",["ocr"]]] },
+  { chips: [["Kind","PDF"],["From","mail.google.com"],["Opened","Never"]],
+    rows: [["pdf","PDF","Statement_Oct2026.pdf","~/Downloads · 1.2 MB · from mail.google.com","",["meta"]],
+           ["pdf","PDF","Policy_Schedule_Renewal.pdf","~/Downloads · 640 KB · from mail.google.com","",["meta"]]] }
+];
+const TAG = { name:["t-name","Name"], text:["t-text","Text"], ocr:["t-ocr","Image text"], mean:["t-mean","Meaning"], meta:["t-meta","Details"] };
+const buttons = document.querySelectorAll('.ex');
+function show(i) {
+  const ex = EX[i];
+  buttons.forEach((b, j) => b.classList.toggle('active', j === i));
+  document.getElementById('q').textContent = buttons[i].textContent;
+  document.getElementById('chips').innerHTML = ex.chips.map(([k, v]) =>
+    k === 'alt' ? `<span class="alt">Also matching <b>${v}</b></span>` : `<span>${k} <b>${v}</b></span>`).join('');
+  document.getElementById('results').innerHTML = ex.rows.map(([c, label, name, where, snip, tags]) =>
+    `<li><div class="ico ${c}">${label}</div><div><b>${name}</b><small>${where}</small>${snip ? `<small class="snip">…${snip}…</small>` : ''}</div>` +
+    `<div class="tags">${tags.map(t => `<em class="${TAG[t][0]}">${TAG[t][1]}</em>`).join('')}</div></li>`).join('');
+}
+buttons.forEach((b, i) => b.addEventListener('click', () => show(i)));
+show(0);
+</script>
 </body>
 </html>
