@@ -5,44 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy — Spotter</title>
 <meta name="description" content="How Spotter handles your data: everything stays on your Mac.">
+<meta name="color-scheme" content="light dark">
 <link rel="icon" href="favicon-64.png" type="image/png" sizes="64x64">
 <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta property="og:image" content="https://thespotter.si/icon-512.png">
-<script>(()=>{let t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.dataset.theme=t})()</script>
-<link rel="stylesheet" href="styles.css?v=4">
+<script>(()=>{let t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t})()</script>
+<link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
-<div class="bg-fallback" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  </defs>
+</svg>
 <header class="nav">
   <div class="wrap nav-inner">
-    <a class="brand" href="/"><img class="mark" src="logo.webp" alt="" width="36" height="33"><span>theSpotter<b>.si</b></span></a>
-    <nav><a href="/#features">Features</a><a href="/#faq">FAQ</a></nav>
+    <a class="brand" href="/" aria-label="Spotter home"><img src="logo.webp" alt="" width="28" height="26"><span>Spotter</span></a>
+    <nav class="nav-links"><a href="/#how">How it works</a><a href="/#features">Features</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a></nav>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" type="button" aria-label="Switch theme"><svg class="moon"><use href="#i-moon"/></svg><svg class="sun"><use href="#i-sun"/></svg></button>
+    </div>
   </div>
 </header>
 <main class="policy">
   <div class="wrap narrow">
-    <h1>Privacy</h1>
-    <p>Last updated 3 November 2026.</p>
+    <p class="label">Privacy</p>
+    <h1>Your files stay on your Mac.</h1>
+    <p class="updated">Last updated 3 November 2026.</p>
 
     <h2>The Spotter app</h2>
     <ul>
       <li>Spotter reads only the folders you choose, plus your Photos library if you turn that on.</li>
-      <li>Everything it extracts — file details, text, text recognized in images, photo locations — is stored on your Mac in an index encrypted with AES‑256. The key is kept in your Keychain.</li>
+      <li>Everything it extracts (file details, text, text recognised in images, photo locations) is stored on your Mac in an index encrypted with AES-256. The key is kept in your Keychain.</li>
       <li>Spotter does not upload your files or their contents. Search, text recognition and place names all work offline.</li>
+      <li>Cloud AI is off by default. If you turn it on, Spotter shows you the passages a question needs before anything is sent.</li>
       <li>Spotter only changes files when you ask, shows a preview first and keeps an undo history.</li>
       <li>You can remove a folder from Spotter, or delete everything it stored, at any time in Settings. Your files are not affected.</li>
     </ul>
 
     <h2>This website</h2>
-    <p>This site uses no cookies, no analytics and no third‑party trackers. Our hosting provider may keep standard server logs (such as IP address and pages requested) for security and reliability.</p>
+    <p>This site uses no cookies, no analytics and no third-party trackers. Our hosting provider may keep standard server logs (such as IP address and pages requested) for security and reliability.</p>
 
     <h2>Credits</h2>
     <p>Place names come from <a href="https://www.geonames.org">GeoNames</a> (CC BY 4.0). Index encryption uses SQLCipher Community Edition by Zetetic LLC.</p>
   </div>
 </main>
 <footer class="footer">
-  <div class="wrap footer-inner"><span>© 2026 Spotter</span><a href="/">Home</a></div>
+  <div class="wrap footer-inner">
+    <span class="brand small"><img src="logo.webp" alt="" width="20" height="18"><span>Spotter</span></span>
+    <span class="footer-links"><a href="/">Home</a><a href="/#faq">FAQ</a></span>
+  </div>
 </footer>
+<script src="app.js?v=6"></script>
 </body>
 </html>
