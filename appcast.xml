@@ -6,6 +6,21 @@
     <description>Spotter updates</description>
     <language>en</language>
     <item>
+      <title>Spotter 0.9.24</title>
+      <pubDate>Tue, 24 Nov 2026 13:52:18 +0000</pubDate>
+      <sparkle:version>26</sparkle:version>
+      <sparkle:shortVersionString>0.9.24</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<h2>Spotter 0.9.24</h2>
+<ul>
+<li><b>Show in Spotter.</b> Next to Show in Finder: opens the file's folder in Spotter's Browse, with the file picked. In the details pane, the best match and the right-click menu.</li>
+<li><b>A clear More menu</b> in the details pane: Copy Path, Copy, Add to Task, Rename and more.</li>
+<li><b>Help videos</b> keep their buttons under the film, so the captions are never covered.</li>
+</ul>
+]]></description>
+      <enclosure url="https://github.com/whiterabbit-vibe/thespotter-site/releases/download/v0.9.24/Spotter-0.9.24.dmg" type="application/octet-stream" sparkle:edSignature="Ve9L/vD4cMDH7cHHwkbcSWH1u0RhZjIk93EaIwVnprrYe8Em6+1613p52XhsgKbiezrg5szgPFKwEBpdtIoJCA==" length="88676204" />
+    </item>
+    <item>
       <title>Spotter 0.9.23</title>
       <pubDate>Tue, 24 Nov 2026 11:11:25 +0000</pubDate>
       <sparkle:version>25</sparkle:version>
