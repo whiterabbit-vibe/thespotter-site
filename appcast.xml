@@ -6,6 +6,22 @@
     <description>Spotter updates</description>
     <language>en</language>
     <item>
+      <title>Spotter 0.9.23</title>
+      <pubDate>Tue, 24 Nov 2026 11:11:25 +0000</pubDate>
+      <sparkle:version>25</sparkle:version>
+      <sparkle:shortVersionString>0.9.23</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<h2>Spotter 0.9.23</h2>
+<ul>
+<li><b>Force Quit from the menu bar.</b> Click Spot, then Force Quit… in the middle of the bottom row (or right-click Spot). Spotter asks before it quits anything.</li>
+<li><b>Safe to install, and it says so.</b> Settings → About shows that Spotter is notarized by Apple, runs on this Mac and never uploads your files, with a way to check it yourself.</li>
+<li><b>The films end on "Your Mac, understood."</b></li>
+<li><b>Small fixes.</b> One date style everywhere, a picture on the welcome film before it plays, clearer messages for links to deleted cards, quieter Health when nothing needs doing.</li>
+</ul>
+]]></description>
+      <enclosure url="https://github.com/whiterabbit-vibe/thespotter-site/releases/download/v0.9.23/Spotter-0.9.23.dmg" type="application/octet-stream" sparkle:edSignature="L18GUaOaK8d4fZ5Z8qg4uYoVeU4w367gSWAq1bL90J7+9iMyYIw0owlOfGuxMKJzZhnHrsSKZtvfraV0SISQAg==" length="88715687" />
+    </item>
+    <item>
       <title>Spotter 0.9.22</title>
       <pubDate>Tue, 24 Nov 2026 09:33:05 +0000</pubDate>
       <sparkle:version>24</sparkle:version>
