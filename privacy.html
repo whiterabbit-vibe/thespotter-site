@@ -3,46 +3,102 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Privacy — Spotter</title>
-<meta name="description" content="How Spotter handles your data: everything stays on your Mac.">
-<link rel="icon" href="favicon-64.png" type="image/png" sizes="64x64">
-<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<title>Spotter privacy</title>
+<meta name="description" content="How Spotter handles your data: your files and what Spotter learns about them stay on your Mac.">
+<meta name="theme-color" content="#14213D">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta property="og:image" content="https://thespotter.si/icon-512.png">
-<script>(()=>{let t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.dataset.theme=t})()</script>
-<link rel="stylesheet" href="styles.css?v=4">
+<script>(()=>{let t=new URLSearchParams(location.search).get('theme');if(!t)try{t=localStorage.getItem('theme')}catch(e){}if(t==='light'||t==='dark')document.documentElement.dataset.theme=t})()</script>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="bg-fallback" aria-hidden="true"></div>
-<header class="nav">
-  <div class="wrap nav-inner">
-    <a class="brand" href="/"><img class="mark" src="logo.webp" alt="" width="36" height="33"><span>theSpotter<b>.si</b></span></a>
-    <nav><a href="/#features">Features</a><a href="/#faq">FAQ</a></nav>
+<header class="stage stage-slim">
+  <div class="final-glass" aria-hidden="true"></div>
+  <nav class="nav wrap" aria-label="Main">
+    <a class="brand" href="index.html" aria-label="Spotter home"><span class="spot" data-spot data-size="26"></span><span>Spotter</span></a>
+    <div class="nav-links">
+      <a href="index.html#find">Find</a>
+      <a href="index.html#ask">Ask</a>
+      <a href="index.html#tasks">Tasks</a>
+      <a href="index.html#privacy">Privacy</a>
+      <a href="index.html#price">Price</a>
+    </div>
+    <button class="icon-btn theme-toggle" type="button" id="themeToggle" aria-label="Switch to dark theme">
+      <svg class="i sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>
+      <svg class="i moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+    </button>
+    <a class="pill pill-coral nav-download" href="https://github.com/whiterabbit-vibe/thespotter-site/releases/latest/download/Spotter.dmg">Download</a>
+  </nav>
+  <div class="wrap narrow policy-head">
+    <h1>Privacy</h1>
+    <p class="fine">Last updated November 22, 2026</p>
   </div>
 </header>
-<main class="policy">
+
+<main class="section policy" id="main">
   <div class="wrap narrow">
-    <h1>Privacy</h1>
-    <p>Last updated 3 November 2026.</p>
+    <p class="lead">Spotter reads your files on your Mac and keeps what it learns there. It has no account and no analytics, and it uploads nothing about your files.</p>
 
     <h2>The Spotter app</h2>
     <ul>
-      <li>Spotter reads only the folders you choose, plus your Photos library if you turn that on.</li>
-      <li>Everything it extracts — file details, text, text recognized in images, photo locations — is stored on your Mac in an index encrypted with AES‑256. The key is kept in your Keychain.</li>
-      <li>Spotter does not upload your files or their contents. Search, text recognition and place names all work offline.</li>
-      <li>Spotter only changes files when you ask, shows a preview first and keeps an undo history.</li>
-      <li>You can remove a folder from Spotter, or delete everything it stored, at any time in Settings. Your files are not affected.</li>
+      <li>Spotter reads only the folders you choose, plus your Photos library if you turn that on. A folder you add to Never read (Settings → Folders), or one holding a file named <code>.nospotter</code>, is never read.</li>
+      <li>What it extracts (file details, text, text found in images, what's said in recordings, photo locations and capture dates) is stored on your Mac in an index encrypted with AES-256. The key is kept in your Keychain.</li>
+      <li>Also encrypted with that key: the small pictures of files shown in Activity, your recent and saved searches, the quick note you haven't finished, recent Go to Folder places, pinned folders and the history of alerts. So are the people you told Spot about, routines, workspaces, the list of changes Spotter made and the list of requests it sent.</li>
+      <li>Kept unencrypted on purpose: the lists of folders Spotter reads, never reads and tidies, the kinds of file it never reads, and your settings. If the key is ever lost, Spotter must still know which folders never to read. Health's readings (including the names of your busiest apps) and the sizes of your installed apps are also kept in plain files beside the index. The downloaded models are public files.</li>
+      <li>Searching, reading text in images, transcribing recordings, naming places and answering questions all happen on your Mac. Answers and related words use Apple's on-device model.</li>
+      <li>Spotter changes files only when you ask. It shows a plan first and keeps an undo history. Nothing is deleted for good: files go to the Trash.</li>
+      <li>Meetings in Timeline and in Spot's morning brief come from your Mac's calendar, only if you allow it, and are read on your Mac. The brief, with any dates it found in your documents, is put together on your Mac; its one notification a day is a local one, and you can turn it off in Settings → Intelligence.</li>
+      <li>You can remove a folder at any time in Settings, and erase what Spotter read there (its index, the faces it found, what it learned from the files you opened). People you told Spot about, routines and workspaces are yours: erase those on their own pages and in Privacy. Your files are not affected.</li>
+      <li>People you tell Spotter about (“my accountant is Maria, maria@…”) are kept encrypted on your Mac, so it can address email drafts. Spotter never reads your contacts and never sends email: it writes drafts you send yourself.</li>
+      <li>Recognizing people in photos is off until you turn it on. You give Spotter a few photos of someone and say who they are; the matching runs on your Mac and nothing about a face is sent anywhere. You can erase the faces at any time.</li>
+      <li>Questions about where you've been (“when did I visit San Francisco?”) are answered on your Mac, from where and when your photos were taken.</li>
+      <li>Health readings (processor, memory, what keeps your Mac awake) are taken and kept on your Mac. Erase them any time.</li>
+      <li>Your tasks and notes, with the files on them, are kept in the same encrypted index on your Mac. A link you copy from a card, a file or a note (<code>spotter://…</code>) is made of random letters: it never holds a file name, a title or a folder, and opening it only shows that card, file or note; it never changes anything. Add to Calendar writes an event only after you press Add, and a due-day reminder is a local notification you can turn off.</li>
+      <li>Copy Text from Image and Copy Text from Screen read the words with Apple's Vision on your Mac. For Copy Text from Screen, macOS asks once for Screen Recording permission; Spotter looks only at the part of the screen you drag over, and only when you ask.</li>
+      <li>In the menu bar, Quit and Force Quit ask before they act, and are never offered for Finder or Spotter.</li>
     </ul>
 
+    <h2>What may go online</h2>
+    <p>This is the same list as the app's Privacy page. Every request below is also shown there, under Sent from this Mac, before it's sent; if a request can't be listed, it isn't sent.</p>
+    <ul>
+      <li><b>Update check.</b> Once a day, to thespotter.si: Spotter's version number. You can turn it off in Settings → Updates.</li>
+      <li><b>Update download.</b> When a new version exists and you install it (or allow automatic installs), it is downloaded from GitHub, where Spotter's releases are kept. Updates are signed by us, and Spotter checks the signature before it installs one.</li>
+      <li><b>Lookups on Wikipedia and Apple Maps.</b> Only when your files don't answer a general question (“who was Ansel Adams?”, “where is Big Sur?”), and only after you press the button (Look it up on Wikipedia, or Find it on Apple Maps), every time. Always allow lookups is off unless you turn it on in Settings → Privacy. Only the words of the question are sent, never file names or file text, and a name that appears in your files is never sent, even with Always allow on. Questions about your own drives, folders and Mac are never offered for lookup.</li>
+      <li><b>Search the web in your browser.</b> Only when you press Search the web instead: your browser opens DuckDuckGo with those words. Spotter itself sends nothing.</li>
+      <li><b>Buying a license in your browser.</b> Only when you press Buy Spotter: your browser opens the checkout, run by Dodo Payments. Spotter itself sends nothing, and checking a key never goes online.</li>
+      <li><b>The Places map.</b> While you look at Places, Apple Maps sends the map pictures for the area on screen. No file names, photos or photo locations are sent; where each photo was taken is read from the photo itself, on your Mac.</li>
+      <li><b>Smart search: the meaning model (639 MB).</b> Qwen3-Embedding, downloaded once from huggingface.co, only when you choose Download smart search (in setup, where nothing downloads until you press Continue, or in Settings → Intelligence). Then it runs on your Mac.</li>
+      <li><b>Smart search: the picture model (199 MB).</b> Apple's MobileCLIP, downloaded once from huggingface.co with the meaning model, or on its own when you choose it. Then it runs on your Mac.</li>
+      <li><b>Second look (636 MB, experimental).</b> bge-reranker-v2-m3, downloaded once from huggingface.co, only when you choose it in Settings → Intelligence.</li>
+      <li><b>Written answers (2.8 GB).</b> Google's Gemma 4, for Macs without Apple Intelligence. Downloaded once from huggingface.co: in setup, where it is ticked on such a Mac and nothing downloads until you press Continue (or Skip Setup), or later when you choose it in Settings → Intelligence.</li>
+      <li><b>Photo descriptions (557 MB).</b> Gemma's image reader, downloaded once from huggingface.co, only when you choose it. Describing your photos and videos then happens on your Mac; photos are never sent.</li>
+      <li><b>Apple's speech model.</b> The first time you talk to Spot, macOS may download Apple's speech model for your language from Apple. What you say is turned into text on your Mac and never sent.</li>
+      <li><b>Feedback you send.</b> Only when you write to us in Help → Send Feedback and press Send: your message, your email address if you give one (so we can reply), and Spotter's and macOS's version numbers unless you untick them. The form shows exactly what will be sent before you press Send. It goes to our mail service on supabase.co, which emails it to us and keeps nothing.</li>
+    </ul>
+    <p>Like any request from any app, each one also carries your Mac's internet (IP) address. No account, no analytics, and the text of your files is never sent. Model downloads carry nothing about you or your files, and the models never send anything.</p>
+
+    <h2>Buying a license</h2>
+    <p>Buying happens in your browser, not inside the app: Buy Spotter (in the app or on this website) opens the checkout. Checkout is run by Dodo Payments, the seller of record, which takes your payment details, name, email and billing address and handles tax and refunds; we never see your card. When the payment goes through, our license server makes your key and emails it to you through Resend. We keep your email address, name, the payment reference and the key, so we can resend a lost key or turn off a refunded one, and nothing else. The app checks the key on your Mac without going online, and never sends it anywhere. To have your purchase details deleted, write to <a href="mailto:hey@thespotter.si">hey@thespotter.si</a>.</p>
+
     <h2>This website</h2>
-    <p>This site uses no cookies, no analytics and no third‑party trackers. Our hosting provider may keep standard server logs (such as IP address and pages requested) for security and reliability.</p>
+    <p>These pages use no cookies, no analytics and no advertising trackers. Our hosting provider may keep standard server logs (IP address and pages requested) for security and reliability. Downloads are served from GitHub.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about privacy, or anything else: <a href="mailto:hey@thespotter.si">hey@thespotter.si</a>.</p>
 
     <h2>Credits</h2>
-    <p>Place names come from <a href="https://www.geonames.org">GeoNames</a> (CC BY 4.0). Index encryption uses SQLCipher Community Edition by Zetetic LLC.</p>
+    <p>Place names come from GeoNames (CC BY 4.0). Index encryption uses SQLCipher Community Edition by Zetetic LLC (BSD-style license). Updates use Sparkle (MIT license). Logos come from Simple Icons (CC0); each logo is a trademark of its owner and is used only to show where a file came from. The open models run on llama.cpp (MIT license). Gemma 4 is by Google (Apache License 2.0). Search by meaning uses Qwen3-Embedding by Alibaba Cloud (Apache License 2.0). The second look uses bge-reranker-v2-m3 by BAAI (Apache License 2.0). Photos by what's in them use MobileCLIP-S2 by Apple (Apple Sample Code License). Faces use SFace from OpenCV Zoo (Apache License 2.0), which is inside Spotter and used only if you turn on Recognize people. Every model except SFace is downloaded only if you choose it.</p>
   </div>
 </main>
+
 <footer class="footer">
-  <div class="wrap footer-inner"><span>© 2026 Spotter</span><a href="/">Home</a></div>
+  <div class="wrap footer-inner">
+    <a class="brand" href="index.html"><span class="spot" data-spot data-size="20"></span>Spotter</a>
+    <nav aria-label="Footer"><a href="privacy.html">Privacy</a><a href="mailto:hey@thespotter.si">hey@thespotter.si</a></nav>
+    <span class="soft">© 2026 Spotter</span>
+  </div>
 </footer>
+<script src="app.js"></script>
 </body>
 </html>
