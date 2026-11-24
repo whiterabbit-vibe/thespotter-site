@@ -384,28 +384,57 @@
     }
   }
 
-  // ---------- Hero: the box finds a file ----------
-  // Illustrative demo data for the made-up user Peter Veronica (California, US dollars). The ranking benchmark runs on its own fixture set (benchmark/), not on these files.
+  // ---------- Loading in the background ----------
+  // Nothing heavy loads before first paint: the hero reel and the film wait for an idle moment, clips and posters
+  // wait until they're about one screen away. Reduce Motion or Save Data: nothing plays by itself.
+  const saveData = !!(navigator.connection && navigator.connection.saveData);
+  const noAutoplay = () => reduceMotion.matches || saveData;
+  const whenIdle = f => {
+    const go = () => ('requestIdleCallback' in window ? requestIdleCallback(f, { timeout: 2500 }) : setTimeout(f, 1200));
+    if (document.readyState === 'complete') go(); else addEventListener('load', go, { once: true });
+  };
+  const hasIO = 'IntersectionObserver' in window;
+  // Calls f once for each element when it comes within about a screen. Inside a closed "Show details" it waits
+  // until that region opens (see setOpen).
+  const pendingNear = new Map();
+  const nearIO = hasIO ? new IntersectionObserver(es => es.forEach(e => {
+    const f = pendingNear.get(e.target);
+    if (!e.isIntersecting || !f || e.target.closest('.more:not(.open)')) return;
+    nearIO.unobserve(e.target); pendingNear.delete(e.target); f(e.target);
+  }), { rootMargin: '100% 0px' }) : null;
+  const nearly = (els, f) => els.forEach(el => { if (!nearIO) { f(el); return; } pendingNear.set(el, f); nearIO.observe(el); });
+  const regionOpened = region => pendingNear.forEach((f, el) => {
+    if (!region.contains(el) || el.closest('.more:not(.open)')) return;
+    nearIO.unobserve(el); pendingNear.delete(el); f(el);
+  });
+  const inView = e => e.isIntersecting && e.intersectionRatio >= 0.5;
+  const setLabel = (btn, playing, what) => {
+    if (!btn) return;
+    btn.querySelector('span').textContent = playing ? 'Pause' : 'Play';
+    btn.querySelector('use').setAttribute('href', playing ? '#i-pause' : '#i-play');
+    btn.setAttribute('aria-label', (playing ? 'Pause ' : 'Play ') + what);
+  };
+  const motion = []; // every muted loop on the page, so only one plays at a time
+  const pauseOthers = keep => motion.forEach(m => { if (m !== keep && !m.video.paused) m.video.pause(); });
+
+  // ---------- Hero: the reel, or the box finds a file ----------
+  // Illustrative demo data for the made-up user Peter Veronica (California, US dollars). Only searches that are a
+  // Sure match in the demo app are shown here.
   const HERO = [
-    { q: 'landlord notice to move out', kind: 'doc', name: 'Lease_Oak_St_2025.pdf',
-      why: 'Scanned lease, page 3: “written notice of non-renewal at least 60 days before the end of the term.” Read from the scan.',
-      tiles: [['doc', 'Lease_Renewal_Letter.pdf', 'From your landlord'], ['shot', 'Screenshot 3.18 PM.png', 'Move-out checklist · text in the image'], ['doc', 'Renters_Insurance_2026.pdf', 'Same address']] },
-    { q: 'home depot receipt', kind: 'photo', name: 'IMG_5120.HEIC',
-      why: 'A photo of a till receipt: Home Depot, Oakland, October 12. TOTAL $55.05. The words were read from the picture.',
-      tiles: [['photo', 'IMG_5091.HEIC', 'Receipt · Ace Hardware'], ['doc', 'HomeDepot_Order_Sep.pdf', 'Order confirmation'], ['doc', 'Expenses_October.numbers', 'Mentions “Home Depot”']] },
     { q: 'insurance for the cat', kind: 'doc', name: 'Pet_Insurance_Luna.pdf',
       why: 'Pet insurance for Luna, your cat. Covers vet visits up to $1,500 a year.',
       tiles: [['doc', 'Vet_Visit_Luna.pdf', 'Vet receipt · Luna'], ['photo', 'IMG_2210.HEIC', 'Luna on the sofa'], ['doc', 'Car_Insurance_Subaru.pdf', 'Another policy']] },
+    { q: 'home depot receipt', kind: 'photo', name: 'IMG_5120.HEIC',
+      why: 'A photo of a till receipt: Home Depot, Oakland, October 12. TOTAL $55.05. The words were read from the picture.',
+      tiles: [['photo', 'IMG_5091.HEIC', 'Receipt · Ace Hardware'], ['doc', 'HomeDepot_Order_Sep.pdf', 'Order confirmation'], ['doc', 'Expenses_October.numbers', 'Mentions “Home Depot”']] },
     { q: 'kayak rental lake tahoe', kind: 'doc', name: 'Kayak_Rental_Tahoe.pdf',
       why: 'Tahoe Paddle Co.: four hours on Lake Tahoe, August 9. $280.',
       tiles: [['photo', 'IMG_4402.HEIC', 'Taken at Lake Tahoe'], ['doc', 'Tahoe_Cabin_Booking.pdf', 'Same summer trip'], ['shot', 'Screenshot 7.02 PM.png', 'Booking chat']] },
-    { q: 'invoice i sent to bayline studio', kind: 'doc', name: 'Freelance_Invoice_007.pdf',
-      why: 'Invoice 007 from you to Bayline Studio: design workshop, $1,600.',
-      tiles: [['doc', 'Freelance_Invoice_006.pdf', 'The one before'], ['doc', 'Coworking_Invoice_Nov.pdf', 'Invoice · November'], ['shot', 'Screenshot 4.40 PM.png', 'Payment received']] },
   ];
+  const heroDemo = $('#heroDemo'), heroReel = $('#heroReel'), reelPoster = $('#heroReel .reel-poster');
   const heroTyped = $('#heroTyped'), heroResults = $('#heroResults'), heroStatus = $('#heroStatus');
   const heroSpotObj = heroSpot && spotOf(heroSpot);
-  let heroToken = { cancelled: false };
+  let heroToken = { cancelled: false }, heroStarted = false;
 
   function showHero(item) {
     heroResults.innerHTML = `
@@ -415,65 +444,185 @@
       <div class="tiles">${item.tiles.map(([k, n, s]) => `<div class="tile"><span class="thumb ${k}"></span><b>${esc(n)}</b><small>${esc(s)}</small></div>`).join('')}</div>`;
   }
 
+  // The first search shows its answer at once, so the window is never empty; then the box types the next ones.
   async function heroLoop(token) {
-    let i = 0;
+    heroTyped.textContent = HERO[0].q; showHero(HERO[0]);
+    heroStatus.textContent = 'Searched the sample files';
+    heroSpotObj?.set('happy'); setGlow(1);
+    if (reduceMotion.matches) return;
+    let i = 1;
     while (!token.cancelled) {
+      await sleep(4200);
+      if (token.cancelled) return;
       const item = HERO[i % HERO.length];
       heroResults.innerHTML = '';
-      heroStatus.textContent = '5,541 files ready';
+      heroStatus.textContent = 'Sample files';
       heroSpotObj?.set('idle'); setGlow(0.55);
-      await sleep(i ? 700 : 900);
+      await sleep(700);
       if (token.cancelled) return;
       heroSpotObj?.set('thinking');
       await type(heroTyped, item.q, token);
       if (token.cancelled) return;
       await sleep(380);
       showHero(item);
-      heroStatus.textContent = 'Searched 5,541 files on this Mac';
+      heroStatus.textContent = 'Searched the sample files';
       heroSpotObj?.set('happy'); setGlow(1);
-      await sleep(reduceMotion.matches ? 6000 : 4200);
       i++;
     }
   }
-
-  function startHero() {
+  function startHeroDemo() {
+    if (heroStarted || !heroTyped) return;
+    heroStarted = true;
+    heroDemo?.classList.add('no-reel');
     heroToken.cancelled = true;
     heroToken = { cancelled: false };
     heroLoop(heroToken);
   }
-  if (heroTyped) {
-    if (reduceMotion.matches) {
-      heroTyped.textContent = HERO[0].q; showHero(HERO[0]);
-      heroStatus.textContent = 'Searched 5,541 files on this Mac';
-      heroSpotObj?.set('happy'); setGlow(1);
-    } else startHero();
-  }
-  // The films (made with Remotion, video/) never start by themselves; starting one pauses the others.
-  const films = $$('video[controls]');
-  films.forEach(v => v.addEventListener('play', () => films.forEach(o => { if (o !== v) o.pause(); })));
 
-  // Tasks: a short, silent clip from the tour film. It plays while it's on screen (not with Reduce Motion),
-  // and the button beside it pauses or plays it.
-  const clip = $('#tasksClip'), clipToggle = $('#tasksClipToggle');
-  if (clip && clipToggle) {
-    let userPaused = reduceMotion.matches;
-    const label = () => {
-      const playing = !clip.paused;
-      clipToggle.querySelector('span').textContent = playing ? 'Pause' : 'Play';
-      clipToggle.querySelector('use').setAttribute('href', playing ? '#i-pause' : '#i-play');
-      clipToggle.setAttribute('aria-label', playing ? 'Pause the clip' : 'Play the clip');
+  // The reel: its poster is in the page from the start; the video itself loads once the page is idle and the hero
+  // is on screen, plays muted and loops, and pauses when it scrolls away or the tab is hidden.
+  function setupReel() {
+    const video = $('video', heroReel), btn = $('.clip-btn', heroReel);
+    const m = { video, userPaused: false, visible: true, idle: false, failed: false };
+    motion.push(m);
+    if (noAutoplay()) heroReel.classList.add('tap');
+    const load = () => { if (!video.getAttribute('src')) { video.preload = 'auto'; video.src = heroReel.dataset.src; } };
+    const tryPlay = () => {
+      if (m.failed || m.userPaused || !m.visible || !m.idle || document.hidden || noAutoplay()) return;
+      load(); pauseOthers(m); video.play().catch(() => {});
     };
-    clip.addEventListener('play', label); clip.addEventListener('pause', label);
-    clipToggle.addEventListener('click', () => {
-      if (clip.paused) { userPaused = false; clip.play().catch(() => {}); } else { userPaused = true; clip.pause(); }
+    m.resume = tryPlay;
+    video.addEventListener('playing', () => { heroReel.classList.add('playing', 'shown'); setLabel(btn, true, 'the reel'); });
+    video.addEventListener('pause', () => { heroReel.classList.remove('playing'); setLabel(btn, false, 'the reel'); });
+    video.addEventListener('error', () => { m.failed = true; heroReel.classList.remove('playing', 'shown'); if (btn) btn.hidden = true; });
+    btn?.addEventListener('click', () => {
+      if (video.paused) { m.userPaused = false; m.failed = false; load(); pauseOthers(m); video.play().catch(() => {}); }
+      else { m.userPaused = true; video.pause(); }
     });
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(([e]) => {
-        if (e.isIntersecting && !userPaused) clip.play().catch(() => {});
-        else if (!e.isIntersecting && !clip.paused) clip.pause();
-      }, { threshold: 0.5 }).observe(clip);
+    if (hasIO) new IntersectionObserver(([e]) => { m.visible = e.isIntersecting && e.intersectionRatio >= 0.25; if (!m.visible && !video.paused) video.pause(); else tryPlay(); }, { threshold: [0, 0.25] }).observe(heroReel);
+    whenIdle(() => { m.idle = true; tryPlay(); });
+  }
+
+  // The reel and the clips take their shape from their posters, so a 16:9 or 16:10 file never gets cropped.
+  const fitTo = (host, img) => { if (img.naturalWidth) host.style.setProperty('--ar', img.naturalWidth + ' / ' + img.naturalHeight); };
+  if (reelPoster) { if (reelPoster.complete) fitTo(heroReel, reelPoster); else reelPoster.addEventListener('load', () => fitTo(heroReel, reelPoster), { once: true }); }
+  // The step row under the reel follows it.
+  const steps = $$('.reel-steps li[data-t]');
+  if (heroReel) $('video', heroReel)?.addEventListener('timeupdate', e => {
+    const t = e.target.currentTime; let on = steps[0];
+    steps.forEach(li => { if (t >= +li.dataset.t) on = li; });
+    steps.forEach(li => li.classList.toggle('on', li === on));
+  });
+
+  if (heroDemo && reelPoster) {
+    const missing = () => heroDemo.classList.contains('no-reel') || (reelPoster.complete && reelPoster.naturalWidth === 0);
+    if (missing()) startHeroDemo();
+    else {
+      reelPoster.addEventListener('error', startHeroDemo, { once: true });
+      setupReel();
     }
-    label();
+  } else if (heroTyped) startHeroDemo();
+
+  // ---------- Clips beside the features ----------
+  // One component (.clip): a muted loop, a poster, and a Play/Pause button. The poster is asked for when the clip is
+  // about a screen away, and only once it's there does the clip replace the drawn example beside it. The video
+  // itself downloads when it first plays. Out of view, it pauses.
+  function setupClip(fig) {
+    const video = $('video', fig), btn = $('.clip-btn', fig);
+    if (!video) return;
+    const m = { video, fig, userPaused: false, visible: false, ready: false };
+    motion.push(m);
+    if (noAutoplay()) fig.classList.add('tap');
+    const ensureSrc = () => { if (!video.getAttribute('src')) video.src = fig.dataset.src; };
+    const missing = () => {
+      fig.classList.remove('ready'); fig.classList.add('missing');
+      if (!fig.classList.contains('has-fallback')) fig.parentElement?.classList.add('solo');
+    };
+    // A clip starts only after it has stayed in view for a moment, so scrolling past ten clips downloads none.
+    let dwell = 0;
+    const tryPlay = () => {
+      clearTimeout(dwell);
+      if (!m.ready || m.userPaused || !m.visible || document.hidden || noAutoplay()) return;
+      dwell = setTimeout(() => {
+        if (!m.visible || m.userPaused || document.hidden) return;
+        ensureSrc(); pauseOthers(m); video.play().catch(() => {});
+      }, 400);
+    };
+    m.resume = tryPlay;
+    m.probe = () => {
+      const poster = fig.dataset.poster;
+      const ok = () => { if (poster) { video.poster = poster; fitTo(fig, img); } fig.classList.add('ready'); m.ready = true; tryPlay(); };
+      const img = new Image();
+      if (!poster) { ok(); return; }
+      img.onload = ok; img.onerror = missing; img.src = poster;
+    };
+    video.addEventListener('play', () => { fig.classList.add('playing'); setLabel(btn, true, 'the clip'); });
+    video.addEventListener('pause', () => { fig.classList.remove('playing'); setLabel(btn, false, 'the clip'); });
+    video.addEventListener('error', missing);
+    const toggle = () => {
+      if (video.paused) { m.userPaused = false; ensureSrc(); pauseOthers(m); video.play().catch(() => {}); }
+      else { m.userPaused = true; video.pause(); }
+    };
+    btn?.addEventListener('click', toggle);
+    video.addEventListener('click', toggle);
+    if (hasIO) new IntersectionObserver(([e]) => { m.visible = inView(e); if (!m.visible && !video.paused) video.pause(); else tryPlay(); }, { threshold: [0, 0.5] }).observe(video.closest('.clip-frame') || fig);
+    else m.visible = true;
+  }
+  const clipFigs = $$('.clip[data-src]');
+  clipFigs.forEach(setupClip);
+  nearly(clipFigs, fig => motion.find(m => m.fig === fig)?.probe());
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) motion.forEach(m => { if (!m.video.paused) m.video.pause(); });
+    else motion.forEach(m => m.resume?.());
+  });
+
+  // ---------- The films ----------
+  // They never start by themselves; starting one pauses the others and every loop. Posters load when a film is
+  // about a screen away (only the one on show: the 16:9 cut or the phone cut). The main film starts buffering once
+  // the page is idle and it is near, so Play starts at once.
+  const films = $$('video[controls]');
+  films.forEach(v => v.addEventListener('play', () => { films.forEach(o => { if (o !== v) o.pause(); }); motion.forEach(m => m.video.pause()); }));
+  const shown = v => v.getClientRects().length > 0 && !v.closest('.more:not(.open)');
+  const mainFilms = films.filter(v => v.closest('.film'));
+  // One callback per film (nearly() keeps one per element): the poster, and for the main film the buffering too.
+  let idle = false; const nearMain = new Set();
+  const buffer = v => { if (shown(v) && !saveData && v.preload === 'none') v.preload = 'metadata'; };
+  nearly(films.filter(v => v.dataset.poster || mainFilms.includes(v)), v => {
+    if (v.dataset.poster) v.poster = v.dataset.poster;
+    if (mainFilms.includes(v)) { if (idle) buffer(v); else nearMain.add(v); }
+  });
+  whenIdle(() => { idle = true; nearMain.forEach(buffer); });
+  // A pointer over the film, a touch or keyboard focus says Play is coming: buffer it properly then.
+  mainFilms.forEach(v => ['pointerenter', 'touchstart', 'focus'].forEach(t => v.addEventListener(t, () => { if (v.preload !== 'auto') v.preload = 'auto'; }, { once: true, passive: true })));
+  // A film inside "More films" gets its poster when the region opens (the observer above sees it then).
+  // The chapter chips under the main film jump to their chapter, but only when the film on the page is the one
+  // they describe (its length matches the figure's data-duration); otherwise they're plain labels.
+  const filmFig = $('.film[data-duration]'), chapters = $('.film .chapters');
+  if (filmFig && chapters) {
+    const chips = $$('[data-t]', chapters);
+    const expected = +filmFig.dataset.duration;
+    const matches = v => Math.abs(v.duration - expected) < 3;
+    const meta = v => new Promise(r => {
+      if (v.readyState >= 1) { r(); return; }
+      v.addEventListener('loadedmetadata', r, { once: true });
+      if (v.preload === 'none') v.preload = 'metadata';
+      v.load();
+    });
+    mainFilms.forEach(v => {
+      v.addEventListener('loadedmetadata', () => { if (shown(v)) chapters.classList.toggle('off', !matches(v)); });
+      v.addEventListener('timeupdate', () => {
+        if (chapters.classList.contains('off') || !shown(v)) return;
+        let on = null;
+        chips.forEach(c => { if (v.currentTime >= +c.dataset.t) on = c; });
+        chips.forEach(c => c.classList.toggle('on', c === on));
+      });
+    });
+    chips.forEach(c => c.addEventListener('click', async () => {
+      const v = mainFilms.find(shown); if (!v) return;
+      await meta(v);
+      if (matches(v)) v.currentTime = +c.dataset.t; else chapters.classList.add('off');
+      v.play().catch(() => {});
+    }));
   }
 
   // ---------- One box, three answers ----------
@@ -525,7 +674,7 @@
   const bandSpot = spotOf($('#bandSpot'));
   let demoToken = { cancelled: false }, autoAdvance = true, demoVisible = false, demoRunning = false;
 
-  async function runDemo(mode) {
+  async function runDemo(mode, instant) {
     demoToken.cancelled = true;
     const token = demoToken = { cancelled: false };
     demoRunning = true;
@@ -536,13 +685,16 @@
       t.querySelector('.progress')?.remove();
     });
     panel.setAttribute('aria-labelledby', 'tab-' + mode);
-    // While the words are typed, Spot is visibly reading rather than showing an empty box.
-    demoBody.innerHTML = '<div class="demo-wait" aria-hidden="true"><p>Spot is reading your files…</p><i></i><i></i><i></i></div>';
-    bandSpot?.set('thinking');
-    await type(demoTyped, demo.q, token);
-    if (token.cancelled) return;
-    await sleep(reduceMotion.matches ? 0 : 420);
-    if (token.cancelled) return;
+    if (instant) demoTyped.textContent = demo.q;
+    else {
+      // While the words are typed, Spot is visibly reading rather than showing an empty box.
+      demoBody.innerHTML = '<div class="demo-wait" aria-hidden="true"><p>Spot is reading your files…</p><i></i><i></i><i></i></div>';
+      bandSpot?.set('thinking');
+      await type(demoTyped, demo.q, token);
+      if (token.cancelled) return;
+      await sleep(reduceMotion.matches ? 0 : 420);
+      if (token.cancelled) return;
+    }
     demoBody.innerHTML = demo.render();
     bandSpot?.set('happy');
     if (demo.after && !reduceMotion.matches) await demo.after(demoBody, token);
@@ -574,7 +726,9 @@
 
   if (panel) {
     let started = false;
-    const begin = () => { if (!started) { started = true; runDemo('find'); } };
+    const begin = () => { if (!started) { started = true; runDemo('find', true); } };
+    // Before it's ever on screen, the box already shows the first search and its answer (no empty skeleton).
+    demoTyped.textContent = DEMOS.find.q; demoBody.innerHTML = DEMOS.find.render(); bandSpot?.set('happy');
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(([e]) => {
         demoVisible = e.isIntersecting;
@@ -605,6 +759,7 @@
       r.classList.toggle('settled', false);
       r.classList.toggle('open', open);
       r.inert = !open;
+      if (open) regionOpened(r);
       if (quick) { void r.offsetHeight; r.classList.toggle('instant', false); r.classList.toggle('settled', open); }
     });
   }
@@ -631,9 +786,38 @@
     return opened ? target : null;
   }
   const idOf = hash => { try { return decodeURIComponent(hash.slice(1)); } catch (e) { return hash.slice(1); } };
+  // A smooth jump is planned against the layout at the moment of the click. If anything above the target changes
+  // height on the way (a region, a font, an image), the jump would stop short or overshoot, so once the scroll
+  // settles the target is checked once more and put back at the top. Any scrolling of the visitor's own cancels it.
+  let settle = null;
+  const landOn = target => {
+    settle?.();
+    const want = () => parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+    let done = false, timer = 0;
+    const check = () => {
+      if (done) return; stop();
+      if (Math.abs(target.getBoundingClientRect().top - want()) > 4) target.scrollIntoView({ block: 'start', behavior: 'auto' });
+    };
+    const quiet = () => { clearTimeout(timer); timer = setTimeout(check, 180); };
+    const stop = () => {
+      done = true; clearTimeout(timer); clearTimeout(cap);
+      removeEventListener('scroll', quiet); removeEventListener('scrollend', check);
+      ['wheel', 'touchstart', 'keydown'].forEach(t => removeEventListener(t, stop));
+      settle = null;
+    };
+    addEventListener('scroll', quiet, { passive: true });
+    if ('onscrollend' in window) addEventListener('scrollend', check);
+    ['wheel', 'touchstart', 'keydown'].forEach(t => addEventListener(t, stop, { passive: true }));
+    const cap = setTimeout(stop, 4000);
+    quiet(); // also covers a jump so short that no scroll event comes
+    settle = stop;
+  };
   document.addEventListener('click', e => {
     const a = e.target.closest?.('a[href*="#"]');
-    if (a && a.origin === location.origin && a.pathname === location.pathname) reveal(idOf(a.hash));
+    if (!a || a.origin !== location.origin || a.pathname !== location.pathname || e.defaultPrevented) return;
+    reveal(idOf(a.hash));
+    const target = a.hash.length > 1 && document.getElementById(idOf(a.hash));
+    if (target && !a.matches('.skip')) landOn(target);
   });
   addEventListener('hashchange', () => { const t = reveal(idOf(location.hash)); if (t) t.scrollIntoView(); });
   if (location.hash) { const t = reveal(idOf(location.hash)); if (t) requestAnimationFrame(() => t.scrollIntoView()); }
@@ -650,4 +834,30 @@
 
   // Make sure every download link points at the same file.
   $$('a[href$="Spotter.dmg"]').forEach(a => { a.href = DOWNLOAD; });
+
+  // On a phone or tablet a .dmg is no use: the Download buttons send the page's link instead (the share sheet,
+  // or an email to yourself), so it can be opened on the Mac. Buy a license keeps working everywhere.
+  const notMac = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (notMac) {
+    const PAGE = 'https://thespotter.si/';
+    $$('a[data-download]').forEach(a => {
+      const label = a.querySelector('span') || a;
+      label.textContent = a.classList.contains('nav-download') ? 'Get link' : 'Send the link to your Mac';
+      a.querySelector('use')?.setAttribute('href', '#i-share');
+      a.href = 'mailto:?subject=' + encodeURIComponent('Spotter for my Mac') + '&body=' + encodeURIComponent('Download Spotter on the Mac: ' + PAGE);
+      a.addEventListener('click', e => {
+        if (!navigator.share) return; // the mailto: link does it
+        e.preventDefault();
+        navigator.share({ title: 'Spotter for Mac', text: 'Spotter: open this on your Mac to download it.', url: PAGE }).catch(() => {});
+      });
+    });
+  }
+
+  // The section menu on narrow screens closes after a pick, on Escape, or on a click elsewhere.
+  const menu = $('.nav-menu');
+  if (menu) {
+    menu.addEventListener('click', e => { if (e.target.closest('a')) menu.open = false; });
+    document.addEventListener('click', e => { if (menu.open && !menu.contains(e.target)) menu.open = false; });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary').focus(); } });
+  }
 })();

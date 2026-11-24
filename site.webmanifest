@@ -1,0 +1,14 @@
+{
+  "name": "Spotter",
+  "short_name": "Spotter",
+  "description": "Your Mac, understood. Find any file by what's in it, clean your Mac, and run your work on a board with the real files.",
+  "start_url": "/",
+  "display": "browser",
+  "theme_color": "#14213D",
+  "background_color": "#F4EDE0",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
