@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Spotter</title>
+    <link>https://thespotter.si/appcast.xml</link>
+    <description>Spotter updates</description>
+    <language>en</language>
+    <item>
+      <title>Spotter 0.9.22</title>
+      <pubDate>Tue, 24 Nov 2026 09:33:05 +0000</pubDate>
+      <sparkle:version>24</sparkle:version>
+      <sparkle:shortVersionString>0.9.22</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<h2>Spotter 0.9.22</h2>
+<ul>
+<li><b>Help for every feature.</b> Click ? beside any page title, or right-click a sidebar item and choose How Does This Work?, for a short video and the steps. Help ▸ Spotter Help lists them all.</li>
+<li><b>Send Feedback.</b> Help ▸ Send Feedback… shows exactly what is sent, and a person reads every message.</li>
+<li><b>Ask Spot understands you better.</b> Ask what it can do, how to reach us, or to switch Spotter to dark, and it answers directly instead of searching your files. It is in beta and says so; you can turn it off in Settings → Intelligence to save memory.</li>
+<li><b>Duplicates in one click.</b> Move N Copies to the Trash… now includes copies made today, shows the list first, and one Undo brings them all back.</li>
+<li><b>Fixes.</b> Settings… in the menu bar opens Settings again; the tour outlines exactly what it is talking about; the film can play faster; setup turns on the most useful things for you.</li>
+</ul>]]></description>
+      <enclosure url="https://github.com/whiterabbit-vibe/thespotter-site/releases/download/v0.9.22/Spotter-0.9.22.dmg" type="application/octet-stream" sparkle:edSignature="SdV2qIcTL9hVtNqr75Vppf05r0chUb0p0vvDyqOrxFWIUQJKl5bGXrvvHI98D74pLZtyp30lI5Ke5J9jMUgqBA==" length="88764093" />
+    </item>
+  </channel>
+</rss>
