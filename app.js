@@ -9,19 +9,32 @@
   const DOWNLOAD = 'https://github.com/whiterabbit-vibe/thespotter-site/releases/latest/download/Spotter.dmg';
 
   // ---------- Theme ----------
+  // Follows the Mac's appearance until you pick one; the pick is remembered. The whole page follows,
+  // hero included, so the switch shows at once, with a short cross-fade.
   const root = document.documentElement;
-  const toggle = $('#themeToggle');
+  const switches = $$('[data-set-theme]');
   const systemDark = matchMedia('(prefers-color-scheme: dark)');
   const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : systemDark.matches;
-  const labelToggle = () => toggle && toggle.setAttribute('aria-label', isDark() ? 'Switch to light theme' : 'Switch to dark theme');
-  labelToggle();
-  systemDark.addEventListener?.('change', labelToggle);
-  toggle?.addEventListener('click', () => {
-    const next = isDark() ? 'light' : 'dark';
-    root.dataset.theme = next;
-    try { localStorage.setItem('theme', next); } catch (e) {}
-    labelToggle();
-  });
+  const themeHooks = []; // the fluted glass redraws itself here
+  const syncTheme = () => {
+    const dark = isDark();
+    switches.forEach(b => b.setAttribute('aria-pressed', String((b.dataset.setTheme === 'dark') === dark)));
+    if (root.dataset.theme) $$('meta[name="theme-color"]').forEach(m => m.setAttribute('content', dark ? '#14213D' : '#F4EDE0'));
+    themeHooks.forEach(f => f());
+  };
+  syncTheme();
+  systemDark.addEventListener?.('change', syncTheme);
+  switches.forEach(b => b.addEventListener('click', () => {
+    const next = b.dataset.setTheme;
+    const apply = () => {
+      root.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      syncTheme();
+    };
+    if ((next === 'dark') === isDark() || reduceMotion.matches) apply();
+    else if (document.startViewTransition) document.startViewTransition(apply);
+    else { root.classList.add('theme-fading'); apply(); setTimeout(() => root.classList.remove('theme-fading'), 420); }
+  }));
 
   // ---------- Spot ----------
   // The same creature as the app (SpotCreature.swift), drawn in SVG on a radius of 50.
@@ -255,22 +268,29 @@
   const glass = { intensity: 0.55, target: 0.55, animating: false };
   const RIB = 11, SCALE = 0.25; // the light is smooth, so it's drawn at a quarter size
 
+  // Night: navy with an indigo haze. Day: cream with a softer haze, the same coral light behind Spot.
+  const LIGHTS = {
+    dark: { top: '#16244A', bottom: '#0F1A31', haze: [73, 88, 168, .7], sheen: [244, 237, 224, .14], glow: .95, mid: .45, core: .55 },
+    light: { top: '#F7F1E6', bottom: '#EADFCB', haze: [73, 88, 168, .14], sheen: [255, 255, 255, .7], glow: .62, mid: .26, core: .5 },
+  };
   function drawLight(ctx, w, h, glow, intensity) {
+    const L = LIGHTS[isDark() ? 'dark' : 'light'];
+    const rgba = (c, a = c[3]) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
     const k = SCALE, W = w * 3, reach = Math.max(w, h);
     ctx.setTransform(k, 0, 0, k, w * k, 0); // light space runs from -w to 2w
     const base = ctx.createLinearGradient(0, 0, 0, h);
-    base.addColorStop(0, '#16244A'); base.addColorStop(1, '#0F1A31');
+    base.addColorStop(0, L.top); base.addColorStop(1, L.bottom);
     ctx.fillStyle = base; ctx.fillRect(-w, 0, W, h);
     const radial = (x, y, r, stops) => {
       const g = ctx.createRadialGradient(x, y, 0, x, y, r);
       stops.forEach(([o, c]) => g.addColorStop(o, c));
       ctx.fillStyle = g; ctx.fillRect(-w, 0, W, h);
     };
-    radial(w * .16, h * .2, reach * .48, [[0, 'rgba(73,88,168,.7)'], [1, 'rgba(73,88,168,0)']]);
-    radial(w * .94, h * .04, reach * .3, [[0, 'rgba(244,237,224,.14)'], [1, 'rgba(244,237,224,0)']]);
+    radial(w * .16, h * .2, reach * .48, [[0, rgba(L.haze)], [1, rgba(L.haze, 0)]]);
+    radial(w * .94, h * .04, reach * .3, [[0, rgba(L.sheen)], [1, rgba(L.sheen, 0)]]);
     const s = 0.55 + 0.45 * intensity;
-    radial(glow.x, glow.y, reach * .36, [[0, `rgba(255,107,91,${.95 * s})`], [.4, `rgba(255,107,91,${.45 * s})`], [1, 'rgba(255,107,91,0)']]);
-    radial(glow.x, glow.y, reach * .1, [[0, `rgba(255,181,158,${.55 * s})`], [1, 'rgba(255,181,158,0)']]);
+    radial(glow.x, glow.y, reach * .36, [[0, `rgba(255,107,91,${L.glow * s})`], [.4, `rgba(255,107,91,${L.mid * s})`], [1, 'rgba(255,107,91,0)']]);
+    radial(glow.x, glow.y, reach * .1, [[0, `rgba(255,181,158,${L.core * s})`], [1, 'rgba(255,181,158,0)']]);
   }
 
   let light, ribShade;
@@ -307,15 +327,19 @@
       ctx.drawImage(light, (p0 + w) * SCALE, 0, sw * SCALE, h * SCALE,
                     Math.round(x * dpr), 0, Math.ceil(RIB * dpr), canvas.height);
     }
-    if (!ribShade || ribShade.dpr !== dpr) {
+    const dark = isDark();
+    if (!ribShade || ribShade.dpr !== dpr || ribShade.dark !== dark) {
       const tile = document.createElement('canvas');
       tile.width = Math.round(RIB * dpr); tile.height = 1;
       const t = tile.getContext('2d');
       const g = t.createLinearGradient(0, 0, tile.width, 0);
-      g.addColorStop(0, 'rgba(255,255,255,.09)'); g.addColorStop(.2, 'rgba(255,255,255,.03)');
-      g.addColorStop(.45, 'rgba(255,255,255,0)'); g.addColorStop(.75, 'rgba(0,0,0,.06)'); g.addColorStop(1, 'rgba(0,0,0,.2)');
+      // By day the ribs catch more light and cast a fainter navy shade.
+      const [hi, lo, sh, deep] = dark ? ['rgba(255,255,255,.09)', 'rgba(255,255,255,.03)', 'rgba(0,0,0,.06)', 'rgba(0,0,0,.2)']
+                                      : ['rgba(255,255,255,.55)', 'rgba(255,255,255,.18)', 'rgba(20,33,61,.03)', 'rgba(20,33,61,.09)'];
+      g.addColorStop(0, hi); g.addColorStop(.2, lo);
+      g.addColorStop(.45, 'rgba(255,255,255,0)'); g.addColorStop(.75, sh); g.addColorStop(1, deep);
       t.fillStyle = g; t.fillRect(0, 0, tile.width, 1);
-      ribShade = { pattern: ctx.createPattern(tile, 'repeat'), dpr };
+      ribShade = { pattern: ctx.createPattern(tile, 'repeat'), dpr, dark };
     }
     ctx.fillStyle = ribShade.pattern;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -342,6 +366,7 @@
     if ('ResizeObserver' in window) new ResizeObserver(schedule).observe(canvas);
     addEventListener('resize', schedule);
     plainGlass.addEventListener?.('change', schedule);
+    themeHooks.push(renderGlass);
     renderGlass();
   }
 
@@ -562,6 +587,56 @@
       }, { threshold: 0.35 }).observe(panel);
     } else { demoVisible = true; begin(); }
   }
+
+  // ---------- Show details ----------
+  // Each feature shows its heading, one line and its key visual; the rest opens here. A button can open
+  // several regions (aria-controls lists them). A link to something inside a closed region opens it first.
+  const toggles = $$('.more-toggle');
+  const regionsOf = b => b.getAttribute('aria-controls').split(/\s+/).map(id => document.getElementById(id)).filter(Boolean);
+  const toggleFor = region => toggles.find(b => regionsOf(b).includes(region));
+  function setOpen(btn, open, instant) {
+    btn.setAttribute('aria-expanded', String(open));
+    const label = btn.querySelector('.more-label');
+    if (label) label.textContent = open ? (btn.dataset.hide || 'Hide details') : (btn.dataset.show || 'Show details');
+    regionsOf(btn).forEach(r => {
+      if (r.tagName === 'TBODY') { r.hidden = !open; r.classList.toggle('open', open && !instant); return; }
+      const quick = instant || reduceMotion.matches;
+      r.classList.toggle('instant', quick);
+      r.classList.toggle('settled', false);
+      r.classList.toggle('open', open);
+      r.inert = !open;
+      if (quick) { void r.offsetHeight; r.classList.toggle('instant', false); r.classList.toggle('settled', open); }
+    });
+  }
+  $$('.more').forEach(r => {
+    r.inert = true;
+    r.addEventListener('transitionend', e => {
+      if (e.target === r && e.propertyName === 'grid-template-rows' && r.classList.contains('open')) r.classList.add('settled');
+    });
+  });
+  toggles.forEach(b => {
+    setOpen(b, false, true);
+    b.addEventListener('click', () => setOpen(b, b.getAttribute('aria-expanded') !== 'true'));
+  });
+  // Opens every closed region around an element, at once, so the browser can scroll straight to it.
+  function reveal(id) {
+    const target = id && document.getElementById(id);
+    if (!target) return null;
+    let opened = false;
+    if (target.tagName === 'DETAILS' && !target.open) { target.open = true; opened = true; } // a FAQ entry
+    for (let r = target.closest('.more, tbody.more-rows'); r; r = r.parentElement?.closest('.more, tbody.more-rows')) {
+      const b = toggleFor(r);
+      if (b && b.getAttribute('aria-expanded') !== 'true') { setOpen(b, true, true); opened = true; }
+    }
+    return opened ? target : null;
+  }
+  const idOf = hash => { try { return decodeURIComponent(hash.slice(1)); } catch (e) { return hash.slice(1); } };
+  document.addEventListener('click', e => {
+    const a = e.target.closest?.('a[href*="#"]');
+    if (a && a.origin === location.origin && a.pathname === location.pathname) reveal(idOf(a.hash));
+  });
+  addEventListener('hashchange', () => { const t = reveal(idOf(location.hash)); if (t) t.scrollIntoView(); });
+  if (location.hash) { const t = reveal(idOf(location.hash)); if (t) requestAnimationFrame(() => t.scrollIntoView()); }
 
   // File names wrap like Finder's: after an underscore or before the extension, not mid-word.
   $$('.f > span, .meet .f > span').forEach(span => {

@@ -4,15 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Spotter: your Mac, understood</title>
-<meta name="description" content="Spotter reads everything on your Mac, scans and screenshots included. Find any file by describing it, ask what your files say, keep your work on a board with the real files on it, and keep your Mac healthy. Nothing is uploaded.">
+<meta name="description" content="Spotter reads inside the files you choose, scans and screenshots included. Find any file by describing it, ask what your files say, hand Spot the chores with Undo, keep your work on a board with the real files on it, and keep your Mac healthy. Your files are never uploaded.">
 <meta property="og:title" content="Spotter for Mac">
 <meta property="og:description" content="Your Mac, understood. Find any file by describing it, ask what your files say, hand Spot the chores and track the work, all on your Mac.">
 <meta property="og:image" content="https://thespotter.si/icon-512.png">
-<meta name="theme-color" content="#14213D">
+<meta name="theme-color" content="#F4EDE0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14213D" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<script>(()=>{let t=new URLSearchParams(location.search).get('theme');if(!t)try{t=localStorage.getItem('theme')}catch(e){}if(t==='light'||t==='dark')document.documentElement.dataset.theme=t})()</script>
+<script>(()=>{const r=document.documentElement;r.classList.add('js');let t=new URLSearchParams(location.search).get('theme');if(!t)try{t=localStorage.getItem('theme')}catch(e){}r.dataset.theme=(t==='light'||t==='dark')?t:'dark'})()</script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -50,6 +51,11 @@
   <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/></symbol>
   <symbol id="i-note" viewBox="0 0 24 24"><path d="M6 3.5h12a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1z"/><path d="M8.5 8.5l1.2 1.2 2-2.2M13.5 9h3M8.5 13.5l1.2 1.2 2-2.2M13.5 14h3"/></symbol>
   <symbol id="i-menubar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 8h18"/><circle cx="17" cy="6" r=".6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M8.8 12.2l2.3 2.3 4.2-4.4"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15.5" r="3.8"/><path d="M10.8 12.8L19.5 4M16.3 7.2l2.6 2.6M14.2 9.3l2 2"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4.5v4h-4"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6.5 9.5l5.5 5.5 5.5-5.5"/></symbol>
 </svg>
 
 <a class="skip" href="#main">Skip to content</a>
@@ -71,9 +77,10 @@
       <a href="#privacy">Privacy</a>
       <a href="#price">Price</a>
     </div>
-    <button class="icon-btn theme-toggle" type="button" id="themeToggle" aria-label="Switch to dark theme">
-      <svg class="i sun"><use href="#i-sun"/></svg><svg class="i moon"><use href="#i-moon"/></svg>
-    </button>
+    <div class="theme-switch" role="group" aria-label="Theme">
+      <button type="button" data-set-theme="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg class="i"><use href="#i-sun"/></svg><span>Light</span></button>
+      <button type="button" data-set-theme="dark" aria-pressed="false" aria-label="Dark theme" title="Dark theme"><svg class="i"><use href="#i-moon"/></svg><span>Dark</span></button>
+    </div>
     <a class="pill pill-coral nav-download" href="https://github.com/whiterabbit-vibe/thespotter-site/releases/latest/download/Spotter.dmg">Download</a>
   </nav>
 
@@ -81,12 +88,27 @@
     <div class="hero-copy">
       <p class="eyebrow">Superintelligence for your Mac</p>
       <h1>Your Mac,<br>understood.</h1>
-      <p class="lead">Spotter reads everything on your Mac, down to the words in a scan and what's in a photo. Find any file by describing it. Ask what your files say. Hand Spot the chores, keep your work on a board with the real files on it, and see why your Mac is slow. All of it runs on your Mac. Nothing is uploaded.</p>
+      <p class="lead">Spotter reads inside every file you let it, down to the words in a scan and what's in a photo. <strong class="hl">Find any file by describing it</strong>, <strong class="hl">ask what your files say</strong> and get the answer with its file and page, <strong class="hl">hand Spot the chores</strong> with an Undo, run your work on a <strong class="hl">Tasks board</strong> whose cards hold the real files, and see <strong class="hl">why your Mac is slow</strong>. <strong class="hl">All of it runs on your Mac.</strong> Your files are never uploaded.</p>
+      <ul class="hero-chips" aria-label="Also in Spotter">
+        <li><a class="chip" href="#tasks">Notes and card links</a></li>
+        <li><a class="chip" href="#copy-text">Copy Text from the screen</a></li>
+        <li><a class="chip" href="#anywhere">⇧⌥Space from any app</a></li>
+        <li><a class="chip" href="#menubar">Menu bar, with Force Quit</a></li>
+        <li><a class="chip" href="#mac">Health and Balance the Load</a></li>
+        <li><a class="chip" href="#tidy">Tidy and duplicates</a></li>
+        <li><a class="chip" href="#remembers">Timeline, Places, People</a></li>
+      </ul>
       <div class="cta-row">
         <a class="pill pill-coral pill-lg" href="https://github.com/whiterabbit-vibe/thespotter-site/releases/latest/download/Spotter.dmg"><svg class="i"><use href="#i-down"/></svg>Download for Mac</a>
         <a class="link-btn" href="#watch"><svg class="i"><use href="#i-play"/></svg>Watch the film</a>
       </div>
       <p class="fine">Free for 7 days of use, then $9 at launch, plus local tax where it applies. macOS 26 or later, Apple silicon.</p>
+      <ul class="trust" aria-label="Safe to install">
+        <li><svg class="i"><use href="#i-shield"/></svg>Notarized by Apple</li>
+        <li><svg class="i"><use href="#i-lock"/></svg>Nothing uploaded</li>
+        <li><svg class="i"><use href="#i-undo"/></svg>Trash with Undo</li>
+        <li><a href="#safe">Why it's safe</a></li>
+      </ul>
     </div>
 
     <div class="hero-demo">
@@ -126,7 +148,7 @@
         <li><a class="card" href="#tasks"><span class="num">04</span><svg class="i"><use href="#i-board"/></svg><b>Tasks &amp; Notes</b><span>A board with your real files on the cards. One link opens the exact card.</span></a></li>
         <li><a class="card" href="#mac"><span class="num">05</span><svg class="i"><use href="#i-heart"/></svg><b>Your Mac</b><span>Why it's slow, where the space went, what to quit. Spot turns orange when it needs a look.</span></a></li>
         <li><a class="card" href="#remembers"><span class="num">06</span><svg class="i"><use href="#i-clock"/></svg><b>Remembers</b><span>Your week, your places, your people, and where every download came from.</span></a></li>
-        <li><a class="card" href="#privacy"><span class="num">07</span><svg class="i"><use href="#i-lock"/></svg><b>Private</b><span>Read on your Mac, an encrypted index, no account. Nothing leaves without a click.</span></a></li>
+        <li><a class="card" href="#privacy"><span class="num">07</span><svg class="i"><use href="#i-shield"/></svg><b>Private and safe</b><span>Read on your Mac, an encrypted index, no account. Notarized by Apple.</span></a></li>
       </ol>
     </div>
   </section>
@@ -159,6 +181,8 @@
           </span>
         </figcaption>
       </figure>
+      <div class="more-bar"><button class="more-toggle" type="button" aria-expanded="false" aria-controls="watch-more" aria-describedby="watch-title" data-show="More films" data-hide="Fewer films"><span class="more-label">More films</span><svg class="i"><use href="#i-chev"/></svg></button><span class="more-peek">The feature film, the tour and Beyond</span></div>
+      <div class="more" id="watch-more"><div class="more-inner">
       <div class="more-films more-films-3">
         <figure class="card">
           <video controls playsinline preload="none" poster="features-poster.jpg" width="1920" height="1080" aria-label="Spotter, the feature film, 1 minute 55 seconds"><source src="SpotterFeatures.mp4" type="video/mp4"><a href="SpotterFeatures.mp4">Download the feature film (MP4)</a></video>
@@ -173,6 +197,7 @@
           <figcaption><b>Beyond · 34 s</b><span>More than a Finder that reads text.</span></figcaption>
         </figure>
       </div>
+      </div></div>
     </div>
   </section>
 
@@ -182,7 +207,7 @@
       <div class="section-head">
         <p class="eyebrow"><span class="chapter">01</span>Find</p>
         <h2 id="find-title">Remember it vaguely. Find it exactly.</h2>
-        <p class="lead">Type what you remember: what it says, what it shows, roughly when. Spotter works out whether you're looking for a file, asking a question or giving it a job. You never pick a mode.</p>
+        <p class="lead">Type what you remember: what it says, what it shows, roughly when. Spotter reads inside every file to find it.</p>
       </div>
 
       <div class="tabs" role="tablist" aria-label="What the box can do">
@@ -202,6 +227,9 @@
         <div class="demo-body" id="demoBody"></div>
       </div>
 
+      <div class="more-bar"><button class="more-toggle" type="button" aria-expanded="false" aria-controls="find-more" aria-describedby="find-title"><span class="more-label">Show details</span><svg class="i"><use href="#i-chev"/></svg></button><span class="more-peek">What it reads · A receipt found by its words · People with paper · ⇧⌥Space from any app</span></div>
+      <div class="more" id="find-more"><div class="more-inner">
+      <p class="more-lead">The same box works out whether you're looking for a file, asking a question or giving it a job. You never pick a mode.</p>
       <ul class="reads loved" aria-label="What Spotter reads">
         <li class="card"><svg class="i"><use href="#i-doc"/></svg><b>Words in scans and screenshots</b><span>Scanned PDFs are read to the last page, and so is the text in screenshots, photos of receipts and old prints, in many languages.</span></li>
         <li class="card"><svg class="i"><use href="#i-photo"/></svg><b>Photos and videos by what's in them</b><span>“The dog on the sofa” or “sunset over the sea” finds the picture, with no caption or tag to go on.</span></li>
@@ -256,16 +284,20 @@
           <p class="quick-hints"><span><b>↩</b>open</span><span><b>⌘↩</b>in Spotter</span><span><b>⌥↩</b>in Finder</span><span><b>⌘Y</b>downloads</span></p>
         </div>
       </div>
+      </div></div>
     </div>
   </section>
 
   <!-- Find: Copy Text -->
   <section class="section" id="copy-text" aria-labelledby="copy-title">
-    <div class="wrap split">
+    <div class="wrap split has-more">
       <div class="section-head">
         <p class="eyebrow"><span class="chapter">01</span>Find · Copy Text</p>
         <h2 id="copy-title">The words in any picture, on your clipboard.</h2>
-        <p class="lead">Right-click a screenshot, a photo or a scanned PDF and choose Copy Text from Image. Or choose Copy Text from Screen and drag over any part of your screen: a slide in a video call, an app that won't let you select. Wherever you are, a small notice says “Text copied” and shows the first words. It's all read on your Mac.</p>
+        <p class="lead">Right-click a screenshot, photo or scan for Copy Text from Image, or drag over any part of your screen with Copy Text from Screen.</p>
+        <div class="more-bar"><button class="more-toggle" type="button" aria-expanded="false" aria-controls="copy-more" aria-describedby="copy-title"><span class="more-label">Show details</span><svg class="i"><use href="#i-chev"/></svg></button><span class="more-peek">The keys · Save as a note, tables as CSV, QR codes</span></div>
+        <div class="more" id="copy-more"><div class="more-inner">
+        <p class="more-lead">A slide in a video call, an app that won't let you select: wherever you are, a small notice says “Text copied” and shows the first words. It's all read on your Mac.</p>
         <ul class="keys" aria-label="Ways to copy text">
           <li><kbd>⌃⌘C</kbd><span>Copy Text from Image, for the files you selected</span></li>
           <li><kbd>⌃⇧⌘T</kbd><span>Copy Text from Screen: drag over any part of it</span></li>
@@ -277,6 +309,7 @@
           <span class="chip">QR codes and links</span>
           <span class="chip">Make a searchable PDF</span>
         </div>
+        </div></div>
       </div>
       <div class="copy-stage" role="img" aria-label="Example: part of the screen is selected with Copy Text from Screen, and a notice says Text copied, with the first words of an invoice.">
         <div class="copy-screen" aria-hidden="true">
@@ -296,11 +329,14 @@
 
   <!-- 02 Ask -->
   <section class="section section-deep" id="ask" aria-labelledby="ask-title">
-    <div class="wrap split">
+    <div class="wrap split has-more">
       <div class="section-head">
         <p class="eyebrow"><span class="chapter">02</span>Ask Spot · Beta</p>
         <h2 id="ask-title">Ask what your files say. Ask about your Mac.</h2>
-        <p class="lead">Click Ask Spot at the bottom of the window and Spot's panel opens beside your work. Or turn on ⌃⌥Space and ask from any app, in a small floating window. Every answer from your files names the file and page it came from. Spot checks each name and number against the file and leaves out what it can't find there; when your files don't say, Spot says so.</p>
+        <p class="lead">Ask in plain words. Every answer from your files names the file and the page it came from.</p>
+        <div class="more-bar"><button class="more-toggle" type="button" aria-expanded="false" aria-controls="ask-more ask-more-convo ask-more-wide" aria-describedby="ask-title"><span class="more-label">Show details</span><svg class="i"><use href="#i-chev"/></svg></button><span class="more-peek">More answers · What Spot can answer · Lookups, only when you say</span></div>
+        <div class="more" id="ask-more"><div class="more-inner">
+        <p class="more-lead">Click Ask Spot at the bottom of the window and Spot's panel opens beside your work, or press ⌃⌥Space to ask from any app. Spot checks each name and number against the file and leaves out what it can't find there; when your files don't say, Spot says so.</p>
         <div class="chips asks" aria-label="More things to ask">
           <span class="chip">What deadlines do I have in December?</span>
           <span class="chip">Summarize the lease</span>
@@ -309,6 +345,7 @@
           <span class="chip">Turn on True Tone</span>
           <span class="chip">How long has my Mac been on?</span>
         </div>
+        </div></div>
       </div>
       <div class="card convo" aria-label="Example conversation with Spot">
         <p class="bubble me">How much is my last electricity bill for?</p>
@@ -321,6 +358,7 @@
           <span class="spot" data-spot data-size="28"></span>
           <div class="say"><em class="why-tag">From your files</em><p><b>December 1:</b> “written notice of non-renewal by December 1, 2026”.<br><b>December 15:</b> “payment due by December 15, 2026”.</p><span class="cite"><span class="thumb doc"></span>Lease_Oak_St_2025.pdf · page 3 · Car_Insurance_Subaru.pdf · page 1</span></div>
         </div>
+        <div class="more convo-more" id="ask-more-convo"><div class="more-inner">
         <p class="bubble me">Turn on True Tone</p>
         <div class="reply">
           <span class="spot" data-spot data-size="28"></span>
@@ -331,11 +369,12 @@
           <span class="spot" data-spot data-size="28"></span>
           <div class="say"><em class="why-tag">Can't check that yet</em><p>Spotter can't tell paid from unpaid invoices yet. Ask “invoices from last month” to list them, and check them against your records.</p></div>
         </div>
+        </div></div>
         <p class="soft small"><b>Beta.</b> Names and numbers are checked against your files. Open the file to be sure.</p>
       </div>
     </div>
 
-    <div class="wrap">
+    <div class="wrap more" id="ask-more-wide"><div class="more-inner">
       <ul class="asked answers" aria-label="What Spot can answer">
         <li class="card"><p class="ask">About your files</p><h3>What your documents say.</h3><p>“Summarize the lease”, “what deadlines do I have in December”, “how much did I spend at Home Depot this year”. The answer names the file and page it came from.</p></li>
         <li class="card"><p class="ask">About your collection</p><h3>Everything you keep, counted.</h3><p>“How many photos do I have”, “how many PDFs are in Downloads”, “what did I work on last week”.</p></li>
@@ -343,22 +382,26 @@
         <li class="card"><p class="ask">About where you've been</p><h3>Your photos remember.</h3><p>“When did I visit San Francisco” is answered from where and when your photos were taken.</p></li>
       </ul>
       <p class="lookup card"><svg class="i"><use href="#i-globe"/></svg><span><b>Spot asks before every lookup, and never sends a name it found in your files.</b> When your files don't answer a general question, Spot offers to look it up on Wikipedia or Apple Maps, and asks each time. Only the words of your question are sent, and each lookup is listed in Privacy. Questions about your own drives and folders are never offered to the web.</span></p>
-    </div>
+    </div></div>
   </section>
 
   <!-- 03 Do -->
   <section class="section" id="do" aria-labelledby="do-title">
-    <div class="wrap split">
+    <div class="wrap split has-more">
       <div class="section-head">
         <p class="eyebrow"><span class="chapter">03</span>Do</p>
         <h2 id="do-title">Say the chore. Approve the plan. Undo any time.</h2>
-        <p class="lead">Say what you need, the way you'd tell a colleague: zip and email, tidy the Desktop, rename by date, make an expense report, make a task. Spot shows exactly what will change and waits for your yes. Email is left as a draft for you to send, and everything it does can be undone from Activity.</p>
+        <p class="lead">Say the chore the way you'd tell a colleague. Spot shows what will change, waits for your yes, and keeps an Undo.</p>
+        <div class="more-bar"><button class="more-toggle" type="button" aria-expanded="false" aria-controls="do-more do-more-wide" aria-describedby="do-title"><span class="more-label">Show details</span><svg class="i"><use href="#i-chev"/></svg></button><span class="more-peek">Jobs to hand over · Routines that run on a schedule</span></div>
+        <div class="more" id="do-more"><div class="more-inner">
+        <p class="more-lead">Zip and email, tidy the Desktop, rename by date, make an expense report, make a task. Email is left as a draft for you to send, and everything Spot does can be undone from Activity.</p>
         <div class="chips asks" aria-label="Jobs to hand over">
           <span class="chip">Tidy my Desktop, but not the screenshots</span>
           <span class="chip">Rename these screenshots by date</span>
           <span class="chip">Get my Mac ready for a presentation</span>
           <span class="chip">Make a task to edit IMG_6012.MOV due Friday</span>
         </div>
+        </div></div>
       </div>
       <div class="card convo" aria-label="Example: Spot plans a job and waits">
         <p class="bubble me">Put my 2025 invoices in one folder, zip it and email it to my accountant</p>
@@ -379,7 +422,8 @@
         <p class="done"><svg class="i"><use href="#i-check"/></svg>Done: 4 files in Invoices, zipped, and a draft to Maria is in Mail (not sent). <span class="link">Undo</span></p>
       </div>
     </div>
-    <div class="wrap routines-block">
+    <div class="wrap more" id="do-more-wide"><div class="more-inner">
+    <div class="routines-block">
       <div class="routines-head">
         <h3>Routines: say when, and what.</h3>
         <p>Write a chore as one sentence, with a time or a folder. Spotter checks every minute. Moves to the Trash and emails wait until you're at your Mac, and every change is listed in Activity with Undo.</p>
@@ -390,6 +434,7 @@
         <li class="card"><p class="when"><svg class="i"><use href="#i-photo"/></svg>When a screenshot lands on the Desktop</p><b>File it into that month's folder</b></li>
       </ul>
     </div>
+    </div></div>
   </section>
 
   <!-- 04 Tasks & Notes -->
@@ -398,7 +443,7 @@
       <div class="section-head">
         <p class="eyebrow"><span class="chapter">04</span>Tasks &amp; Notes</p>
         <h2 id="tasks-title">A board with your real files on the cards.</h2>
-        <p class="lead">Tasks is a Kanban board, with columns you name. The difference: each card holds the actual files. Put a video on a card and it plays right there. Copy the card's link into Calendar, Slack or Mail, and one click brings you back to that card with the file ready.</p>
+        <p class="lead">A Kanban board whose cards hold the real files. Paste a card's link into Calendar, Slack or Mail, and one click opens that card.</p>
       </div>
 
       <figure class="shot shot-wide">
@@ -406,6 +451,9 @@
         <figcaption>The real app in demo mode: a made-up video maker's board. The open card offers the newer cut it found beside the file.</figcaption>
       </figure>
 
+      <div class="more-bar"><button class="more-toggle" type="button" aria-expanded="false" aria-controls="tasks-more" aria-describedby="tasks-title"><span class="more-label">Show details</span><svg class="i"><use href="#i-chev"/></svg></button><span class="more-peek">The 20-second clip · Columns you name · Links to a card · Notes with live file links</span></div>
+      <div class="more" id="tasks-more"><div class="more-inner">
+      <p class="more-lead">Columns you name, and the difference: each card holds the actual files. Put a video on a card and it plays right there. Copy the card's link into Calendar, Slack or Mail, and one click brings you back to that card with the file ready.</p>
       <div class="split tasks-split">
         <figure class="clip">
           <div class="film-frame">
@@ -437,16 +485,20 @@
           <img src="shots/notes.webp" width="985" height="938" loading="lazy" decoding="async" alt="A note called Lisbon video plan. Checklist lines show their cards: “Edit Lisbon ep. 3” with the video C0048.MP4 is Doing, due Friday, November 27; “Rough cut” is Done; “Thumbnail for Lisbon” offers Make Task. Under the note: the video file and the two tasks made from it, each with Open Card.">
         </figure>
       </div>
+      </div></div>
     </div>
   </section>
 
   <!-- 05 Your Mac -->
   <section class="section" id="mac" aria-labelledby="mac-title">
-    <div class="wrap split">
+    <div class="wrap split has-more">
       <div class="section-head">
         <p class="eyebrow"><span class="chapter">05</span>Your Mac · Health</p>
         <h2 id="mac-title">Know your Mac. Fix the slow, free the space.</h2>
-        <p class="lead">Health reads your Mac every two seconds while you look, in plain words: how busy the processor and memory are, how warm it runs, what keeps it awake and which apps use the most. “Why is my Mac slow?” gives the reason in plain words. Balance the Load moves busy background work to the efficiency cores and quits big apps you haven't used for 45 minutes. One Undo puts it back.</p>
+        <p class="lead">Ask “why is my Mac slow?” and get the reason in plain words. Balance the Load fixes it, and one Undo puts it back.</p>
+        <div class="more-bar"><button class="more-toggle" type="button" aria-expanded="false" aria-controls="mac-more mac-more-wide" aria-describedby="mac-title"><span class="more-label">Show details</span><svg class="i"><use href="#i-chev"/></svg></button><span class="more-peek">Spot in the menu bar, with Quit and Force Quit · Tidy · Duplicates</span></div>
+        <div class="more" id="mac-more"><div class="more-inner">
+        <p class="more-lead">Health reads your Mac every two seconds while you look: how busy the processor and memory are, how warm it runs, what keeps it awake and which apps use the most. Balance the Load moves busy background work to the efficiency cores and quits big apps you haven't used for 45 minutes.</p>
         <div class="chips asks" aria-label="Also in Health">
           <span class="chip">Memory and swap</span>
           <span class="chip">Battery health</span>
@@ -454,6 +506,7 @@
           <span class="chip">History, from an hour to a month</span>
           <span class="chip">Stays on this Mac</span>
         </div>
+        </div></div>
       </div>
       <div class="card health" aria-label="Example: Health on a MacBook">
         <div class="health-top">
@@ -469,7 +522,8 @@
       </div>
     </div>
 
-    <div class="wrap routines-block menubar-block" id="menubar">
+    <div class="wrap more" id="mac-more-wide"><div class="more-inner">
+    <div class="routines-block menubar-block" id="menubar">
       <div class="routines-head">
         <h3>Spot keeps an eye on your Mac, from the menu bar.</h3>
         <p>One click on Spot in the menu bar: search, how your Mac is doing in one line, the three apps using the most memory with Quit and Force Quit (each asks first), five quick tools and your recent documents. When the disk is nearly full, memory is tight or the Mac runs hot, Spot turns orange and frowns. When that passes, it smiles again.</p>
@@ -482,11 +536,11 @@
         </div>
       </div>
       <figure class="shot shot-tall">
-        <img src="shots/menubar.webp" width="760" height="1062" loading="lazy" decoding="async" alt="The menu bar panel with a worried orange Spot: “Memory is tight: Safari has 3 GB”, free space, memory and processor lines, the apps using the most memory (Safari, Mail, Notes), the tools Copy Text, Note, Downloads, Tidy and Space, three recent documents, Ask Spot and Open Spotter.">
+        <img src="shots/menubar.webp" width="760" height="1068" loading="lazy" decoding="async" alt="The menu bar panel with a worried orange Spot: “Memory is tight: Safari has 3 GB”, free space, memory and processor lines, the apps using the most memory (Safari, Mail, Notes) each with Quit and Force Quit, the tools Copy Text, Note, Downloads, Tidy and Space, three recent documents, and Ask Spot, Force Quit… and Open Spotter.">
       </figure>
     </div>
 
-    <div class="wrap routines-block" id="tidy">
+    <div class="routines-block" id="tidy">
       <div class="routines-head">
         <h3>Tidy: free space without the guesswork.</h3>
         <p>Check my Mac finds what a Mac collects without anyone choosing it: forgotten downloads, old installers, duplicates, look-alike photos, big old videos, apps you no longer use, and the junk apps leave behind. The safe ones are ticked for you; the rest are your call. It never touches Mail, Messages, Photos, iCloud Drive or a folder under version control. Everything goes to the Trash, and one Undo brings it all back.</p>
@@ -509,7 +563,7 @@
       </div>
     </div>
 
-    <div class="wrap routines-block">
+    <div class="routines-block" id="duplicates">
       <div class="routines-head">
         <h3>Duplicates: identical files, side by side.</h3>
         <p>Documents from 1 KB, and photos and other files from 20 KB: Spotter lines up the copies that are exactly the same and shows where each one lives. It suggests keeping the original, not the one named “copy” or “(1)”, and shows you the list before anything moves. The rest go to the Trash, with Undo.</p>
@@ -522,6 +576,7 @@
         </ul>
       </div>
     </div>
+    </div></div>
   </section>
 
   <!-- 06 Remembers -->
@@ -530,7 +585,7 @@
       <div class="section-head">
         <p class="eyebrow"><span class="chapter">06</span>Spot remembers</p>
         <h2 id="remembers-title">It remembers when, where and who.</h2>
-        <p class="lead">Timeline lays out your week the way you lived it: the files around each meeting, and where every file came from. Photos copied in from a camera sit on the day they were taken. Meetings come from your Mac's calendar and stay on your Mac.</p>
+        <p class="lead">Timeline lays out your week the way you lived it: the files around each meeting, and where every file came from.</p>
       </div>
 
       <div class="timeline card" id="memory">
@@ -579,6 +634,9 @@
         </div>
       </div>
 
+      <div class="more-bar"><button class="more-toggle" type="button" aria-expanded="false" aria-controls="remembers-more" aria-describedby="remembers-title"><span class="more-label">Show details</span><svg class="i"><use href="#i-chev"/></svg></button><span class="more-peek">Your day · Places · People · Downloads by source · One file leads to the rest</span></div>
+      <div class="more" id="remembers-more"><div class="more-inner">
+      <p class="more-lead">Photos copied in from a camera sit on the day they were taken. Meetings come from your Mac's calendar and stay on your Mac.</p>
       <div class="bento remembers-bento">
         <article class="card feat" id="today">
           <div class="demo-mini" aria-label="Example: Your day, Spot's morning brief" role="img">
@@ -658,18 +716,38 @@
           </div>
         </article>
       </div>
+      </div></div>
     </div>
   </section>
 
   <!-- Everyday: live previews, Browse, themes -->
   <section class="section" id="look" aria-labelledby="look-title">
     <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Every day</p>
-        <h2 id="look-title">Files that show themselves. Folders like Finder.</h2>
-        <p class="lead">Select a file and the details pane shows the file itself. When you'd rather walk the folders than search them, Browse is there, and the whole app wears the theme you pick.</p>
+      <div class="split look-split">
+        <div>
+          <div class="section-head">
+            <p class="eyebrow">Every day</p>
+            <h2 id="look-title">Files that show themselves. Folders like Finder.</h2>
+            <p class="lead">Select a file and the details pane shows the file itself. Browse walks the folders, the way Finder does.</p>
+          </div>
+          <div class="more-bar"><button class="more-toggle" type="button" aria-expanded="false" aria-controls="look-more" aria-describedby="look-title"><span class="more-label">Show details</span><svg class="i"><use href="#i-chev"/></svg></button><span class="more-peek">Live previews · Browse in up to four panes</span></div>
+        </div>
+        <div class="card look-themes">
+          <div class="demo-mini" aria-label="The themes: White, Cream, Mist, Sage, Blush and Dark" role="img">
+            <ul class="themes">
+              <li><i style="--g:#FFFFFF;--s:#F2F3F5"></i>White</li>
+              <li><i style="--g:#F4EDE0;--s:#EBE2D1"></i>Cream</li>
+              <li><i style="--g:#EEF2F7;--s:#E1E8F0"></i>Mist</li>
+              <li><i style="--g:#EEF3EC;--s:#E0E9DD"></i>Sage</li>
+              <li><i style="--g:#FBEFEA;--s:#F5E1DA"></i>Blush</li>
+              <li><i style="--g:#14213D;--s:#0B1426"></i>Dark</li>
+            </ul>
+          </div>
+          <p class="look-themes-copy"><b>Six themes.</b> White, Cream, Mist, Sage or Blush by day, navy at night. Spot and the glass stay the same in all of them.</p>
+        </div>
       </div>
-      <div class="bento bento-3">
+      <div class="more" id="look-more"><div class="more-inner">
+      <div class="bento">
         <article class="card feat">
           <div class="demo-mini" aria-label="Example: a video playing in the details pane" role="img">
             <div class="pane-video"><span class="thumb photo"></span><span class="pane-play"><svg class="i"><use href="#i-play"/></svg></span><span class="pane-bar"><i></i></span></div>
@@ -694,23 +772,8 @@
             <p>Columns, a list or icons, with a size on every row and up to four panes side by side. Finder's keys work too.</p>
           </div>
         </article>
-        <article class="card feat">
-          <div class="demo-mini" aria-label="The themes: White, Cream, Mist, Sage, Blush and Dark" role="img">
-            <ul class="themes">
-              <li><i style="--g:#FFFFFF;--s:#F2F3F5"></i>White</li>
-              <li><i style="--g:#F4EDE0;--s:#EBE2D1"></i>Cream</li>
-              <li><i style="--g:#EEF2F7;--s:#E1E8F0"></i>Mist</li>
-              <li><i style="--g:#EEF3EC;--s:#E0E9DD"></i>Sage</li>
-              <li><i style="--g:#FBEFEA;--s:#F5E1DA"></i>Blush</li>
-              <li><i style="--g:#14213D;--s:#0B1426"></i>Dark</li>
-            </ul>
-          </div>
-          <div class="feat-copy">
-            <h3>Themes</h3>
-            <p>White, Cream, Mist, Sage or Blush by day, navy at night. Spot and the glass stay the same in all of them.</p>
-          </div>
-        </article>
       </div>
+      </div></div>
     </div>
   </section>
 
@@ -718,10 +781,23 @@
   <section class="section section-deep" id="privacy" aria-labelledby="privacy-title">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow"><span class="chapter">07</span>Private</p>
-        <h2 id="privacy-title">Kept on your Mac. Tested in the open.</h2>
-        <p class="lead">Spotter reads your files on your Mac and keeps what it learns there. No account, no analytics, and nothing leaves your Mac without a click.</p>
+        <p class="eyebrow"><span class="chapter">07</span>Private and safe</p>
+        <h2 id="privacy-title">Kept on your Mac. Safe to install.</h2>
+        <p class="lead">Spotter reads your files on your Mac and keeps what it learns there. No account, no analytics, nothing uploaded.</p>
       </div>
+      <ul class="safe" id="safe" aria-label="Why Spotter is safe to install">
+        <li class="card safe-key"><svg class="i"><use href="#i-shield"/></svg><b>Notarized by Apple</b><span>Signed with an Apple Developer ID and checked by Apple for malware. macOS verifies that before Spotter opens.</span></li>
+        <li class="card"><svg class="i"><use href="#i-refresh"/></svg><b>Signed updates</b><span>Every update is signed, and Spotter checks the signature before it installs one.</span></li>
+        <li class="card"><svg class="i"><use href="#i-mac"/></svg><b>Runs on your Mac</b><span>Your files are read on your Mac and never uploaded.</span></li>
+        <li class="card"><svg class="i"><use href="#i-eye-off"/></svg><b>No account, no analytics</b><span>No tracking. Nothing is sent without your OK, except a daily check for updates.</span></li>
+        <li class="card"><svg class="i"><use href="#i-key"/></svg><b>License checked offline</b><span>Your key is checked on your Mac and never sent.</span></li>
+        <li class="card"><svg class="i"><use href="#i-undo"/></svg><b>The Trash, with Undo</b><span>Everything Spotter removes goes to the Trash, and one Undo puts it back.</span></li>
+        <li class="card"><svg class="i"><use href="#i-card"/></svg><b>Checkout by Dodo Payments</b><span>The merchant of record takes the payment; we never see your card. 30-day refunds.</span></li>
+        <li class="card"><svg class="i"><use href="#i-mail"/></svg><b>A person replies</b><span>Write to <a href="mailto:hey@thespotter.si">hey@thespotter.si</a>. A person reads every email.</span></li>
+      </ul>
+      <p class="safe-check"><b>Check it yourself.</b> The first time you open Spotter, macOS says Apple checked it for malicious software. Or, in Terminal, <code>spctl -a -vv /Applications/Spotter.app 2&gt;&amp;1 | grep source=</code> answers <code>source=Notarized Developer ID</code>.</p>
+      <div class="more-bar"><button class="more-toggle" type="button" aria-expanded="false" aria-controls="privacy-more" aria-describedby="privacy-title"><span class="more-label">Show details</span><svg class="i"><use href="#i-chev"/></svg></button><span class="more-peek">How your files are kept · Spotter against Spotlight</span></div>
+      <div class="more" id="privacy-more"><div class="more-inner">
       <div class="split split-even">
         <ul class="promises">
           <li><svg class="i"><use href="#i-mac"/></svg><div><b>Your files never leave your Mac</b><p>Search, text in images, transcripts of recordings and answers all run on your Mac, with Apple's on-device model and the small open models you choose to download once.</p></div></li>
@@ -747,6 +823,7 @@
           <p class="soft small bench-more">Every request Spotter may make is listed on the <a href="privacy.html">privacy page</a>, the same list the app shows.</p>
         </div>
       </div>
+      </div></div>
     </div>
   </section>
 
@@ -765,6 +842,8 @@
             <tr><th scope="row">Words inside screenshots, scans and recordings</th><td>Searchable, and copied with one click, from a file or from the screen</td><td>Text in images through Spotlight; recordings not at all</td></tr>
             <tr><th scope="row">Asking what a document says</th><td>An answer with the file and page it came from</td><td>Open it and read</td></tr>
             <tr><th scope="row">Tracking work on files</th><td>A board with the files on the cards, and links that open the card from Calendar, Slack or Mail</td><td>Tags and folders</td></tr>
+          </tbody>
+          <tbody class="more-rows" id="finder-more">
             <tr><th scope="row">A question about your Mac</th><td>“How much space is free?” or “why is my Mac slow?”, answered in a sentence</td><td>About This Mac, Activity Monitor and Settings, each on its own</td></tr>
             <tr><th scope="row">Where a download came from</th><td>Grouped by Gmail, ChatGPT, Slack or any site</td><td>A "Where from" line in Get Info, one file at a time</td></tr>
             <tr><th scope="row">What you worked on last Tuesday</th><td>A week of files, with your meetings</td><td>Recents, without the days</td></tr>
@@ -773,6 +852,7 @@
             <tr><th scope="row">A chore in one sentence</th><td>"Zip my 2025 invoices and email them to my accountant", shown first, with Undo</td><td>By hand</td></tr>
           </tbody>
         </table>
+        <div class="more-bar"><button class="more-toggle" type="button" aria-expanded="false" aria-controls="finder-more" aria-describedby="finder-title" data-show="Show all 10 rows" data-hide="Show fewer rows"><span class="more-label">Show all 10 rows</span><svg class="i"><use href="#i-chev"/></svg></button><span class="more-peek">Your Mac, downloads, last Tuesday, people and places, space, chores</span></div>
         <p class="soft small">Compared with Finder in macOS 26. Spotter isn't made by or affiliated with Apple.</p>
       </div>
     </div>
@@ -793,7 +873,7 @@
           <li><svg class="i"><use href="#i-check"/></svg>Ask Spot (Beta): answers with the file and page, questions about your Mac, jobs with Undo, routines</li>
           <li><svg class="i"><use href="#i-check"/></svg>Tasks: a board with your files on the cards, links that open the card; Notes with live file links</li>
           <li><svg class="i"><use href="#i-check"/></svg>Your Mac: Health, Tidy, Duplicates, Space and Apps</li>
-          <li><svg class="i"><use href="#i-check"/></svg>Spot in the menu bar: your Mac at a glance, apps to quit, quick tools</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Spot in the menu bar: your Mac at a glance, Quit and Force Quit, quick tools</li>
           <li><svg class="i"><use href="#i-check"/></svg>Quick search from any app with ⇧⌥Space, apps included</li>
           <li><svg class="i"><use href="#i-check"/></svg>Timeline, Your day, People, Places and Downloads</li>
           <li><svg class="i"><use href="#i-check"/></svg>Search by meaning; photos and videos by what's in them</li>
@@ -803,6 +883,12 @@
         <a class="pill pill-coral pill-lg" href="https://github.com/whiterabbit-vibe/thespotter-site/releases/latest/download/Spotter.dmg"><svg class="i"><use href="#i-down"/></svg>Download and try free</a>
         <a class="pill pill-lg pill-outline" id="buy" href="https://checkout.dodopayments.com/buy/pdt_0NsVdGHVlf8kLIEWdPCIt?quantity=1">Buy a license · $9</a>
         <p class="fine">Plus local tax where it applies. Your key arrives by email in a minute. One license per person, up to two Macs · 30-day refunds · macOS 26 or later on Apple silicon.</p>
+        <ul class="trust trust-card" aria-label="Safe to buy and install">
+          <li><svg class="i"><use href="#i-shield"/></svg>Notarized by Apple</li>
+          <li><svg class="i"><use href="#i-card"/></svg>Checkout by Dodo Payments</li>
+          <li><svg class="i"><use href="#i-key"/></svg>Key checked offline</li>
+          <li><svg class="i"><use href="#i-undo"/></svg>30-day refunds</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -811,6 +897,7 @@
     <div class="wrap narrow">
       <h2 id="faq-title">Questions</h2>
       <details><summary>How is this different from Spotlight?</summary><p>Spotlight matches the words you type against file names and some text. Spotter reads what's inside your files, including text in screenshots and scans and what's said in recordings, and understands related words, dates and places. "Insurance for the cat" finds a policy that says "Luna" and "vet visits". With the meaning model, it also finds a file when none of your words are in it. It can also answer questions with the page the answer came from, and show the files around a meeting.</p></details>
+      <details id="faq-safe"><summary>Is Spotter safe to install?</summary><p>Yes. Spotter is signed with an Apple Developer ID and notarized by Apple: Apple checked it for malware, and macOS verifies that before it opens. To see it yourself, run <code>spctl -a -vv /Applications/Spotter.app 2&gt;&amp;1 | grep source=</code> in Terminal; it answers “source=Notarized Developer ID”. Updates are signed too, and Spotter checks the signature before it installs one. Your files are read on your Mac and never uploaded; there is no account and no analytics. Your license key is checked on your Mac, offline. Everything Spotter removes goes to the Trash, and one Undo puts it back. Checkout is run by Dodo Payments, so we never see your card, and you can get a refund within 30 days. A person reads every email to <a href="mailto:hey@thespotter.si">hey@thespotter.si</a>.</p></details>
       <details><summary>Does anything get uploaded?</summary><p>No. Reading, searching and answering all happen on your Mac. The app sends a daily update check carrying its version number (you can turn it off), and downloads a new version from GitHub when you install one. It downloads an open model only when you choose it: the meaning model (639 MB) and the picture model (199 MB) when you press Continue in setup with smart search ticked, or later in Settings → Intelligence; written answers in setup too, on a Mac without Apple Intelligence (ticked, and nothing downloads until you press Continue); the second look and photo descriptions only from Settings. Each lookup of a general question on Wikipedia or Apple Maps asks you first, every time, and sends just the words of the question, never a name that appears in your files. Each of these requests is listed on Spotter's Privacy page before it's sent, and like any request from any app, each carries your Mac's internet (IP) address. The Places map is Apple's, and loads its map imagery from Apple as you move around it.</p></details>
       <details><summary>What is the Tasks board?</summary><p>A Kanban board inside Spotter, in the sidebar under Work. Cards sit in columns you name (it starts with To do, Doing, Waiting and Done, or the Client work or Creator presets), and each card can hold files, a due day, a checklist and notes. Drag a file onto a card, or choose Add to Task… on any file. Open a card and its files show themselves: videos play, PDFs scroll. Move or rename a file and the card still finds it. Your tasks are kept in Spotter's encrypted index, on your Mac.</p></details>
       <details><summary>How does a link open the exact card?</summary><p>Copy Link on a card, a file or a note gives you a link that starts with <code>spotter://</code>. Paste it into Calendar, Slack, Mail or anywhere else; clicking it opens Spotter at that card, file or note. The link is made of random letters, so it never shows a file name, a title or a folder. A link only opens things; it never changes anything. On a Mac that doesn't have that card, Spotter says the link points to something on another Mac.</p></details>
@@ -839,8 +926,8 @@
     <div class="wrap final-inner">
       <img src="icon-512.png" alt="" width="112" height="112">
       <h2 id="final-title">Your Mac, understood.</h2>
-        <a class="pill pill-coral pill-lg" href="https://github.com/whiterabbit-vibe/thespotter-site/releases/latest/download/Spotter.dmg"><svg class="i"><use href="#i-down"/></svg>Download for Mac</a>
-      <p class="fine">Free for 7 days of use. $9 at launch, plus local tax where it applies.</p>
+      <a class="pill pill-coral pill-lg" href="https://github.com/whiterabbit-vibe/thespotter-site/releases/latest/download/Spotter.dmg"><svg class="i"><use href="#i-down"/></svg>Download for Mac</a>
+      <p class="fine">Free for 7 days of use. $9 at launch, plus local tax where it applies. Notarized by Apple.</p>
     </div>
   </section>
 </main>
